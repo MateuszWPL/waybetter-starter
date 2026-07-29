@@ -11,7 +11,7 @@ const fs = require('fs');
 const sharp = require('sharp');
 
 const IMG_DIR = path.join(__dirname, '..', 'inc', 'img');
-const QUALITY = 82; // K11: dostroić do ustawień z XnConvert
+const QUALITY = 80; // K11: potwierdzone (jak w XnConvert)
 const EXTS = ['.jpg', '.jpeg', '.png'];
 
 function webpPath(file) {
