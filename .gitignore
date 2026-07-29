@@ -1,0 +1,25 @@
+# Zależności i buildy (odtwarzalne: npm install / npm run build)
+node_modules/
+build/
+
+# Pinegrow — pliki robocze (used-classes.html i tak łapie jawny @source w main.css)
+_pgbackup/
+_pgexport/
+_pginfo/
+
+# Oryginały grafik (commitujemy tylko webp/svg) — K11
+inc/img/**/*.jpg
+inc/img/**/*.jpeg
+inc/img/**/*.png
+!inc/img/favicon.png
+
+# Sekrety — NIGDY w repo
+.env
+.env.*
+
+# Lockfile watcherów i śmieci systemowe
+.watchery.lock
+.DS_Store
+Thumbs.db
+*.tmp
+*.log

@@ -1,0 +1,73 @@
+/* Custom CSS goes here */
+/* @media all and (min-width: 1024px) { */
+
+/*----------- Pagination (Not active) -----------*/
+.paginationBttn.disabled{
+    color: #E2E2E2;
+    border-color: #E2E2E2;
+    pointer-events: none;
+}
+
+.paginationBttn.disabled svg path{
+    stroke: #E2E2E2;
+}
+
+/* ----------- Splide sliders style -----------*/
+.splide__pagination .splide__pagination__page {
+  width: 12px;       
+  height: 12px;       
+  background: #000;
+  opacity: 0.3; 
+}
+
+.splide__pagination .splide__pagination__page.is-active {
+background: #000;
+opacity: 1; 
+}
+
+
+/*----------- Contact form styles -----------*/
+  /* Phone field */
+  .selected-flag{
+    border-radius: 12px 0 0 12px;
+    background-color: #fff !important;
+    border-right: 1px solid #000;
+  }
+  .flag-container{
+    top: 15px !important;
+    bottom: 15px !important;
+  }
+  .selected-dial-code{
+    font-size: 14px;
+  }
+
+  /* Checkbox, input, area - [checked] [focus] */
+  textarea:focus,
+  input:focus {
+    border: 1px solid #be964a !important;
+    --tw-ring-color: #be964a !important;
+    --tw-ring-sgadow: 0 0 0 3px rgba(190, 150, 74, 0.5) !important;
+  }
+
+  input[type="checkbox"] {
+    color: #be964a;
+  }
+
+  input[type="checkbox"]:focus {
+    --tw-ring-shadow: none !important;
+    --tw-ring-offset-shadow: none !important;
+  }
+
+  input[type="checkbox"]:checked {
+    background-color: #be964a;
+    border: 1px solid #be964a;
+    --tw-ring-shadow: none !important;
+    --tw-ring-offset-shadow: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='black' xmlns='http://www.w3.org/2000/svg'><path d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+  }
+
+  /* ----------- Active menu style ----------- */
+  .menu-item.current-menu-item a,
+  .active-mega-menu{
+    color: #be964a;
+  }

@@ -1,0 +1,198 @@
+/* ------------------- Accordion ------------------- */
+    .accordion_margin:before {
+        content: "";
+        margin-top: 0;
+        float: left;
+        width: 100%;
+    }
+    .accordion_margin:after {
+        content: "";
+        margin-bottom: 20px;
+        float: left;
+        width: 100%;
+    }
+
+    [accordion-button].active {
+        /* Active accordion styles go here */
+    }
+
+    [accordion-button].active .rotate_bar {
+        rotate: -90deg;
+        transition: rotate .3s ease-in-out;
+    }
+
+    [accordion-panel].active {
+        display: block;
+    }
+
+    [accordion-button] {
+        cursor: pointer;
+    }
+
+    [accordion-panel] {
+        display: none;
+        overflow: hidden;
+        height: 0;
+        transition: height .3s ease-in-out;
+    }
+
+    /* Show more FAQ button */
+    @keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    }
+
+    .hide-accordion {
+        max-height: 0;
+        display: none;
+        overflow: hidden;
+        transition: max-height 0.5s ease-out;
+    }
+
+    .show-more-btn {
+        margin: 20px auto 0 auto;
+        display: block;
+        font-family: 'Inter', sans-serif;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        width: 100%;
+        padding: 18px 0 18px 0;
+        background-color: #2B2A28;
+        transition: transform 300ms;
+        border: none;
+        cursor: pointer;
+        border-radius: 24px;
+    }
+
+    .show-more-btn:hover {
+        transform: scale(1.05);
+    }
+
+/* ------------------- Tabs ------------------- */
+    [tab-button].active {
+        /* Active tab styles go here */
+    }
+
+    [tab-panel].active {
+        display: block;
+        animation: fadeIn .5s ease-in-out;
+    }
+
+    [tab-button] {
+        cursor: pointer;
+    }
+
+    [tab-panel] {
+        display: none;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+
+/* ------------------- Mobile menu ------------------- */
+    .bar{
+        display: block;
+        width: 25px;
+        height: 2px;
+        margin: 5px auto;
+        -webkit-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        background-color: #000;
+    }
+
+    @media(max-width:1023px){
+
+        .nav-menu{
+        position: fixed;
+        z-index: 1001;
+        opacity: 0;
+        transform: translateX(-100%);
+        top: 0;
+        transition: 0.6s;
+        height: calc(100dvh);
+        }
+
+        .nav-menu.active{
+            opacity: 1;
+            transform: translateX(-12px);
+        }
+
+        .nav-overlay.active {
+            opacity: 0.5;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+         .hamburger.active .bar:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .hamburger.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger.active .bar:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+    }
+
+/* ------------------- Popup ------------------- */
+            /* Popup specyfic styles */
+            
+            
+/* ------------------- Megamenu (Dropdown mwnu) ------------------- */
+    [megamenu-panel] {
+        display: none;
+    }
+
+    [megamenu-panel].active {
+        display: flex;
+    }
+
+    .megamenu-item svg.active{
+        rotate: 180deg;
+    }
+
+/* ------------------- Custom scroll ------------------- */
+    .hide-scroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scroll::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroller {
+        scrollbar-width: auto;
+        scrollbar-color: #1E1E1E #E2E2E2;
+    }
+
+    .scroller::-webkit-scrollbar {
+        height: 5px;
+    }
+
+    .scroller::-webkit-scrollbar-track {
+        background: #E2E2E2;
+        border-radius: 20px;
+    }
+
+    .scroller::-webkit-scrollbar-thumb {
+        background-color: #1E1E1E;
+        border-radius: 20px;
+    }
+
+
+/* ------------------- Smooth scroll ------------------- */
+    html {
+        scroll-behavior: smooth;
+    }

@@ -1,0 +1,39 @@
+/**
+ * SPIS TREŚCI
+ * 1. TAILWIND 4 + ŹRÓDŁA SKANOWANIA (@source — w tym used-classes.html z Pinegrow!)
+ * 2. TOKENY (theme.css)
+ * 3. SAFELISTA KLAS DLA GUTENBERGA (klasy wpisywane przez klientów w polu "Dodatkowe klasy CSS")
+ * 4. STYLE KOMPONENTÓW (components.css) I PROJEKTOWE (custom.css)
+ * 5. BIBLIOTEKI ZEWNĘTRZNE (Splide core)
+ */
+
+/* ============================================
+   1. TAILWIND 4 + ŹRÓDŁA SKANOWANIA
+   ============================================ */
+@import "tailwindcss";
+
+/* KRYTYCZNE (R16): _pginfo/ jest w .gitignore, a TW4 pomija pliki z .gitignore —
+   klasy klikane w panelu Design PG trafiają do CSS TYLKO dzięki temu jawnemu @source. */
+@source "../../_pginfo/used-classes.html";
+
+/* ============================================
+   2. TOKENY
+   ============================================ */
+@import "./theme.css";
+
+/* ============================================
+   3. SAFELISTA KLAS DLA GUTENBERGA (R15)
+   Klasy, których wolno używać w polu "Dodatkowe klasy CSS" bloków.
+   ============================================ */
+@source inline("text-center text-left text-right mt-{0,4,8,12,16,20} mb-{0,4,8,12,16,20} pt-{0,4,8,12,16,20} pb-{0,4,8,12,16,20}");
+
+/* ============================================
+   4. STYLE KOMPONENTÓW I PROJEKTOWE
+   ============================================ */
+@import "./components.css";
+@import "./custom.css";
+
+/* ============================================
+   5. BIBLIOTEKI ZEWNĘTRZNE
+   ============================================ */
+@import "@splidejs/splide/dist/css/splide-core.min.css";
