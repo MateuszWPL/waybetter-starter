@@ -14,10 +14,10 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /* ============================================
    1. NASZE MODUŁY
+   (inc/custom.php dokłada Pinegrow w sekcji "Include Resources" niżej — nie dublujemy)
    ============================================ */
 require_once get_template_directory() . '/inc/setup.php';
 require_once get_template_directory() . '/inc/enqueue.php';
-require_once get_template_directory() . '/inc/custom.php';
 
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_template_directory() . '/inc/woo.php';
