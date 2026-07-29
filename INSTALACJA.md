@@ -2,6 +2,21 @@
 
 Stan: szkielet startera gotowy i przetestowany bez Pinegrow. Poniższe kroki spinają go z PG 9.3 i Localem — to są **bramki F1 z Docs/08-roadmapa.md**. Odhaczaj po kolei; problemy zapisuj na dole.
 
+## 0. Pobranie startera (tak będzie wyglądał start KAŻDEGO projektu)
+
+Oficjalne źródło startera: **https://github.com/MateuszWPL/waybetter-starter** (prywatne).
+
+1. Utwórz stronę w Local (np. `starter-test`) — pusta instalacja WP.
+2. Pobierz starter do folderu projektów:
+   ```
+   git clone https://github.com/MateuszWPL/waybetter-starter.git "D:\Projekty\0.Starter-test"
+   ```
+   (przy pierwszym razie Git otworzy okno logowania do GitHuba — zaloguj się raz, zapamięta)
+3. W folderze projektu: `npm install`, potem `npm run build` — oba muszą przejść bez błędów.
+4. Dalej sekcja A (podpięcie Pinegrow).
+
+Docelowo kroki 2-3 robi za Ciebie skill `/nowy-projekt` — teraz przechodzisz je ręcznie, żeby przetestować flow.
+
 ## A. Podpięcie Pinegrow (GUI — robi człowiek)
 
 1. Utwórz stronę w Local na testy startera (np. `starter-test`), pusta instalacja WP.

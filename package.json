@@ -1,5 +1,5 @@
 {
-  "name": "wb-starter",
+  "name": "waybetter-starter",
   "version": "0.1.0",
   "private": true,
   "description": "Starter motywu WordPress (Pinegrow 9.3 + Tailwind 4 + esbuild). Waybetter.",
