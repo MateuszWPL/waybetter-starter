@@ -2,6 +2,17 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.8.0 — 2026-07-30 (warstwa AI: zespół agentów + orkiestracja /nowa-sekcja)
+
+Starter gotowy pod pracę „programista + pomocnik AI" do rezultatu pixel-perfect z Figmą. Sam kod motywu bez zmian — to warstwa `.claude/` + kontekst.
+
+- **Nowi agenci** (`.claude/agents/`): `swiper-expert` (slidery — najpierw czyta docs/kod, potem koduje), `animation-expert` (animacje `data-anim` minimalistycznie, bez zmian layoutu, pilnuje mobile), `interactions-expert` (wpinanie akcji — dobiera i podpina moduły JS + config enqueue).
+- **`pinegrow-block-expert` = budowniczy**: workflow Figma pixel-perfect (metadata → code/screenshot → wartości z variables → porównanie renderu), twarda zasada hoverów (`transition` + `cursor-pointer` na każdym klikalnym) i mobile-first; jasne granice roli (slider/animacje/akcje → wyspecjalizowani agenci).
+- **`block-validator`** rozszerzony: hover/kursor, animacje (transform/opacity, dozwolone `data-anim`), markup Swiper, integracja hook↔`wbstarter_modules()`, mobile.
+- **Skill `/nowa-sekcja`**: orkiestruje pełny pipeline sekcji z Figmy (wymagania PRZED delegacją → budowa → akcje → slidery → animacje → walidacja). `/nowy-blok` deleguje do właściwych agentów i odsyła do `/nowa-sekcja` przy pełnych sekcjach.
+- **CLAUDE.md**: sekcja „Zespół agentów AI" (tabela + zasady współpracy). Mechanika: subagent nie rozmawia z userem → wymagania zbiera główny agent, agent bez danych zwraca pytania zamiast kodu.
+- Wersje → 0.8.0. Kod motywu (JS/CSS/PHP) bez zmian.
+
 ## 0.7.0 — 2026-07-30 (rewizja frontu: Swiper, scroll-driven animations, config enqueue, jakość JS)
 
 Audyt i dopracowanie warstwy JS/CSS/PHP + wymiana martwych vendorów. Runtime dalej zero-build.

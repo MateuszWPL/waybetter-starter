@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.7.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.8.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -57,6 +57,26 @@ Pinegrow NIE wykrywa nowych/usuniętych plików z zewnątrz i może nadpisać zm
 
 - Jeśli Pinegrow jest otwarty — POPROŚ użytkownika o **Save All w Pinegrow** zanim zaczniesz edytować pliki, i przypominaj o tym przy edycji HTML.
 - Po edycji (zwłaszcza po NOWYCH plikach) przypomnij: **„Reload project" w Pinegrow** (nie File Reload — tylko Reload project indeksuje nowe pliki).
+
+## Zespół agentów AI (jak pracujemy nad sekcją)
+
+Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Do pełnej sekcji z Figmy użyj skilla **`/nowa-sekcja`** (prowadzi pipeline), do pojedynczego bloku **`/nowy-blok`**.
+
+| Agent / skill | Kiedy | Co robi |
+|---|---|---|
+| `/nowa-sekcja` (skill) | budowa sekcji z Figmy | orkiestruje: wymagania → budowa → akcje → slidery → animacje → walidacja |
+| `/nowy-blok` (skill) | pojedynczy blok | scaffold + walidacja |
+| `pinegrow-block-expert` (budowniczy) | markup + wygląd | HTML+Tailwind pixel-perfect z Figmy, hovery + `cursor-pointer`, mobile-first |
+| `interactions-expert` | interakcje | dobiera/podpina moduły JS (accordion, tabs, popup, lightbox, menu) + config enqueue |
+| `swiper-expert` | slidery | konfiguracja Swipera w `sliders.js` (najpierw czyta docs, potem koduje) |
+| `animation-expert` | animacje wejścia | `data-anim` minimalistycznie, bez zmian layoutu, pilnuje mobile |
+| `block-validator` | po budowie | raport zgodności z konwencją (`[BŁĄD]`/`[OSTRZEŻENIE]`/`[SUGESTIA]`) |
+
+**Zasady współpracy:**
+- **Wymagania zbiera główny agent (Ty) PRZED delegacją** — subagent nie rozmawia z użytkownikiem. Agent bez kompletu danych zwróci listę pytań zamiast kodu; wtedy dopytaj (AskUserQuestion) i ponów delegację.
+- Jeden agent = jeden segment; role się nie nakładają (budowniczy nie konfiguruje sliderów ani nie nakłada animacji itd.).
+- Kolejność: struktura → akcje/slidery (dopinają hooki) → animacje (warstwa na gotowym) → walidacja.
+- **Definicja sukcesu = pixel-perfect z Figmą** oraz identyczny wygląd front ↔ edytor Gutenberga.
 
 ## Style w edytorze WP — jak działa parity (front ↔ Gutenberg)
 

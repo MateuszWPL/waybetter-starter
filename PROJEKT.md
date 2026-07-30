@@ -1,6 +1,6 @@
 # PROJEKT: {{NAZWA_PROJEKTU}}
 
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.7.0
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.8.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 

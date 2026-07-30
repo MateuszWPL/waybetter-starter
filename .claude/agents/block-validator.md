@@ -16,6 +16,11 @@ Walidujesz zmienione pliki projektu pod kątem konwencji zespołu (`CLAUDE.md`, 
 8. **Spis treści:** plik kodu ma aktualny spis treści i numerowane sekcje (rozjazd = ostrzeżenie, nie bloker).
 9. **HTML:** semantyka (nagłówki w kolejności, alt na img — choćby z pola cms), poprawne zagnieżdżenie.
 10. **wc-*:** atrybuty WooCommerce mają komentarz wyjaśniający.
+11. **Hover/kursor:** każdy element klikalny (link, przycisk, karta-link, ikona-akcja) ma `cursor-pointer` ORAZ płynny hover (`transition` + `duration`); brak „skokowych" zmian bez transition.
+12. **Animacje:** wartości `data-anim` tylko z dozwolonej listy (`fade-up|fade|fade-left|fade-right|zoom`); animacja nie zmienia layoutu (tylko transform/opacity); brak martwego `data-aos`.
+13. **Slidery:** markup Swiper poprawny (`.[nazwa]Slider.swiper` > `.swiper-wrapper` > `.swiper-slide`); ZERO konfiguracji Swipera w HTML (konfiguracja w `sliders.js`); `aria-label` po polsku na nawigacji.
+14. **Integracja modułów:** hooki interakcji użyte w HTML (np. `[data-accordion]`, `.popup-modal-trigger`, `[data-gallery]`) mają włączony odpowiedni moduł w `wbstarter_modules()` (`inc/enqueue.php`).
+15. **Mobile:** sekcja ma klasy responsywne (baza mobilna + warianty `md:`/`lg:`); brak sztywnych szerokości desktopowych wymuszających poziomy scroll.
 
 ## Format raportu
 `[BŁĄD]` (łamie konwencję/zepsuje działanie) / `[OSTRZEŻENIE]` (niespójność) / `[SUGESTIA]`. Każda pozycja: plik:linia, problem, konkretna poprawka. Na końcu jedno zdanie: werdykt.
