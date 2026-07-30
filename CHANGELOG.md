@@ -14,6 +14,16 @@ Duża zmiana po testach F1 — CSS kompiluje **wbudowany kompilator Pinegrow (Ta
 - `package.json`: bez `tailwindcss`/`@tailwindcss/cli` (zostaje esbuild, sharp, chokidar, concurrently); scripts js/extra/webp.
 - `functions.php`: PG wypełnił `Include Resources` (custom.php + wp_pg_helpers) i enqueue Tailwind (`tailwind_theme/tailwind.css`).
 
+## 0.3.2 — 2026-07-30 (functions.php = teren Pinegrow; kod w custom.php)
+
+LEKCJA z testu: Pinegrow **w pełni zarządza `functions.php`** i nadpisuje ręczne edycje przy eksporcie (jak w starym workflow). Przestajemy go tykać.
+
+- **`functions.php`**: minimalny, PG-friendly — `require` setup/enqueue/woo + markery `Include Resources` i `Enqueue`. PG wstrzykuje tu `custom.php`, helpery bloków i Tailwind. Nie edytujemy go ręcznie.
+- **`inc/custom.php`**: NASZ plik na kod (PG go wymaga). **Rejestruje bloki automatycznie** — `glob('blocks/*/*_register.php')` — niezależnie od tego, co PG wpisze w functions.php. Plus kategoria „Bloki dedykowane". Tu dopisujemy funkcje projektowe.
+- **`inc/setup.php`**: przywrócony (theme supports + menusy).
+- Fix: fatal error `require inc/setup.php` po tym, jak PG nadpisał functions.php starą wersją z brakującym plikiem.
+- CLAUDE.md: twardy zakaz edycji functions.php; kod → custom.php.
+
 ## 0.3.1 — 2026-07-30 (fix: rejestracja bloków)
 
 - **`functions.php` — pełny komplet markerów Pinegrow** (na wzór sprawdzonego starego szablonu): `Register Pinegrow Blocks`, `Register Blocks Category`, `Register Menus`, `Custom Post Types`, `Taxonomies`, `Register Sidebars`, `Customizer`, `Image sizes`, `Theme Supports`, `Load Blocks Editor Styles`, `Load Text Domain`, `Include Resources`, `Enqueue`. Bez sekcji `Register Pinegrow Blocks` PG nie miał gdzie wstrzyknąć rejestracji bloków → bloki nie pojawiały się w Gutenbergu. Naprawione.

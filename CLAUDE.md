@@ -17,7 +17,7 @@ Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tail
 
 ## ZAKAZY (twarde)
 
-1. NIE edytuj: `projectdb.pgml`, `pinegrow.json`, `_pginfo/`, `tailwind_theme/`, folderu eksportu w `wp-content/themes/`.
+1. NIE edytuj: **`functions.php`** (zarządza nim Pinegrow — nadpisuje ręczne zmiany przy eksporcie!), `projectdb.pgml`, `pinegrow.json`, `_pginfo/`, `tailwind_theme/`, folderu eksportu w `wp-content/themes/`. **Cały custom kod PHP piszemy w `inc/custom.php`** (PG go wymaga; bloki rejestrują się tam automatycznie z folderu `blocks/`).
 2. NIE dodawaj bundlera/watcherów/kroku builda — świadomie ich nie ma.
 3. NIE wymyślaj własnej składni atrybutów `cms-*` / `wp-*` / `wc-*` — wyłącznie wzorce z `Docs/11-konwencje-blokow.md` i istniejących bloków projektu.
 4. NIE dopisuj custom CSS, gdy istnieje klasa Tailwinda (Tailwind-first).
