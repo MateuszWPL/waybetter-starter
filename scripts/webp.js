@@ -1,6 +1,6 @@
 /**
  * Konwerter WEBP na żądanie — jedna komenda: `npm run optimize`
- * Przelatuje inc/img/ oraz assets/img/, konwertuje jpg/jpeg/png → webp (quality 80).
+ * Przelatuje inc/img/, konwertuje jpg/jpeg/png → webp (quality 80).
  * Oryginał ZOSTAJE na miejscu (PG nie wykrywa usuniętych plików). Idempotentne:
  * pomija, gdy webp jest nowszy niż źródło. SVG i webp pomijane.
  */
@@ -12,7 +12,6 @@ const QUALITY = 80; // jak w XnConvert
 const EXTS = ['.jpg', '.jpeg', '.png'];
 const DIRS = [
 	path.join(__dirname, '..', 'inc', 'img'),
-	path.join(__dirname, '..', 'assets', 'img'),
 ];
 
 function webpPath(file) {

@@ -14,6 +14,17 @@ Duża zmiana po testach F1 — CSS kompiluje **wbudowany kompilator Pinegrow (Ta
 - `package.json`: bez `tailwindcss`/`@tailwindcss/cli` (zostaje esbuild, sharp, chokidar, concurrently); scripts js/extra/webp.
 - `functions.php`: PG wypełnił `Include Resources` (custom.php + wp_pg_helpers) i enqueue Tailwind (`tailwind_theme/tailwind.css`).
 
+## 0.3.3 — 2026-07-30 (powrót do natywnego Pinegrow — koniec nadpisywania)
+
+LEKCJA z porównania ze starym, DZIAŁAJĄCYM szablonem (`StareWorkflow/0.Szablon WP tailwind3`): budowaliśmy równoległy system obok Pinegrow zamiast używać jego markerów. Naprawione.
+
+- **`functions.php`** = pełny, natywny szkielet Pinegrow ze WSZYSTKIMI markerami (wg starego szablonu): `Load Text Domain`, `Register Menus`, `Image sizes`, `Custom Post Types`, `Taxonomies`, `Include Resources`, `Enqueue Scripts/Styles`, **`Register Pinegrow Blocks`**, `Register Blocks Category`, `Theme Supports`, `Load Blocks Editor Styles`. **Bloki rejestruje Pinegrow SAM** — poprzednio brakowało markera `Register Pinegrow Blocks`, więc bloki nie trafiały do Gutenberga.
+- **USUNIĘTE `inc/setup.php`** — theme supports i menusy generuje Pinegrow w functions.php (był zbędnym duplikatem).
+- **`inc/custom.php`** = malutki, tylko NASZ kod: wpina `inc/enqueue.php` + `inc/woo.php` i miejsce na funkcje projektowe. Usunięta rejestracja bloków (glob) i kategoria — robi to Pinegrow.
+- **`inc/enqueue.php`** bez zmian (ładuje nasze assety), ale wpinany z `custom.php`, nie z functions.php.
+- **Koniec duplikacji grafik** — usunięty `assets/img/`, jedyny folder na grafiki to `inc/img/` (webp.js przelatuje tylko jego).
+- Fix: parse error / fatal — wynikały z hybrydowego functions.php bez pełnych markerów PG.
+
 ## 0.3.2 — 2026-07-30 (functions.php = teren Pinegrow; kod w custom.php)
 
 LEKCJA z testu: Pinegrow **w pełni zarządza `functions.php`** i nadpisuje ręczne edycje przy eksporcie (jak w starym workflow). Przestajemy go tykać.
