@@ -1,0 +1,11 @@
+/**
+ * DODATKOWY CSS (poza Tailwindem) — bundluje esbuild → build/extra.css
+ * Wbudowany kompilator Pinegrow kompiluje TYLKO Tailwind + @theme z main.css
+ * i ignoruje @import zwykłego CSS / node_modules. Dlatego Splide i nasze
+ * style komponentów zbieramy tutaj i ładujemy osobno (inc/enqueue.php).
+ * Zawartość to czysty CSS (bez @apply) — nie potrzebuje Tailwinda.
+ */
+@import "@splidejs/splide/dist/css/splide-core.min.css";
+@import "aos/dist/aos.css";
+@import "./components.css";
+@import "./custom.css";

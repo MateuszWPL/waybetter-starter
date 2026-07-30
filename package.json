@@ -1,19 +1,18 @@
 {
   "name": "waybetter-starter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Starter motywu WordPress (Pinegrow 9.3 + Tailwind 4 + esbuild). Waybetter.",
+  "description": "Starter motywu WordPress (Pinegrow 9.3 wbudowany kompilator Tailwind 4 + esbuild). Waybetter.",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "concurrently -n css,js,webp -c blue,yellow,green \"npm:css:dev\" \"npm:js:dev\" \"npm:webp:watch\"",
-    "build": "npm run css:build && npm run js:build && npm run webp",
-    "css:dev": "concurrently \"tailwindcss -i resources/css/main.css -o build/main.css --watch\" \"tailwindcss -i resources/css/editor.css -o build/editor.css --watch\"",
-    "css:build": "tailwindcss -i resources/css/main.css -o build/main.css --minify && tailwindcss -i resources/css/editor.css -o build/editor.css --minify",
-    "css:once": "tailwindcss -i resources/css/main.css -o build/main.css && tailwindcss -i resources/css/editor.css -o build/editor.css",
+    "dev": "concurrently -n js,css,webp -c yellow,blue,green \"npm:js:dev\" \"npm:extra:dev\" \"npm:webp:watch\"",
+    "build": "npm run js:build && npm run extra:build && npm run webp",
     "js:dev": "esbuild resources/js/main.js --bundle --outfile=build/main.js --watch",
     "js:build": "esbuild resources/js/main.js --bundle --minify --outfile=build/main.js",
+    "extra:dev": "esbuild resources/css/extra.css --bundle --outfile=build/extra.css --watch",
+    "extra:build": "esbuild resources/css/extra.css --bundle --minify --outfile=build/extra.css",
     "webp": "node scripts/webp.js",
     "webp:watch": "node scripts/webp.js --watch"
   },
@@ -23,11 +22,9 @@
     "aos": "^3.0.0-beta.6"
   },
   "devDependencies": {
-    "@tailwindcss/cli": "^4.1.0",
-    "chokidar": "^4.0.0",
-    "concurrently": "^9.0.0",
     "esbuild": "^0.25.0",
+    "chokidar": "^4.0.0",
     "sharp": "^0.35.0",
-    "tailwindcss": "^4.1.0"
+    "concurrently": "^9.0.0"
   }
 }

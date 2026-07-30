@@ -28,7 +28,7 @@ import './modules/sliders.js';
    3. ANIMACJE ON-SCROLL (AOS)
    ============================================ */
 import AOS from 'aos';
-import 'aos/dist/aos.css';
+// CSS AOS jest w resources/css/extra.css (żeby main.js nie generował osobnego build/main.css)
 
 document.addEventListener('DOMContentLoaded', () => {
   AOS.init({ duration: 1000 });
