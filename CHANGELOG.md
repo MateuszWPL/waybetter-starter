@@ -14,6 +14,13 @@ Duża zmiana po testach F1 — CSS kompiluje **wbudowany kompilator Pinegrow (Ta
 - `package.json`: bez `tailwindcss`/`@tailwindcss/cli` (zostaje esbuild, sharp, chokidar, concurrently); scripts js/extra/webp.
 - `functions.php`: PG wypełnił `Include Resources` (custom.php + wp_pg_helpers) i enqueue Tailwind (`tailwind_theme/tailwind.css`).
 
+## 0.3.1 — 2026-07-30 (fix: rejestracja bloków)
+
+- **`functions.php` — pełny komplet markerów Pinegrow** (na wzór sprawdzonego starego szablonu): `Register Pinegrow Blocks`, `Register Blocks Category`, `Register Menus`, `Custom Post Types`, `Taxonomies`, `Register Sidebars`, `Customizer`, `Image sizes`, `Theme Supports`, `Load Blocks Editor Styles`, `Load Text Domain`, `Include Resources`, `Enqueue`. Bez sekcji `Register Pinegrow Blocks` PG nie miał gdzie wstrzyknąć rejestracji bloków → bloki nie pojawiały się w Gutenbergu. Naprawione.
+- `inc/setup.php` USUNIĘTY — theme setup (menusy, supports) jest teraz w `functions.php` (tam gdzie PG wstrzykuje swoje sekcje). `inc/enqueue.php` (assety) i `inc/woo.php` dalej osobno.
+- Tailwind ładuje PG w sekcji „Enqueue Styles" (tailwind_theme/tailwind.css); nasze assety — `inc/enqueue.php`.
+- `/nowy-projekt`: ostrzeżenie o `npm install` bez `--prefix` (unikanie samo-referencji w package.json).
+
 ## 0.3.0 — 2026-07-30 (radykalne uproszczenie: „zero build", bez Gita)
 
 Cel: mniej warstw, „ma po prostu działać". Usunięte: esbuild, concurrently, chokidar, watchery, `build/`, `resources/`, `start-projekt.bat`, `.vscode/tasks.json`, hook `SessionStart`, skille `/start` `/koniec` `/napraw-konflikt`, `.gitattributes`. Kontrola wersji (Git/GitHub per projekt) odłożona na później.

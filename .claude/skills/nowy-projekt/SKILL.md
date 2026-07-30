@@ -16,7 +16,7 @@ Kroki:
    - `wbstarter` → prefiks (np. `kn`) — prefiks funkcji, handle, text-domain
    - `New Workflow Test` / `WB Starter` → nazwa klienta (style.css Theme Name)
    - placeholdery `{{NAZWA_PROJEKTU}}`, `{{PREFIKS}}`, `{{SCIEZKA_LOCAL}}`
-2. `npm install` (ściąga tylko sharp do webp). Bez builda — nie ma `npm run dev`/`build`.
+2. `npm install` — **koniecznie z katalogu projektu, bez flag** (NIE `--prefix`, NIE `npm install <nazwa>` — inaczej npm dopisze błędną samo-referencję `"nazwa": "file:"` do package.json/lock; jeśli się pojawi, usuń ten wpis). Ściąga tylko sharp do webp. Bez builda — nie ma `npm run dev`/`build`.
 3. Jeśli podano Figmę: pobierz kolory (`get_variable_defs`) i **poinstruuj użytkownika**, żeby wpisał je w panelu Design PG (tokeny nie idą do kodu przy wbudowanym kompilatorze).
 4. Uzupełnij `PROJEKT.md` (nazwa, data startu, wersja startera).
 5. Wypisz użytkownikowi checklist GUI: Pinegrow → **Open project** → **Create Classic theme** → Tailwind **Built-in JIT 4.2.2** → ustaw eksport do `wp-content/themes/{nazwa}` w Local → Ctrl+M → aktywuj motyw w WP.
