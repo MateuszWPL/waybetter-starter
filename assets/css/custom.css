@@ -1,3 +1,12 @@
+/* ============================================================
+   WŁASNE KLASY / UTILITIES
+   Tailwind 4 nie ma już max-w-screen-*. Własne rozmiary trzymamy tu.
+   Wpisujesz klasę normalnie w polu klas w Pinegrow (działa na froncie i w edytorze).
+   Aby Pinegrow podpowiadał te klasy w UI: podlinkuj ten plik jako design-stylesheet
+   w projekcie PG (Pinegrow skanuje wtedy nazwy klas). Więcej: CLAUDE.md.
+   ============================================================ */
+.max-w-site { max-width: 1324px; }   /* dawne max-w-screen-xl (kontener strony) */
+
 /* Custom CSS goes here */
 /* @media all and (min-width: 1024px) { */
 

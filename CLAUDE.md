@@ -14,8 +14,7 @@ Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tail
 - **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Biblioteki (Splide, AOS) są „vendored" w `assets/vendor/` i działają globalnie.
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
 - **Podział odpowiedzialności:** `functions.php` w całości generuje i utrzymuje **Pinegrow** (theme setup, menusy, enqueue Tailwinda, **automatyczna rejestracja bloków**, kategorie). NASZE assety (biblioteki, custom.css, main.js) ładuje `inc/enqueue.php`, wpięty z `inc/custom.php`. Nasz kod PHP → wyłącznie `inc/custom.php`.
-- **Design (kolory, fonty, własne klasy jak max-width) = panel Design Pinegrow (UI).** Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json` — pliki generuje PG, NIE edytuj ich ręcznie (nadpisze). Kolory → jako `--color-{nazwa}-{odcień}`, fonty → panel Fonts (+ „Use for H1…"), rozmiary/max-width → sekcja theme sizing (np. `--container-*`).
-- **Demo na starcie:** `inc/custom.php` przy aktywacji motywu tworzy raz kategorię wpisów, stronę startową i przykładowy wpis (flaga `wbstarter_demo_done`). W realnym projekcie usuń tę sekcję.
+- **Design (kolory, fonty, własne klasy jak max-width) = panel Design Pinegrow (UI).** Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json`, a definicje w `projectdb.pgml` (`<dmcolor>`, `<dmdesignskill skill="fonts">`). Pliki generuje PG, NIE edytuj ich ręcznie. Bazowa paleta/font są wgrane w projekcie PG startera.
 
 ## ZAKAZY (twarde)
 
