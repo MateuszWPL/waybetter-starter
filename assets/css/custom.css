@@ -1,7 +1,7 @@
 /* ============================================================
    SPIS TREŚCI — custom.css (style projektowe, ostateczność po Tailwindzie)
    1. PAGINACJA
-   2. SLIDERY SPLIDE (pagination dots)
+   2. SLIDERY SWIPER (pagination bullets + marquee)
    3. FORMULARZ KONTAKTOWY (telefon, checkbox/input focus)
    4. AKTYWNE MENU
    ------------------------------------------------------------
@@ -9,7 +9,7 @@
    „TODO kolor projektu" podmień na token z panelu Design PG (albo klasę TW
    na elemencie). Domyślnie zostawiamy neutralny czarny / currentColor.
    Tailwind-first: jeśli styl da się zapisać klasą TW — rób to na elemencie,
-   nie tutaj. custom.css jest dla Splide, pseudo-elementów i styli wtyczek.
+   nie tutaj. custom.css jest dla Swiper, pseudo-elementów i styli wtyczek.
    Kontener strony: klasa „max-w-site" (1324px) to NATYWNA klasa Tailwinda —
    zdefiniowana w custom config kompilatora PG (--container-site), nie tutaj.
    Więcej: CLAUDE.md.
@@ -27,17 +27,22 @@
 }
 
 
-/* === 2. SLIDERY SPLIDE (pagination dots) === */
-.splide__pagination .splide__pagination__page {
+/* === 2. SLIDERY SWIPER (pagination bullets + marquee) === */
+.swiper-pagination-bullet {
   width: 12px;
   height: 12px;
   background: #000;
   opacity: 0.3;
 }
 
-.splide__pagination .splide__pagination__page.is-active {
+.swiper-pagination-bullet-active {
   background: #000;   /* TODO kolor projektu (akcent aktywnej kropki) */
   opacity: 1;
+}
+
+/* Ciągły auto-scroll (.autoSlider) — liniowy ruch bez easingu */
+.autoSlider .swiper-wrapper {
+  transition-timing-function: linear;
 }
 
 

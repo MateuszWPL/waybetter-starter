@@ -2,6 +2,16 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.7.0 — 2026-07-30 (rewizja frontu: Swiper, scroll-driven animations, config enqueue, jakość JS)
+
+Audyt i dopracowanie warstwy JS/CSS/PHP + wymiana martwych vendorów. Runtime dalej zero-build.
+
+- **Splide → Swiper 11** (Splide bez rozwoju). Vendory zarządza npm: `dependencies.swiper` + `scripts/vendors.js` (kopiuje `swiper-bundle.*` z `node_modules` → `assets/vendor/`, uruchamiane też przez `postinstall`). Usunięte `assets/vendor/{splide*,aos*}`. `sliders.js` przepisany na API Swipera (`basicSlider`, `autoSlider`/marquee); paginacja w `custom.css` (`.swiper-pagination-bullet`).
+- **AOS → CSS scroll-driven animations + fallback IntersectionObserver.** Nowy `assets/css/animations.css` (atrybuty `data-anim`, `@supports animation-timeline`, `prefers-reduced-motion`, bezpieczny default „widoczne") + `assets/js/modules/reveal.js` (fallback, `window.wbReveal.scan()`). Usunięty AOS i `refreshAOSAfter`; `main.js` odchudzony do czystego entry.
+- **`inc/enqueue.php` przepisany:** tablica config `wbstarter_modules()` (moduł → `true/false`, koniec odkomentowywania), wszystkie skrypty `strategy=defer` (WP 6.3+), Swiper ładowany **warunkowo** (tylko gdy `sliders` on), `animations.css` dołożony do stylów front+edytor, wzorzec `has_block()` per-strona w komentarzu.
+- **Naprawy jakości JS (z audytu):** `modalgallery.js` przepisany na multi-instance (per `[data-gallery]`, izolowany stan, listenery klawiatury dodawane/zdejmowane przy open/close, aria, koniec ID-based buga i hardcoded Tailwind → klasy `.gallery-dot`). `accordion.js` — `dataset.init`, `aria-expanded`, przycisk „Pokaż więcej" tworzony raz. `dragscroll.js` — `passive:false` przy `preventDefault`. `megamenu.js` — guard na brak panelu + `aria-expanded`. `mobilemenu.js` — `aria-expanded`. `tabs.js` — `role`/`aria-selected`. `popup.js` — zamykanie Escape. Spisy treści w nagłówkach modułów.
+- `functions.php`, `inc/custom.php`, `inc/woo.php` — bez zmian. Wersje → 0.7.0.
+
 ## 0.6.0 — 2026-07-30 (pre-konfigurowany projekt PG: panel Design + ustawienia WP)
 
 Świadome odwrócenie decyzji z 0.4.0 (starter = sam kod). Starter jest teraz **gotowym projektem Pinegrow** — po pobraniu i `/nowy-projekt` otwierasz przez **Open project** (koniec „Create Classic theme"), a panel Design i ustawienia WordPress są już skonfigurowane. Formaty plików PG przechwycone empirycznie z działającego projektu (`000.NewWorkflowTest`), nie zgadywane.

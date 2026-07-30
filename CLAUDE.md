@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.6.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.7.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -14,7 +14,9 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 - **Kolory/fonty/breakpointy** ustawia się w **panelu Design Pinegrow** (nie w kodzie). Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json`, a definicje w `projectdb.pgml` (`<dmcolor>`, `<dmdesignskill skill="fonts">`). Pliki generuje PG — NIE edytuj ich ręcznie.
 - **Kontener strony:** klasa `max-w-site` = **1324px** to natywna klasa Tailwinda, zdefiniowana w custom config kompilatora PG (`pinegrow.json` → `design-settings.custom_config`: `@theme { --container-site: 1324px; }`). Nie ma jej w custom.css. Zmiana szerokości = to pole (przez „Compiler & custom config…" w PG).
 - **Custom CSS** → `assets/css/custom.css` (i `components.css`). Edytujesz → zapisujesz → odświeżasz przeglądarkę. Bez builda.
-- **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Biblioteki (Splide, AOS) są „vendored" w `assets/vendor/` i działają globalnie (patrz `assets/vendor/README.md`).
+- **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Które moduły się ładują — ustawiasz w tablicy config na górze `inc/enqueue.php` (`true`/`false`), nie odkomentowywaniem. Wszystkie skrypty z `strategy=defer`.
+- **Biblioteki (vendory):** tylko **Swiper** (slider) — plik w `assets/vendor/`, zarządzany przez npm: `npm run vendors` (kopiuje z `node_modules`, uruchamiane też po `npm install`). Runtime dalej zero-build. Patrz `assets/vendor/README.md`. Swiper ładuje się TYLKO gdy włączony moduł `sliders`.
+- **Animacje on-scroll:** atrybut `data-anim="fade-up|fade|fade-left|fade-right|zoom"` (opcjonalnie `data-anim-delay="200"`). Robi to CSS (`assets/css/animations.css`, scroll-driven) na nowoczesnych przeglądarkach; starsze łapie fallback `reveal.js` (IntersectionObserver). Bez biblioteki, koniec AOS. Respektuje `prefers-reduced-motion`; brak wsparcia = treść widoczna.
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
 
 ## Mapa plików — kto za co odpowiada
@@ -23,15 +25,17 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 |---|---|---|
 | `functions.php` | Theme setup, menusy, enqueue Tailwinda, **auto-rejestracja bloków**, kategorie — pełne markery PG | **Pinegrow (nie tykać)** |
 | `inc/custom.php` | NASZ kod PHP; wpina `enqueue.php` + warunkowo `woo.php`; miejsce na funkcje projektowe | Claude + człowiek |
-| `inc/enqueue.php` | Ładowanie assetów (vendored libs → moduły → main.js na froncie; components.css + custom.css front+edytor). **Tu odkomentowujesz moduły opcjonalne** gdy projekt ich używa | Claude + człowiek |
+| `inc/enqueue.php` | Ładowanie assetów. **Na górze tablica config `wbstarter_modules()`** (moduł → `true`/`false`) — tu włączasz moduły per projekt. Swiper ładowany warunkowo, skrypty `strategy=defer`. Style (components/custom/animations.css) front+edytor. Wzorzec `has_block()` w komentarzu | Claude + człowiek |
 | `inc/woo.php` | Moduł WooCommerce (theme support + HPOS). Ładowany tylko gdy Woo aktywne | Claude + człowiek |
 | `inc/img/` | Grafiki motywu (logo, favicon, placeholdery). Źródła jpg/png + wygenerowane `.webp` | człowiek + `npm run optimize` |
-| `assets/css/custom.css` | Style projektowe (ostateczność po Tailwindzie): Splide, pseudo-elementy, style wtyczek | Claude + człowiek |
-| `assets/css/components.css` | Style komponentów JS (accordion, tabs, mobile menu, popup, megamenu, drag scroll) | Claude + człowiek |
-| `assets/js/main.js` | Entry point — init AOS + `window.refreshAOSAfter()` | Claude + człowiek |
-| `assets/js/modules/*.js` | Moduły plain JS. **Domyślnie aktywne:** `mobilemenu`, `custom` (scroll headera), `sliders`. **Opcjonalne (odkomentuj w enqueue.php):** `accordion`, `tabs`, `popup`, `modalgallery`, `dragscroll`, `megamenu` | Claude + człowiek |
-| `assets/vendor/*` | Gotowe biblioteki (Splide, Splide AutoScroll, AOS) — nie budowane, enqueue wprost. Wersje: `assets/vendor/README.md` | wymiana ręczna |
+| `assets/css/custom.css` | Style projektowe (ostateczność po Tailwindzie): Swiper, pseudo-elementy, style wtyczek | Claude + człowiek |
+| `assets/css/components.css` | Style komponentów JS (accordion, tabs, mobile menu, popup, gallery, megamenu, drag scroll) | Claude + człowiek |
+| `assets/css/animations.css` | Animacje on-scroll `data-anim` (CSS scroll-driven + fallback dla `reveal.js`) | Claude + człowiek |
+| `assets/js/main.js` | Entry point — miejsce na globalne inicjalizacje (ładowany po modułach) | Claude + człowiek |
+| `assets/js/modules/*.js` | Moduły plain JS (włączane w config `enqueue.php`). **Domyślnie:** `mobilemenu`, `custom` (scroll headera), `reveal` (fallback animacji), `sliders`. **Opcjonalne:** `accordion`, `tabs`, `popup`, `modalgallery`, `dragscroll`, `megamenu` | Claude + człowiek |
+| `assets/vendor/*` | **Swiper** (slider) — vendored, zarządzany przez npm (`npm run vendors`). Nie edytuj ręcznie. Wersje: `assets/vendor/README.md` | npm |
 | `scripts/webp.js` | Konwerter `npm run optimize` (sharp): `inc/img/` jpg/png → webp, idempotentnie | rzadko |
+| `scripts/vendors.js` | `npm run vendors` / `postinstall`: kopiuje biblioteki z `node_modules` → `assets/vendor/` | rzadko |
 | `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
 | `index.html` | Master page projektu PG (`wp-template-define-master-page`) — z niej PG generuje `index.php` | Pinegrow (przez PG) |
 | `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
@@ -108,21 +112,26 @@ WooCommerce: atrybuty `wc-*` (`wc-cats`, `wc-product-link`, `wc-product-thumbnai
 | Grafiki | webp, bez spacji, opisowo | `logo_dark.svg`, `1280x600.webp` |
 | Prefiks PHP | `{{PREFIKS}}_` na wszystkich funkcjach | `{{PREFIKS}}_force_stock_text()` |
 
-### Slidery (Splide)
-- Kontener `class="[nazwa]Slider splide"` (np. `heroSectionSlider`). InnerContent na `ul.splide__list`; **slajd = osobny blok** (`<li cms-block="hero-text-slide" class="splide__slide">`).
-- Nawigacja `splide__arrows` + `splide__pagination` z `aria-label` po polsku.
-- **Konfiguracja wyłącznie w `assets/js/modules/sliders.js`** (per klasa slidera, breakpoint 1024). Żadnej konfiguracji Splide w HTML — decyduje klasa kontenera.
+### Slidery (Swiper)
+- Kontener `class="[nazwa]Slider swiper"` (np. `heroSectionSlider`). Struktura Swiper: `.swiper-wrapper` > `.swiper-slide`; **slajd = osobny blok** (`<div cms-block="hero-text-slide" class="swiper-slide">`).
+- Nawigacja/paginacja wewnątrz kontenera: `.swiper-button-next` / `.swiper-button-prev` / `.swiper-pagination` (`aria-label` po polsku).
+- Warianty kontenerów obsługiwane w starterze: `basicSlider` (paginacja+strzałki, 1 / od 1024px: 2) i `autoSlider` (ciągły auto-scroll/marquee).
+- **Konfiguracja wyłącznie w `assets/js/modules/sliders.js`** (per klasa slidera, breakpoint 1024). Żadnej konfiguracji Swiper w HTML — decyduje klasa kontenera.
+
+### Animacje wejścia (on-scroll)
+- Atrybut `data-anim="fade-up|fade|fade-left|fade-right|zoom"` na elemencie; opcjonalnie `data-anim-delay="200"` (ms, działa w fallbacku). Bez `data-aos` (koniec AOS).
+- Mechanizm: CSS scroll-driven (`animations.css`) + fallback `reveal.js` — nic nie inicjalizujesz w JS. Dynamiczna treść: `window.wbReveal.scan()`.
 
 ### Tailwind-first (zasada twarda)
 - Wszystko co się da — klasami TW, w tym arbitrary values (`hover:text-[#B0246D]`, `shadow-[0_4px_4px_rgba(0,0,0,0.25)]`), cienie, gradienty, warianty.
-- `custom.css` to ostateczność — tylko: style Splide (pagination/arrows), pseudo-elementy niemożliwe w TW, style wtyczek.
+- `custom.css` to ostateczność — tylko: style Swiper (pagination/arrows), pseudo-elementy niemożliwe w TW, style wtyczek.
 - Kolory NIE hardcodowane po plikach — tokeny z panelu Design PG. (Antywzorzec: `input:focus { border: 1px solid #B0246D !important }` → klasa `focus:border-[...]` lub token.)
 
 ### Spis treści w plikach kodu
 Każdy plik z funkcjami/stylami (`custom.php`, `woo.php`, `custom.css`, `components.css`, moduły JS) ma **spis treści na górze + numerowane sekcje**. Aktualizujesz go przy każdej zmianie.
 
 ### Czego NIE robić
-Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Splide konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów).
+Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów).
 
 ## Workflow z Figmą
 

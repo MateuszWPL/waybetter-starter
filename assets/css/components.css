@@ -147,8 +147,23 @@
 
 /* ------------------- Popup ------------------- */
             /* Popup specyfic styles */
-            
-            
+
+
+/* ------------------- Gallery (lightbox — kropki paginacji) ------------------- */
+    .gallery-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 9999px;
+        background-color: #fff;
+        opacity: 0.2;
+        transition: opacity .2s ease;
+    }
+
+    .gallery-dot-active {
+        opacity: 1;
+    }
+
+
 /* ------------------- Megamenu (Dropdown mwnu) ------------------- */
     [megamenu-panel] {
         display: none;

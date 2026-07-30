@@ -1,106 +1,74 @@
+/**
+ * SPIS TREŚCI — accordion.js (akordeon, multi-instance)
+ * 1. Logika akordeonu (jeden otwarty naraz; data-accordion="open" otwiera pierwszy)
+ * 2. „Pokaż więcej" (limit pozycji: data-limit=N; wyłączenie: data-show-all)
+ * ------------------------------------------------------------
+ * Markup: [data-accordion] > ([accordion-button] + [accordion-panel]) ...
+ * Pozycje liczone do „Pokaż więcej": .accordion-item.
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  const accordionContainers = document.querySelectorAll('[data-accordion]');
+	document.querySelectorAll('[data-accordion]').forEach(container => {
+		if (container.dataset.init === 'true') return;
+		container.dataset.init = 'true';
 
-  accordionContainers.forEach(container => {
-  // ---------------------------------------------------------
-  // CZĘŚĆ 1: LOGIKA AKORDYONU
-  // ---------------------------------------------------------
-    const accordionButtons = container.querySelectorAll('[accordion-button]');
+		// --- 1. Akordeon ---
+		const buttons = container.querySelectorAll('[accordion-button]');
 
-    // Sprawdzamy czy kontener ma atrybut open i otwieramy pierwszy element
-    if (container.getAttribute('data-accordion') === 'open' && accordionButtons.length > 0) {
-      const firstButton = accordionButtons[0];
-      const firstPanel = firstButton.nextElementSibling;
+		const openPanel = (btn, panel) => {
+			panel.classList.add('active');
+			panel.style.height = panel.scrollHeight + 'px';
+			btn.classList.add('active');
+			btn.setAttribute('aria-expanded', 'true');
+		};
+		const closePanel = (btn, panel) => {
+			panel.style.height = '0';
+			btn.classList.remove('active');
+			btn.setAttribute('aria-expanded', 'false');
+			setTimeout(() => panel.classList.remove('active'), 300);
+		};
 
-      firstButton.classList.add('active');
-      firstPanel.classList.add('active');
-      firstPanel.style.height = firstPanel.scrollHeight + 'px';
-    }
+		buttons.forEach((btn, i) => {
+			const panel = btn.nextElementSibling;
+			if (!panel) return;
+			btn.setAttribute('aria-expanded', 'false');
 
-    accordionButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const panel = btn.nextElementSibling;
-        const isActive = panel.classList.contains('active');
+			if (i === 0 && container.getAttribute('data-accordion') === 'open') {
+				openPanel(btn, panel);
+			}
 
-        // Zamykamy wszystkie aktywne panele w tym samym kontenerze
-        const activePanels = container.querySelectorAll('[accordion-panel].active');
-        const activeButtons = container.querySelectorAll('[accordion-button].active');
+			btn.addEventListener('click', () => {
+				const isActive = panel.classList.contains('active');
+				// zamknij wszystkie aktywne w TYM kontenerze
+				container.querySelectorAll('[accordion-button].active').forEach(activeBtn => {
+					const activePanel = activeBtn.nextElementSibling;
+					if (activePanel) closePanel(activeBtn, activePanel);
+				});
+				if (!isActive) openPanel(btn, panel);
+			});
+		});
 
-        activePanels.forEach(activePanel => {
-          activePanel.style.height = '0';
-          setTimeout(() => {
-            activePanel.classList.remove('active');
-          }, 300);
-        });
+		// --- 2. „Pokaż więcej" ---
+		if (container.hasAttribute('data-show-all')) return;
+		const limit = parseInt(container.getAttribute('data-limit'), 10) || 5;
+		const items = container.querySelectorAll('.accordion-item');
+		if (items.length <= limit) return;
 
-        activeButtons.forEach(activeBtn => {
-          activeBtn.classList.remove('active');
-        });
+		for (let i = limit; i < items.length; i++) items[i].style.display = 'none';
 
-        // Jeśli kliknięty panel nie był aktywny, otwieramy go
-        if (!isActive) {
-          panel.classList.add('active');
-          panel.style.height = panel.scrollHeight + 'px';
-          btn.classList.add('active');
-        }
+		const moreBtn = document.createElement('button');
+		moreBtn.type = 'button';
+		moreBtn.className = 'show-more-btn';
+		moreBtn.textContent = 'Pokaż więcej';
+		container.after(moreBtn);
 
-        //Refresh AOS
-        if (typeof refreshAOSAfter === 'function') {
-           refreshAOSAfter(300);
-        }
-      });
-    });
-
-  // ---------------------------------------------------------
-  // CZĘŚĆ 2: LOGIKA "POKAŻ WIĘCEJ"
-  // ---------------------------------------------------------
-    // 1. Sprawdzamy, czy kontener ma atrybut blokujący zwijanie (np. data-show-all)
-    if (container.hasAttribute('data-show-all')) {
-        return;
-    }
-
-    // 2. Pobieramy limit z HTML lub ustawiamy domyślnie 5
-    const limitAttr = container.getAttribute('data-limit');
-    const itemsToShow = limitAttr ? parseInt(limitAttr) : 5; 
-
-    const allItems = container.querySelectorAll('.accordion-item');
-
-    if (allItems.length > itemsToShow) {
-      
-      for (let i = itemsToShow; i < allItems.length; i++) {
-        allItems[i].style.display = 'none';
-      }
-
-      const showMoreBtn = document.createElement('button');
-      showMoreBtn.classList.add('show-more-btn');
-      showMoreBtn.innerText = 'Pokaż więcej';
-      
-      container.after(showMoreBtn);
-
-      showMoreBtn.addEventListener('click', () => {
-        const isExpanded = showMoreBtn.classList.contains('expanded');
-
-        if (!isExpanded) {
-          for (let i = itemsToShow; i < allItems.length; i++) {
-            allItems[i].style.display = '';
-            allItems[i].style.animation = 'fadeIn 0.5s ease';
-          }
-          showMoreBtn.innerText = 'Schowaj';
-          showMoreBtn.classList.add('expanded');
-        } else {
-          for (let i = itemsToShow; i < allItems.length; i++) {
-            allItems[i].style.display = 'none';
-          }
-          showMoreBtn.innerText = 'Pokaż więcej';
-          showMoreBtn.classList.remove('expanded');
-          
-          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        if (typeof refreshAOSAfter === 'function') {
-            refreshAOSAfter(100); 
-          }
-      });
-    }
-  });
+		moreBtn.addEventListener('click', () => {
+			const expanded = moreBtn.classList.toggle('expanded');
+			for (let i = limit; i < items.length; i++) {
+				items[i].style.display = expanded ? '' : 'none';
+				if (expanded) items[i].style.animation = 'fadeIn 0.5s ease';
+			}
+			moreBtn.textContent = expanded ? 'Schowaj' : 'Pokaż więcej';
+			if (!expanded) container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+		});
+	});
 });

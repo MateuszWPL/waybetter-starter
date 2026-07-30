@@ -63,7 +63,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Dodawanie event listenerów zamykania (tylko raz na popup)
     popupModalCloseButtons.forEach(button => button.addEventListener('click', closePopup));
     popupModal.addEventListener('click', handleOutsideClick);
-    
+
+    // Zamknięcie klawiszem Escape (gdy popup otwarty)
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !popupModal.classList.contains('hidden')) closePopup();
+    });
+
     // Oznaczamy popup jako zainicjowany, żeby kolejne przyciski wiedziały, że zamykanie już działa
     popupModal.dataset.init = 'true';
   };

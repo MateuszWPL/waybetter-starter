@@ -1,62 +1,54 @@
-// Splide sliders — plain JS (globalny Splide + AutoScroll z vendored, bez importów)
+/**
+ * SPIS TREŚCI — sliders.js (slidery Swiper, plain JS, globalny Swiper z vendored)
+ * 1. .basicSlider — slider z paginacją i strzałkami (1 / od 1024px: 2)
+ * 2. .autoSlider  — ciągły auto-scroll (marquee), pauza na hover
+ * ------------------------------------------------------------
+ * Markup Swiper: kontener `.[nazwa]Slider.swiper` > `.swiper-wrapper` > `.swiper-slide`.
+ * Nawigacja/paginacja: `.swiper-button-next/prev`, `.swiper-pagination` wewnątrz kontenera.
+ * Konfiguracja WYŁĄCZNIE tutaj (per klasa kontenera) — nie w HTML.
+ */
 document.addEventListener('DOMContentLoaded', function () {
-	if (typeof Splide === 'undefined') return;
-	// Rozszerzenie AutoScroll rejestruje się pod window.splide.Extensions
-	var AutoScroll = (window.splide && window.splide.Extensions) ? window.splide.Extensions.AutoScroll : null;
+	if (typeof Swiper === 'undefined') return;
 
-	// Slidery podstawowe
-	function initBasicSlider() {
-		var basicSliders = document.querySelectorAll('.basicSlider');
-		basicSliders.forEach(function (slider) {
-			if (slider.querySelectorAll('.splide__slide').length === 0) return;
-			new Splide(slider, {
-				type: 'loop',
-				gap: '1.125rem',
-				perPage: 2,
-				perMove: 2,
-				autoplay: false,
-				interval: 5000,
-				pagination: true,
-				arrows: true,
-				breakpoints: {
-					1024: { arrows: false, perPage: 1, perMove: 1 },
-				},
-			}).mount();
+	// 1. Slidery podstawowe
+	document.querySelectorAll('.basicSlider').forEach(function (el) {
+		if (el.querySelectorAll('.swiper-slide').length === 0) return;
+		new Swiper(el, {
+			slidesPerView: 1,
+			spaceBetween: 18,
+			loop: true,
+			pagination: {
+				el: el.querySelector('.swiper-pagination'),
+				clickable: true,
+			},
+			navigation: {
+				nextEl: el.querySelector('.swiper-button-next'),
+				prevEl: el.querySelector('.swiper-button-prev'),
+			},
+			breakpoints: {
+				1024: { slidesPerView: 2, spaceBetween: 18 },
+			},
 		});
-	}
+	});
 
-	// Slidery auto-scroll
-	function initAutoSlider() {
-		var autoSliders = document.querySelectorAll('.autoSlider');
-		if (autoSliders.length === 0 || !AutoScroll) return;
-		autoSliders.forEach(function (slider) {
-			if (slider.querySelectorAll('.splide__slide').length === 0) return;
-			new Splide(slider, {
-				type: 'loop',
-				drag: 'free',
-				gap: '5rem',
-				pagination: false,
-				arrows: false,
-				perPage: 'auto',
-				autoWidth: true,
-				clones: 20,
-				trimSpace: false,
-				focus: 0,
-				start: 0,
-				breakpoints: {
-					1024: { gap: '3rem', autoScroll: { speed: 1 } },
-				},
-				autoScroll: {
-					pauseOnHover: false,
-					speed: 1.5,
-					waitForTransition: false,
-					rewind: false,
-					disableOnInteraction: false,
-				},
-			}).mount({ AutoScroll: AutoScroll });
+	// 2. Slidery ciągłe (auto-scroll / marquee) — odpowiednik dawnego AutoScroll.
+	//    Ruch liniowy zapewnia CSS: .autoSlider .swiper-wrapper { transition-timing-function: linear }.
+	document.querySelectorAll('.autoSlider').forEach(function (el) {
+		if (el.querySelectorAll('.swiper-slide').length === 0) return;
+		new Swiper(el, {
+			slidesPerView: 'auto',
+			spaceBetween: 80,
+			loop: true,
+			freeMode: true,
+			speed: 4000,
+			autoplay: {
+				delay: 0,
+				disableOnInteraction: false,
+				pauseOnMouseEnter: true,
+			},
+			breakpoints: {
+				1024: { spaceBetween: 48 },
+			},
 		});
-	}
-
-	initBasicSlider();
-	initAutoSlider();
+	});
 });

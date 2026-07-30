@@ -1,42 +1,27 @@
+/**
+ * SPIS TREŚCI — mobilemenu.js (menu mobilne: hamburger + overlay)
+ * Elementy: .hamburger, .nav-menu, opcjonalnie .nav-overlay, .close-menu, .nav-link.
+ */
 document.addEventListener('DOMContentLoaded', () => {
-  if(document.querySelectorAll('.hamburger').length > 0 && document.querySelectorAll('.nav-menu').length > 0) {
-    const hamburger = document.querySelector(".hamburger");
-    const navMenu = document.querySelector(".nav-menu");
-    const body = document.body;
-    const closeButton = document.querySelector('.close-menu');
-    const overlay = document.querySelector('.nav-overlay');
+	const hamburger = document.querySelector('.hamburger');
+	const navMenu = document.querySelector('.nav-menu');
+	if (!hamburger || !navMenu) return;
 
-    // Funkcja zamykająca menu
-    const closeMenu = () => {
-      hamburger.classList.remove("active");
-      navMenu.classList.remove("active");
-      if (overlay) overlay.classList.remove("active");
-      body.style.overflow = "";
-    };
+	const body = document.body;
+	const closeButton = document.querySelector('.close-menu');
+	const overlay = document.querySelector('.nav-overlay');
 
-    // Obsługa kliknięcia hamburger
-    hamburger.addEventListener("click", () => {
-      hamburger.classList.toggle("active");
-      navMenu.classList.toggle("active");
-      if (overlay) overlay.classList.toggle("active");
-      
-      body.style.overflow = navMenu.classList.contains("active") ? "hidden" : "";
-    });
+	const setState = (open) => {
+		hamburger.classList.toggle('active', open);
+		navMenu.classList.toggle('active', open);
+		if (overlay) overlay.classList.toggle('active', open);
+		hamburger.setAttribute('aria-expanded', open ? 'true' : 'false');
+		body.style.overflow = open ? 'hidden' : '';
+	};
 
-    // Opcjonalna obsługa przycisku zamykania
-    if (closeButton) {
-      closeButton.addEventListener("click", closeMenu);
-    }
-
-    // Opcjonalna obsługa overlay
-    if (overlay) {
-      overlay.addEventListener("click", closeMenu);
-    }
-
-    // Obsługa kliknięć w linki nawigacyjne
-    const navLinks = document.querySelectorAll(".nav-link");
-    if (navLinks.length > 0) {
-      navLinks.forEach(link => link.addEventListener("click", closeMenu));
-    }
-  }
+	hamburger.setAttribute('aria-expanded', 'false');
+	hamburger.addEventListener('click', () => setState(!navMenu.classList.contains('active')));
+	if (closeButton) closeButton.addEventListener('click', () => setState(false));
+	if (overlay) overlay.addEventListener('click', () => setState(false));
+	document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => setState(false)));
 });

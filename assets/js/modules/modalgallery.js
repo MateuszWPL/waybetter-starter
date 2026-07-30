@@ -1,185 +1,116 @@
-class Gallery {
-    constructor() {
-        // Required items
-        if (!document.getElementById('modalLightbox') || !document.getElementById('ModalLightboxImage')) {
-            console.warn('Required gallery elements not found');
-            return;
-        }
+/**
+ * SPIS TREŚCI — modalgallery.js (lightbox galerii, MULTI-INSTANCE)
+ * Każdy kontener [data-gallery] to osobna, izolowana galeria — może być wiele na stronie.
+ * Markup (HTML w dalszym etapie):
+ *   <div data-gallery data-gallery-modal="galeria-1">
+ *     <button class="gallery-item"><img src="mini.webp" alt=""></button> ...
+ *   </div>
+ *   <div id="galeria-1" data-gallery-lightbox class="hidden"
+ *        role="dialog" aria-modal="true" aria-hidden="true">
+ *     <img data-gallery-image alt="">
+ *     <button data-gallery-close>×</button>
+ *     <button data-gallery-prev>‹</button>
+ *     <button data-gallery-next>›</button>
+ *     <div data-gallery-pagination></div>
+ *   </div>
+ * Kropki paginacji: klasy .gallery-dot / .gallery-dot-active (components.css) — nie hardcode w JS.
+ */
+(function () {
+	function initGallery(container) {
+		if (container.dataset.init === 'true') return;
 
-        this.currentIndex = 0;
-        this.images = Array.from(document.querySelectorAll('.gallery-item img'));
-        this.modal = document.getElementById('modalLightbox');
-        this.modalImage = document.getElementById('ModalLightboxImage');
-        this.pagination = document.getElementById('lightboxPagination');
-        
-        this.touchStartX = 0;
-        this.touchEndX = 0;
-        this.isDragging = false;
-        this.startX = 0;
-        
-        this.setupEventListeners();
-        if (this.pagination) {
-            this.setupPagination();
-        }
-    }
- 
-    setupPagination() {
-        // Creating pagination dots
-        this.images.forEach((_, index) => {
-            const dot = document.createElement('div');
-            dot.className = 'w-2 h-2 rounded-full bg-white opacity-20';
-            if (index === 0) {
-                dot.classList.remove('opacity-20');
-            }
-            this.pagination.appendChild(dot);
-        });
-     }
+		var modalId = container.getAttribute('data-gallery-modal');
+		var modal = modalId ? document.getElementById(modalId) : null;
+		var image = modal ? modal.querySelector('[data-gallery-image]') : null;
+		var items = Array.prototype.slice.call(container.querySelectorAll('.gallery-item'));
+		if (!modal || !image || items.length === 0) return;
 
-    updatePagination() {
-        if (!this.pagination) return;
+		container.dataset.init = 'true';
 
-        // Active dot update
-        const dots = this.pagination.children;
-        Array.from(dots).forEach((dot, index) => {
-            dot.className = 'w-2 h-2 rounded-full ' + 
-                (index === this.currentIndex ? 'bg-white' : 'bg-white opacity-20');
-        });
-    }
+		var sources = items.map(function (item) {
+			var img = item.querySelector('img');
+			return (img && img.getAttribute('src')) || item.getAttribute('data-src');
+		});
 
-    setupEventListeners() {
-        // Clicking on a thumbnail opens a lightbox
-        document.querySelectorAll('.gallery-item').forEach((item, index) => {
-            item.addEventListener('click', () => this.openModal(index));
-        });
+		var closeBtn = modal.querySelector('[data-gallery-close]');
+		var prevBtn = modal.querySelector('[data-gallery-prev]');
+		var nextBtn = modal.querySelector('[data-gallery-next]');
+		var pagination = modal.querySelector('[data-gallery-pagination]');
 
-        const closeBtn = document.getElementById('closeModalLightbox');
-        const prevBtn = document.getElementById('prevButton');
-        const nextBtn = document.getElementById('nextButton');
- 
-        // Closing lightbox after clicking X
-        if (closeBtn) {
-            closeBtn.addEventListener('click', () => this.closeModal());
-        }
-                
-        // Close lightbox after clicking background
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal) this.closeModal();
-        });
- 
-        // Navigation buttons
-        if (prevBtn) {
-            prevBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.showPrev();
-            });
-        }
-        
-        if (nextBtn) {
-            nextBtn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                this.showNext();
-            });
-        }
- 
-        // Keyboard support (ESC, arrows)
-        document.addEventListener('keydown', (e) => {
-            if (!this.modal.classList.contains('hidden')) {
-                if (e.key === 'Escape') this.closeModal();
-                if (e.key === 'ArrowLeft') this.showPrev();
-                if (e.key === 'ArrowRight') this.showNext();
-            }
-        });
+		var current = 0;
+		var startX = 0;
+		var dragging = false;
 
-        // Touch events
-        this.modalImage.addEventListener('touchstart', (e) => {
-            this.startX = e.touches[0].clientX;
-            this.isDragging = true;
-        });
+		// Kropki paginacji
+		var dots = [];
+		if (pagination) {
+			sources.forEach(function () {
+				var dot = document.createElement('span');
+				dot.className = 'gallery-dot';
+				pagination.appendChild(dot);
+				dots.push(dot);
+			});
+		}
 
-        this.modalImage.addEventListener('touchmove', (e) => {
-            if (!this.isDragging) return;
-            e.preventDefault();
-        });
+		function paint() {
+			image.setAttribute('src', sources[current] || '');
+			dots.forEach(function (dot, i) {
+				dot.classList.toggle('gallery-dot-active', i === current);
+			});
+		}
 
-        this.modalImage.addEventListener('touchend', (e) => {
-            this.isDragging = false;
-            this.touchEndX = e.changedTouches[0].clientX;
-            this.handleSwipe();
-        });
+		function open(index) {
+			current = index;
+			paint();
+			modal.classList.remove('hidden');
+			modal.classList.add('flex');
+			modal.setAttribute('aria-hidden', 'false');
+			document.body.style.overflow = 'hidden';
+			document.addEventListener('keydown', onKey);
+		}
 
-        // Mouse events
-        this.modalImage.addEventListener('mousedown', (e) => {
-            this.startX = e.clientX;
-            this.isDragging = true;
-        });
+		function close() {
+			modal.classList.add('hidden');
+			modal.classList.remove('flex');
+			modal.setAttribute('aria-hidden', 'true');
+			document.body.style.overflow = '';
+			document.removeEventListener('keydown', onKey);
+		}
 
-        document.addEventListener('mousemove', (e) => {
-            if (!this.isDragging) return;
-            e.preventDefault();
-        });
+		function show(next) {
+			current = (next + sources.length) % sources.length;
+			paint();
+		}
 
-        document.addEventListener('mouseup', (e) => {
-            if (!this.isDragging) return;
-            this.isDragging = false;
-            this.touchEndX = e.clientX;
-            this.handleSwipe();
-        });
+		function onKey(e) {
+			if (e.key === 'Escape') close();
+			else if (e.key === 'ArrowLeft') show(current - 1);
+			else if (e.key === 'ArrowRight') show(current + 1);
+		}
 
-        document.addEventListener('mouseleave', () => {
-            this.isDragging = false;
-        });
-    }
- 
-    // Open lightbox
-    openModal(index) {
-        this.currentIndex = index;
-        this.modalImage.src = this.images[index].src;
-        this.modal.classList.remove('hidden');
-        this.modal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-        this.updatePagination();
-    }
- 
-    // Closing lightbox
-    closeModal() {
-        this.modal.classList.add('hidden');
-        this.modal.classList.remove('flex');
-        document.body.style.overflow = '';
-    }
- 
-    // Show next photo
-    showNext() {
-        this.currentIndex = (this.currentIndex + 1) % this.images.length;
-        this.modalImage.src = this.images[this.currentIndex].src;
-        this.updatePagination();
-    }
- 
-    // Showing prev photo
-    showPrev() {
-        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
-        this.modalImage.src = this.images[this.currentIndex].src;
-        this.updatePagination();
-    }
+		items.forEach(function (item, i) {
+			item.addEventListener('click', function () { open(i); });
+		});
+		if (closeBtn) closeBtn.addEventListener('click', close);
+		if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current - 1); });
+		if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); show(current + 1); });
+		modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
 
-    // Check Dragging
-    handleSwipe() {
-        const swipeThreshold = 40;
-        const swipeLength = this.touchEndX - this.startX;
-     
-        if (Math.abs(swipeLength) > swipeThreshold) {
-            if (swipeLength > 0) {
-                this.showPrev();
-            } else {
-                this.showNext();
-            }
-        }
-    }
- }
- 
- // Initialize the gallery
- document.addEventListener('DOMContentLoaded', () => {
-    const galleryContainer = document.getElementById('galleryContainer');
-    if (galleryContainer && document.querySelector('.gallery-item')) {
-        new Gallery();
-    }
- });
+		// Swipe (dotyk + mysz) na obrazku
+		function down(x) { dragging = true; startX = x; }
+		function up(x) {
+			if (!dragging) return;
+			dragging = false;
+			var delta = x - startX;
+			if (Math.abs(delta) > 40) show(current + (delta > 0 ? -1 : 1));
+		}
+		image.addEventListener('touchstart', function (e) { down(e.touches[0].clientX); }, { passive: true });
+		image.addEventListener('touchend', function (e) { up(e.changedTouches[0].clientX); });
+		image.addEventListener('mousedown', function (e) { down(e.clientX); });
+		image.addEventListener('mouseup', function (e) { up(e.clientX); });
+	}
+
+	document.addEventListener('DOMContentLoaded', function () {
+		document.querySelectorAll('[data-gallery]').forEach(initGallery);
+	});
+})();

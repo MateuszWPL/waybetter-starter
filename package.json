@@ -1,13 +1,18 @@
 {
   "name": "waybetter-starter",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "description": "Starter motywu WordPress (Pinegrow 9.3, wbudowany kompilator Tailwind 4, zero builda). Waybetter.",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "optimize": "node scripts/webp.js"
+    "optimize": "node scripts/webp.js",
+    "vendors": "node scripts/vendors.js",
+    "postinstall": "node scripts/vendors.js"
+  },
+  "dependencies": {
+    "swiper": "^11"
   },
   "devDependencies": {
     "sharp": "^0.35.0"

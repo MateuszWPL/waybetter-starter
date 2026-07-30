@@ -1,0 +1,56 @@
+/* ============================================================
+   SPIS TREŚCI — animations.css (animacje wejścia on-scroll, bez biblioteki)
+   1. KEYFRAMES (wspólne dla obu ścieżek)
+   2. ŚCIEŻKA NOWOCZESNA — CSS scroll-driven (@supports animation-timeline)
+   3. FALLBACK — klasa .anim-in dokładana przez reveal.js (IntersectionObserver)
+   ------------------------------------------------------------
+   Użycie: atrybut  data-anim="fade-up|fade|fade-left|fade-right|zoom"
+   na elemencie; opcjonalnie  data-anim-delay="200"  (ms — działa w fallbacku).
+   Zasady bezpieczeństwa:
+   - Respektuje prefers-reduced-motion (brak ruchu → element od razu widoczny).
+   - Brak JS / brak wsparcia = element w PEŁNI widoczny (nie chowamy na sztywno).
+   - Nowoczesne przeglądarki: animuje samo CSS (bez JS). Starsze: reveal.js.
+   ============================================================ */
+
+/* === 1. KEYFRAMES === */
+@keyframes wb-fade       { from { opacity: 0; }                                  to { opacity: 1; } }
+@keyframes wb-fade-up    { from { opacity: 0; transform: translateY(2rem); }     to { opacity: 1; transform: none; } }
+@keyframes wb-fade-left  { from { opacity: 0; transform: translateX(2rem); }     to { opacity: 1; transform: none; } }
+@keyframes wb-fade-right { from { opacity: 0; transform: translateX(-2rem); }    to { opacity: 1; transform: none; } }
+@keyframes wb-zoom       { from { opacity: 0; transform: scale(0.92); }          to { opacity: 1; transform: none; } }
+
+/* === 2. ŚCIEŻKA NOWOCZESNA: scroll-driven (bez JS) === */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    [data-anim] {
+      animation: wb-fade-up both;
+      animation-timeline: view();
+      animation-range: entry 15% entry 85%;
+    }
+    [data-anim="fade"]       { animation-name: wb-fade; }
+    [data-anim="fade-up"]    { animation-name: wb-fade-up; }
+    [data-anim="fade-left"]  { animation-name: wb-fade-left; }
+    [data-anim="fade-right"] { animation-name: wb-fade-right; }
+    [data-anim="zoom"]       { animation-name: wb-zoom; }
+  }
+}
+
+/* === 3. FALLBACK: starsze przeglądarki (html.no-sda ustawia reveal.js) === */
+html.no-sda [data-anim] {
+  opacity: 0;
+  transition: opacity .6s ease, transform .6s ease;
+  will-change: opacity, transform;
+}
+html.no-sda [data-anim="fade-up"]    { transform: translateY(2rem); }
+html.no-sda [data-anim="fade-left"]  { transform: translateX(2rem); }
+html.no-sda [data-anim="fade-right"] { transform: translateX(-2rem); }
+html.no-sda [data-anim="zoom"]       { transform: scale(0.92); }
+
+html.no-sda [data-anim].anim-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.no-sda [data-anim] { opacity: 1; transform: none; transition: none; }
+}

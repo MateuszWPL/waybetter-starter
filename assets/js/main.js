@@ -1,18 +1,9 @@
 /**
- * ENTRY JS — inicjalizacja AOS + helpery globalne (plain, bez importów).
- * Biblioteki (Splide, AOS) i moduły ładuje inc/enqueue.php jako osobne pliki
- * — zero builda. Kolejność ładowania pilnuje WP przez zależności (deps).
+ * ENTRY JS — miejsce na globalną inicjalizację projektu (plain, bez importów).
+ * Moduły (assets/js/modules/*.js) i biblioteki (assets/vendor/*) ładuje
+ * inc/enqueue.php jako osobne pliki — zero builda; kolejność pilnuje WP (deps).
+ * Animacje on-scroll robi CSS (animations.css) + reveal.js — nie inicjalizujemy ich tutaj.
  */
 document.addEventListener('DOMContentLoaded', function () {
-	if (typeof AOS !== 'undefined') {
-		AOS.init({ duration: 1000 });
-	}
+	// Globalne inicjalizacje projektu dopisz tutaj (ładowane po modułach).
 });
-
-// Odśwież AOS po dynamicznym doładowaniu treści (np. lazy obrazki)
-window.refreshAOSAfter = function (delay) {
-	delay = delay || 300;
-	setTimeout(function () {
-		if (typeof AOS !== 'undefined') AOS.refresh();
-	}, delay);
-};
