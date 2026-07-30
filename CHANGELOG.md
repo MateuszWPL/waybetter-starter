@@ -2,6 +2,17 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.6.0 — 2026-07-30 (pre-konfigurowany projekt PG: panel Design + ustawienia WP)
+
+Świadome odwrócenie decyzji z 0.4.0 (starter = sam kod). Starter jest teraz **gotowym projektem Pinegrow** — po pobraniu i `/nowy-projekt` otwierasz przez **Open project** (koniec „Create Classic theme"), a panel Design i ustawienia WordPress są już skonfigurowane. Formaty plików PG przechwycone empirycznie z działającego projektu (`000.NewWorkflowTest`), nie zgadywane.
+
+- **Klasa kontenera `max-w-site` = 1324px** jako natywna klasa Tailwinda: `pinegrow.json` → `design-settings.custom_config` = `@theme { --container-site: 1324px; }` (kompiluje się do `tailwind.css` i `tailwind_for_wp_editor.css`). Usunięty hack `.max-w-site` z `custom.css`. Koniec szukania „gdzie ustawić szerokość".
+- **Panel Design pre-seedowany** (`projectdb.pgml`): przykładowe kolory semantyczne primary/secondary/accent (+ neutralne) i font **Inter** dla H1–H6 — do podmiany wartości na projekcie.
+- **Ustawienia WordPress pre-seedowane** (`pinegrow.json` → `wp-theme-info`): kategoria bloków `custom_block` / „Customowe bloki", CSS edytora `tailwind_theme/tailwind_for_wp_editor.css`, `blocks_type` native-hybrid, **WooCommerce off**. Nazwa/slug/folder jako placeholdery.
+- **Nowe pliki w repo:** `pinegrow.json`, `projectdb.pgml`, `theme.json` (PG-generowany z palety), `tailwind_theme/`, `index.html` (master page), `blocks.html` (czysty katalog bloków).
+- **`/nowy-projekt`**: flow „Open project" zamiast „Create Classic theme"; dochodzi przepisywanie `pinegrow.json` (name/slug/dir + self-ref `{{SCIEZKA_PROJEKTU}}` = `file:///` ścieżka projektu).
+- **CLAUDE.md**: zaktualizowana mapa plików (pliki PG teraz w repo, kto co edytuje), opis klasy `max-w-site`, flow Open project. Wersje ujednolicone → 0.6.0.
+
 ## 0.5.0 — 2026-07-30 (czyszczenie: samowystarczalny kontekst, neutralizacja)
 
 Runda porządkowa — starter gotowy jako czysta baza do dalszego rozwoju. Bez zmian architektury (functions.php = teren PG, kod w custom.php, zero builda).

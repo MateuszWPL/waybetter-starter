@@ -1,16 +1,16 @@
 # PROJEKT: {{NAZWA_PROJEKTU}}
 
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.5.0
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.6.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 
 ## Checklist życia projektu
 
 ### Setup
-- [ ] Rozpakowany ZIP startera + `/nowy-projekt` (rebranding, `npm install`)
-- [ ] Pinegrow: Open project → **Create Classic theme** → Tailwind **Built-in JIT 4.2.2**
+- [ ] Rozpakowany ZIP startera + `/nowy-projekt` (rebranding, przepisany `pinegrow.json`, `npm install`)
+- [ ] Pinegrow: **Open project** (projekt gotowy — panel Design i ustawienia WP już skonfigurowane)
 - [ ] Eksport ustawiony na stronę Local, motyw aktywny w WP
-- [ ] Kolory marki wpisane w **panelu Design PG**
+- [ ] Kolory marki podmienione w **panelu Design PG** (primary/secondary/accent)
 
 ### Budowa
 - [ ] Header + stopka (master page)

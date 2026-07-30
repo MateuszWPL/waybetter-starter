@@ -1,6 +1,5 @@
 /* ============================================================
    SPIS TREŚCI — custom.css (style projektowe, ostateczność po Tailwindzie)
-   0. WŁASNE KLASY / UTILITIES (max-w-site)
    1. PAGINACJA
    2. SLIDERY SPLIDE (pagination dots)
    3. FORMULARZ KONTAKTOWY (telefon, checkbox/input focus)
@@ -11,14 +10,10 @@
    na elemencie). Domyślnie zostawiamy neutralny czarny / currentColor.
    Tailwind-first: jeśli styl da się zapisać klasą TW — rób to na elemencie,
    nie tutaj. custom.css jest dla Splide, pseudo-elementów i styli wtyczek.
-   Aby Pinegrow podpowiadał .max-w-site w UI: podlinkuj ten plik jako
-   design-stylesheet w projekcie PG. Więcej: CLAUDE.md.
+   Kontener strony: klasa „max-w-site" (1324px) to NATYWNA klasa Tailwinda —
+   zdefiniowana w custom config kompilatora PG (--container-site), nie tutaj.
+   Więcej: CLAUDE.md.
    ============================================================ */
-
-/* === 0. WŁASNE KLASY / UTILITIES ===
-   Tailwind 4 nie ma już max-w-screen-*. Własne rozmiary trzymamy tu. */
-.max-w-site { max-width: 1324px; }   /* dawne max-w-screen-xl (kontener strony) */
-
 
 /* === 1. PAGINACJA === */
 .paginationBttn.disabled{

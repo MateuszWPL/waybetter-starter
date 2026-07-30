@@ -1,6 +1,8 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.5.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.6.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
+
+Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.pgml`, `tailwind_theme/`, `index.html`, `blocks.html`) — otwierasz go przez **Open project** (nie „Create Classic theme"). Panel Design ma już przykładowe kolory (primary/secondary/accent), font Inter i klasę `max-w-site` (1324px); ustawienia WordPress (kategoria bloków „Customowe bloki", CSS edytora, WooCommerce off) są ustawione.
 
 ## Ścieżki projektu
 
@@ -10,6 +12,7 @@ Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tail
 
 - **Tailwind** kompiluje **Pinegrow na zapis** (wbudowany kompilator 4.2.2 → `tailwind_theme/tailwind.css`). Nic nie budujemy ręcznie.
 - **Kolory/fonty/breakpointy** ustawia się w **panelu Design Pinegrow** (nie w kodzie). Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json`, a definicje w `projectdb.pgml` (`<dmcolor>`, `<dmdesignskill skill="fonts">`). Pliki generuje PG — NIE edytuj ich ręcznie.
+- **Kontener strony:** klasa `max-w-site` = **1324px** to natywna klasa Tailwinda, zdefiniowana w custom config kompilatora PG (`pinegrow.json` → `design-settings.custom_config`: `@theme { --container-site: 1324px; }`). Nie ma jej w custom.css. Zmiana szerokości = to pole (przez „Compiler & custom config…" w PG).
 - **Custom CSS** → `assets/css/custom.css` (i `components.css`). Edytujesz → zapisujesz → odświeżasz przeglądarkę. Bez builda.
 - **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Biblioteki (Splide, AOS) są „vendored" w `assets/vendor/` i działają globalnie (patrz `assets/vendor/README.md`).
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
@@ -29,9 +32,13 @@ Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tail
 | `assets/js/modules/*.js` | Moduły plain JS. **Domyślnie aktywne:** `mobilemenu`, `custom` (scroll headera), `sliders`. **Opcjonalne (odkomentuj w enqueue.php):** `accordion`, `tabs`, `popup`, `modalgallery`, `dragscroll`, `megamenu` | Claude + człowiek |
 | `assets/vendor/*` | Gotowe biblioteki (Splide, Splide AutoScroll, AOS) — nie budowane, enqueue wprost. Wersje: `assets/vendor/README.md` | wymiana ręczna |
 | `scripts/webp.js` | Konwerter `npm run optimize` (sharp): `inc/img/` jpg/png → webp, idempotentnie | rzadko |
-| `theme.json` | Tokeny dla edytora Gutenberga (paleta, font sizes) — spójne z panelem Design | Claude + człowiek (przy setupie) |
 | `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
-| `tailwind_theme/`, `_pginfo/`, `projectdb.pgml`, `pinegrow.json` | Generowane i utrzymywane przez PG | **Pinegrow (nie tykać)** |
+| `index.html` | Master page projektu PG (`wp-template-define-master-page`) — z niej PG generuje `index.php` | Pinegrow (przez PG) |
+| `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
+| `pinegrow.json` | Ustawienia projektu PG: WordPress Theme Settings (kategoria bloków, CSS edytora, WooCommerce off, folder/nazwa) + `design-settings.custom_config` (max-w-site) | **PG / `/nowy-projekt` (nie tykać ręcznie)** |
+| `projectdb.pgml` | Panel Design: kolory (`<dmcolor>`) i fonty (`<dmdesignskill skill="fonts">`) | **Pinegrow (panel Design, nie tykać ręcznie)** |
+| `theme.json` | Tokeny dla edytora Gutenberga (paleta, font sizes) — **PG generuje z palety** | **Pinegrow (nie tykać)** |
+| `tailwind_theme/`, `_pginfo/` | Output kompilatora TW (`tailwind.css`, `tailwind_for_wp_editor.css`) + stan PG | **Pinegrow (nie tykać)** |
 
 ## ZAKAZY (twarde)
 

@@ -1,36 +1,367 @@
 {
-  "$schema": "https://schemas.wp.org/trunk/theme.json",
-  "version": 3,
-  "settings": {
-    "appearanceTools": true,
-    "color": {
-      "custom": true,
-      "palette": [
-        { "slug": "primary", "name": "Primary", "color": "#10b981" },
-        { "slug": "secondary", "name": "Secondary", "color": "#6366f1" },
-        { "slug": "black", "name": "Czarny", "color": "#000000" },
-        { "slug": "white", "name": "Biały", "color": "#ffffff" },
-        { "slug": "gray-100", "name": "Szary jasny", "color": "#f3f4f6" },
-        { "slug": "gray-700", "name": "Szary ciemny", "color": "#374151" }
-      ]
-    },
-    "typography": {
-      "customFontSize": true,
-      "fontSizes": [
-        { "slug": "small", "name": "Mały", "size": "0.875rem" },
-        { "slug": "medium", "name": "Średni", "size": "1.125rem" },
-        { "slug": "large", "name": "Duży", "size": "1.5rem" },
-        { "slug": "x-large", "name": "Bardzo duży", "size": "2.25rem" }
-      ]
-    },
-    "spacing": {
-      "padding": true,
-      "margin": true,
-      "units": [ "px", "rem", "%" ]
-    },
-    "layout": {
-      "contentSize": "1324px",
-      "wideSize": "1324px"
+    "$schema": "https://schemas.wp.org/trunk/theme.json",
+    "version": 3,
+    "settings": {
+        "appearanceTools": true,
+        "color": {
+            "custom": true,
+            "palette": [
+                {
+                    "color": "white",
+                    "name": "current",
+                    "slug": "current"
+                },
+                {
+                    "color": "rgba(0,0,0,0)",
+                    "name": "transparent",
+                    "slug": "transparent"
+                },
+                {
+                    "color": "black",
+                    "name": "black",
+                    "slug": "black"
+                },
+                {
+                    "color": "white",
+                    "name": "white",
+                    "slug": "white"
+                },
+                {
+                    "color": "rgba(0,0,0,0.5)",
+                    "name": "inherit",
+                    "slug": "inherit"
+                },
+                {
+                    "color": "oklch(0.985 0.002 247.839)",
+                    "name": "gray-50",
+                    "slug": "gray-50"
+                },
+                {
+                    "color": "oklch(0.967 0.003 264.542)",
+                    "name": "gray-100",
+                    "slug": "gray-100"
+                },
+                {
+                    "color": "oklch(0.928 0.006 264.531)",
+                    "name": "gray-200",
+                    "slug": "gray-200"
+                },
+                {
+                    "color": "oklch(0.872 0.01 258.338)",
+                    "name": "gray-300",
+                    "slug": "gray-300"
+                },
+                {
+                    "color": "oklch(0.707 0.022 261.325)",
+                    "name": "gray-400",
+                    "slug": "gray-400"
+                },
+                {
+                    "color": "oklch(0.551 0.027 264.364)",
+                    "name": "gray-500",
+                    "slug": "gray-500"
+                },
+                {
+                    "color": "oklch(0.446 0.03 256.802)",
+                    "name": "gray-600",
+                    "slug": "gray-600"
+                },
+                {
+                    "color": "oklch(0.373 0.034 259.733)",
+                    "name": "gray-700",
+                    "slug": "gray-700"
+                },
+                {
+                    "color": "oklch(0.278 0.033 256.848)",
+                    "name": "gray-800",
+                    "slug": "gray-800"
+                },
+                {
+                    "color": "oklch(0.21 0.034 264.665)",
+                    "name": "gray-900",
+                    "slug": "gray-900"
+                },
+                {
+                    "color": "oklch(0.13 0.028 261.692)",
+                    "name": "gray-950",
+                    "slug": "gray-950"
+                },
+                {
+                    "color": "oklch(0.985 0 0)",
+                    "name": "neutral-50",
+                    "slug": "neutral-50"
+                },
+                {
+                    "color": "oklch(0.97 0 0)",
+                    "name": "neutral-100",
+                    "slug": "neutral-100"
+                },
+                {
+                    "color": "oklch(0.922 0 0)",
+                    "name": "neutral-200",
+                    "slug": "neutral-200"
+                },
+                {
+                    "color": "oklch(0.87 0 0)",
+                    "name": "neutral-300",
+                    "slug": "neutral-300"
+                },
+                {
+                    "color": "oklch(0.708 0 0)",
+                    "name": "neutral-400",
+                    "slug": "neutral-400"
+                },
+                {
+                    "color": "oklch(0.556 0 0)",
+                    "name": "neutral-500",
+                    "slug": "neutral-500"
+                },
+                {
+                    "color": "oklch(0.439 0 0)",
+                    "name": "neutral-600",
+                    "slug": "neutral-600"
+                },
+                {
+                    "color": "oklch(0.371 0 0)",
+                    "name": "neutral-700",
+                    "slug": "neutral-700"
+                },
+                {
+                    "color": "oklch(0.269 0 0)",
+                    "name": "neutral-800",
+                    "slug": "neutral-800"
+                },
+                {
+                    "color": "oklch(0.205 0 0)",
+                    "name": "neutral-900",
+                    "slug": "neutral-900"
+                },
+                {
+                    "color": "oklch(0.145 0 0)",
+                    "name": "neutral-950",
+                    "slug": "neutral-950"
+                },
+                {
+                    "color": "#f4ebeb",
+                    "name": "primary-50",
+                    "slug": "primary-50"
+                },
+                {
+                    "color": "#ecc4be",
+                    "name": "primary-100",
+                    "slug": "primary-100"
+                },
+                {
+                    "color": "#e09c92",
+                    "name": "primary-200",
+                    "slug": "primary-200"
+                },
+                {
+                    "color": "#d07568",
+                    "name": "primary-300",
+                    "slug": "primary-300"
+                },
+                {
+                    "color": "#be4d40",
+                    "name": "primary-400",
+                    "slug": "primary-400"
+                },
+                {
+                    "color": "#A8191B",
+                    "name": "primary-500",
+                    "slug": "primary-500"
+                },
+                {
+                    "color": "#9a1719",
+                    "name": "primary-600",
+                    "slug": "primary-600"
+                },
+                {
+                    "color": "#8c1517",
+                    "name": "primary-700",
+                    "slug": "primary-700"
+                },
+                {
+                    "color": "#7e1315",
+                    "name": "primary-800",
+                    "slug": "primary-800"
+                },
+                {
+                    "color": "#711112",
+                    "name": "primary-900",
+                    "slug": "primary-900"
+                },
+                {
+                    "color": "#630f10",
+                    "name": "primary-950",
+                    "slug": "primary-950"
+                },
+                {
+                    "color": "#fbebeb",
+                    "name": "secondary-50",
+                    "slug": "secondary-50"
+                },
+                {
+                    "color": "#ffc8be",
+                    "name": "secondary-100",
+                    "slug": "secondary-100"
+                },
+                {
+                    "color": "#ffa392",
+                    "name": "secondary-200",
+                    "slug": "secondary-200"
+                },
+                {
+                    "color": "#fa7d67",
+                    "name": "secondary-300",
+                    "slug": "secondary-300"
+                },
+                {
+                    "color": "#f1523e",
+                    "name": "secondary-400",
+                    "slug": "secondary-400"
+                },
+                {
+                    "color": "#E40714",
+                    "name": "secondary-500",
+                    "slug": "secondary-500"
+                },
+                {
+                    "color": "#d10612",
+                    "name": "secondary-600",
+                    "slug": "secondary-600"
+                },
+                {
+                    "color": "#be0611",
+                    "name": "secondary-700",
+                    "slug": "secondary-700"
+                },
+                {
+                    "color": "#ab050f",
+                    "name": "secondary-800",
+                    "slug": "secondary-800"
+                },
+                {
+                    "color": "#99050e",
+                    "name": "secondary-900",
+                    "slug": "secondary-900"
+                },
+                {
+                    "color": "#87040c",
+                    "name": "secondary-950",
+                    "slug": "secondary-950"
+                },
+                {
+                    "color": "#fdf4ed",
+                    "name": "accent-50",
+                    "slug": "accent-50"
+                },
+                {
+                    "color": "#fee6cd",
+                    "name": "accent-100",
+                    "slug": "accent-100"
+                },
+                {
+                    "color": "#fdd7ad",
+                    "name": "accent-200",
+                    "slug": "accent-200"
+                },
+                {
+                    "color": "#fac98e",
+                    "name": "accent-300",
+                    "slug": "accent-300"
+                },
+                {
+                    "color": "#f6bb6f",
+                    "name": "accent-400",
+                    "slug": "accent-400"
+                },
+                {
+                    "color": "#F0AD4E",
+                    "name": "accent-500",
+                    "slug": "accent-500"
+                },
+                {
+                    "color": "#dc9e47",
+                    "name": "accent-600",
+                    "slug": "accent-600"
+                },
+                {
+                    "color": "#c89041",
+                    "name": "accent-700",
+                    "slug": "accent-700"
+                },
+                {
+                    "color": "#b4823b",
+                    "name": "accent-800",
+                    "slug": "accent-800"
+                },
+                {
+                    "color": "#a17434",
+                    "name": "accent-900",
+                    "slug": "accent-900"
+                },
+                {
+                    "color": "#8e662e",
+                    "name": "accent-950",
+                    "slug": "accent-950"
+                },
+                {
+                    "color": "#202020",
+                    "name": "brand_dark",
+                    "slug": "brand_dark"
+                },
+                {
+                    "color": "#FFF",
+                    "name": "background",
+                    "slug": "background"
+                }
+            ]
+        },
+        "typography": {
+            "customFontSize": true,
+            "fontSizes": [
+                {
+                    "slug": "small",
+                    "name": "Mały",
+                    "size": "0.875rem"
+                },
+                {
+                    "slug": "medium",
+                    "name": "Średni",
+                    "size": "1.125rem"
+                },
+                {
+                    "slug": "large",
+                    "name": "Duży",
+                    "size": "1.5rem"
+                },
+                {
+                    "slug": "x-large",
+                    "name": "Bardzo duży",
+                    "size": "2.25rem"
+                }
+            ],
+            "fontFamilies": [
+                {
+                    "fontFamily": "'Inter', system-ui, -apple-system, sans-serif",
+                    "name": "Inter",
+                    "slug": "inter"
+                }
+            ]
+        },
+        "spacing": {
+            "padding": true,
+            "margin": true,
+            "units": [
+                "px",
+                "rem",
+                "%"
+            ]
+        },
+        "layout": {
+            "contentSize": "1324px",
+            "wideSize": "1324px"
+        }
     }
-  }
 }
