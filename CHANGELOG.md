@@ -14,7 +14,19 @@ Duża zmiana po testach F1 — CSS kompiluje **wbudowany kompilator Pinegrow (Ta
 - `package.json`: bez `tailwindcss`/`@tailwindcss/cli` (zostaje esbuild, sharp, chokidar, concurrently); scripts js/extra/webp.
 - `functions.php`: PG wypełnił `Include Resources` (custom.php + wp_pg_helpers) i enqueue Tailwind (`tailwind_theme/tailwind.css`).
 
-## 0.1.1 — 2026-07-29 (odkrycia z testu F1)
+## 0.3.0 — 2026-07-30 (radykalne uproszczenie: „zero build", bez Gita)
+
+Cel: mniej warstw, „ma po prostu działać". Usunięte: esbuild, concurrently, chokidar, watchery, `build/`, `resources/`, `start-projekt.bat`, `.vscode/tasks.json`, hook `SessionStart`, skille `/start` `/koniec` `/napraw-konflikt`, `.gitattributes`. Kontrola wersji (Git/GitHub per projekt) odłożona na później.
+
+- **Zero builda dla JS/CSS.** Nowy `assets/`: `css/` (components, custom — plain), `js/` (main + modules, plain, bez `import`), `vendor/` (Splide + AOS jako gotowe pliki „vendored"). Edytujesz → zapisujesz → odświeżasz.
+- `sliders.js` / `main.js` przepisane na globalne `Splide`/`AOS` (bez importów).
+- `inc/enqueue.php`: ładuje vendored biblioteki + moduły + `main.js` (front) i `components.css`+`custom.css` (front+edytor). Tailwind ładuje PG. Bez failsafe.
+- **WEBP jedną komendą:** `npm run optimize` (sharp, one-shot). `package.json` = tylko to + devDep `sharp`.
+- **Tokeny w panelu Design PG** (wbudowany kompilator), nie w `@theme` w kodzie — usunięte `resources/css/main.css`/`theme.css`/`editor.css`/`extra.css`.
+- **Starter pobierany jako ZIP** z GitHuba (bez `.git` w projekcie).
+- CLAUDE.md, README-praca.md, PROJEKT.md, `/nowy-projekt` — przepisane pod nowy, prostszy flow.
+
+## 0.2.0 — 2026-07-29 (rewizja D3: wbudowany kompilator PG)
 
 - `functions.php`: dodane markery Pinegrow (`Include Resources`, `Enqueue Scripts`, `Enqueue Styles`) — bez nich PG nie eksportuje motywu. Decyzja: front enqueue robi `inc/enqueue.php`, markery Enqueue zostają puste; PG wypełnia tylko `Include Resources` (helpery bloków/navwalker/paginacja).
 - hook `SessionStart`: wywołanie przez `cmd /c` (rozwijanie `%CLAUDE_PROJECT_DIR%`) + utwardzenie snapshotu.

@@ -1,17 +1,16 @@
 # PROJEKT: {{NAZWA_PROJEKTU}}
 
-- **Prowadzi:** (jedna osoba naraz — soft-lock, Docs/06)
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.1.0
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.3.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 
 ## Checklist życia projektu
 
 ### Setup
-- [ ] `/nowy-projekt` wykonany (nazwy, wp.bat, skrót, npm install)
-- [ ] Projekt otwarty w Pinegrow, eksport WP ustawiony na stronę Local
-- [ ] Motyw aktywowany w WP, `npm run build` przechodzi, watchery startują skrótem
-- [ ] Tokeny z Figmy w theme.css + theme.json
+- [ ] Rozpakowany ZIP startera + `/nowy-projekt` (rebranding, `npm install`)
+- [ ] Pinegrow: Open project → **Create Classic theme** → Tailwind **Built-in JIT 4.2.2**
+- [ ] Eksport ustawiony na stronę Local, motyw aktywny w WP
+- [ ] Kolory marki wpisane w **panelu Design PG**
 
 ### Budowa
 - [ ] Header + stopka (master page)
@@ -19,18 +18,17 @@
 - [ ] Podstrony: (lista wg designu)
 - [ ] Bloki dedykowane: (lista)
 - [ ] CPT / taksonomie: (jeśli są)
-- [ ] WooCommerce: (jeśli sklep — checklist z Docs/07)
+- [ ] WooCommerce: (jeśli sklep — Docs/07)
 
 ### Jakość
 - [ ] Walidacja bloków (block-validator) czysta
-- [ ] Audyt WCAG + SEO (na razie ręcznie przez Claude; po pilotażu /audyt)
-- [ ] Test responsywności (breakpointy z theme.css)
-- [ ] Parity front ↔ edytor Gutenberga sprawdzone
+- [ ] Audyt WCAG + SEO (ręcznie przez Claude)
+- [ ] Test responsywności
+- [ ] Parity front ↔ edytor Gutenberga
+- [ ] Grafiki przekonwertowane (`npm run optimize`)
 
 ### Oddanie
-- [ ] Build produkcyjny + eksport z PG
-- [ ] Backup bazy aktualny (D:\Backupy)
-- [ ] Deploy na produkcję (Docs/12)
+- [ ] Eksport z PG, motyw kompletny
 - [ ] Przekazanie klientowi (instrukcja edycji bloków)
 
 ## Notatki sesji

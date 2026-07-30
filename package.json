@@ -1,30 +1,15 @@
 {
   "name": "waybetter-starter",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Starter motywu WordPress (Pinegrow 9.3 wbudowany kompilator Tailwind 4 + esbuild). Waybetter.",
+  "description": "Starter motywu WordPress (Pinegrow 9.3, wbudowany kompilator Tailwind 4, zero builda). Waybetter.",
   "engines": {
     "node": ">=20"
   },
   "scripts": {
-    "dev": "concurrently -n js,css,webp -c yellow,blue,green \"npm:js:dev\" \"npm:extra:dev\" \"npm:webp:watch\"",
-    "build": "npm run js:build && npm run extra:build && npm run webp",
-    "js:dev": "esbuild resources/js/main.js --bundle --outfile=build/main.js --watch",
-    "js:build": "esbuild resources/js/main.js --bundle --minify --outfile=build/main.js",
-    "extra:dev": "esbuild resources/css/extra.css --bundle --outfile=build/extra.css --watch",
-    "extra:build": "esbuild resources/css/extra.css --bundle --minify --outfile=build/extra.css",
-    "webp": "node scripts/webp.js",
-    "webp:watch": "node scripts/webp.js --watch"
-  },
-  "dependencies": {
-    "@splidejs/splide": "^4.1.4",
-    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
-    "aos": "^3.0.0-beta.6"
+    "optimize": "node scripts/webp.js"
   },
   "devDependencies": {
-    "esbuild": "^0.25.0",
-    "chokidar": "^4.0.0",
-    "sharp": "^0.35.0",
-    "concurrently": "^9.0.0"
+    "sharp": "^0.35.0"
   }
 }

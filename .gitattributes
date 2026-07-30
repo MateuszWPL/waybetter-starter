@@ -1,7 +1,0 @@
-# LF dla plików tekstowych (spójność Windows między stanowiskami)
-* text=auto eol=lf
-*.bat text eol=crlf
-
-# projectdb.pgml jak binarny — konflikt to wybór "moja/ich wersja",
-# bez markerów <<<<<<< które uszkodziłyby plik i zablokowały Pinegrow (06-git)
-projectdb.pgml -diff -merge

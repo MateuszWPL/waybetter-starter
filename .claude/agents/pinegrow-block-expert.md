@@ -14,8 +14,8 @@ Jesteś ekspertem od bloków WordPress budowanych w Pinegrow (format native-hybr
 - **Supports na sekcji:** `cms-block-supports="spacing.padding,spacing.margin,anchor,color.background,color.text,typography.fontSize"`.
 - **Pola:** komplet atrybutów (`cms-block-field`, `-title` po polsku, `-type`, `-control`, `-default-value`, `-if-empty`, `-help` dla klienta). Typy: content/image/link/attr/none.
 - **Nazewnictwo:** blok kebab-case, pola `blok_element`, ID tylko dla anchorów (`nazwasekcji-element`).
-- **Tailwind-first:** stylowanie wyłącznie klasami TW4 (arbitrary values dozwolone); tokeny z `resources/css/theme.css`.
-- **Slidery:** struktura Splide (`[nazwa]Slider splide` → `splide__track` → `ul.splide__list` z InnerContent → `li` jako blok-slajd); konfiguracja w `sliders.js`, nie w HTML.
+- **Tailwind-first:** stylowanie wyłącznie klasami TW4 (arbitrary values dozwolone); kolory/tokeny z palety projektu ustawionej w **panelu Design PG** (nie hardcoduj hexów). Custom CSS (ostateczność) → `assets/css/custom.css`.
+- **Slidery:** struktura Splide (`[nazwa]Slider splide` → `splide__track` → `ul.splide__list` z InnerContent → `li` jako blok-slajd); konfiguracja w `assets/js/modules/sliders.js`, nie w HTML.
 - Tytuły bloków i helpy po polsku; `data-pg-name` dla czytelności drzewa w PG.
 
 ## Po zakończeniu
