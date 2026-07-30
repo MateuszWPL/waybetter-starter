@@ -2,17 +2,17 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne (Docs/12).
 
-## 0.2.0 — 2026-07-30 (rewizja D3: wbudowany kompilator PG)
+## 0.4.0 — 2026-07-30 (konsolidacja: spójny starter, natywny Pinegrow)
 
-Duża zmiana po testach F1 — CSS kompiluje **wbudowany kompilator Pinegrow (Tailwind 4.2.2)**, nie external build. Powody: kompilacja na zapis (jak Prepros), kolory z panelu Design (GUI), PG sam generuje arkusz edytora Gutenberga (rozwiązuje parity/R14), znikają błędy external build. JS/dodatkowy CSS zostają na esbuild.
+Uspójnienie repo po serii testów. Architektura potwierdzona i „zamrożona":
+- **Starter = szkielet motywu (kod).** Projekt Pinegrow składasz w PG: Open project → Create Classic theme → Built-in JIT 4.2.2. PG generuje wtedy swoje pliki (`projectdb.pgml`, `pinegrow.json`, HTML → PHP, `tailwind_theme/`).
+- **`functions.php` = teren Pinegrow** (pełne markery, **auto-rejestracja bloków** przez marker „Register Pinegrow Blocks" — potwierdzone: PG wypełnia go sam na eksporcie).
+- **Nasz kod wyłącznie w `inc/custom.php`** (wpina enqueue + woo). Zero builda; Tailwind kompiluje PG na zapis.
 
-- `main.css`: `@theme` scalone tutaj (jedno miejsce tokenów, PG panel Design pisze do markerów); usunięte `@source`/used-classes (PG skanuje klasy sam).
-- Nowy `resources/css/extra.css` → `build/extra.css` (esbuild): Splide + AOS css + components + custom. PG ignoruje `@import` zwykłego CSS, więc zbieramy je tu i ładujemy osobno.
-- `inc/enqueue.php`: ładuje `build/main.js` (front) + `build/extra.css` (front+edytor). Tailwind ładuje PG. Usunięte ładowanie `build/main.css`/`editor.css`.
-- `main.js`: `import 'aos/dist/aos.css'` przeniesiony do extra.css (żeby esbuild nie robił osobnego build/main.css).
-- Usunięte pliki: `resources/css/theme.css`, `resources/css/editor.css`.
-- `package.json`: bez `tailwindcss`/`@tailwindcss/cli` (zostaje esbuild, sharp, chokidar, concurrently); scripts js/extra/webp.
-- `functions.php`: PG wypełnił `Include Resources` (custom.php + wp_pg_helpers) i enqueue Tailwind (`tailwind_theme/tailwind.css`).
+Zmiany porządkowe:
+- Ujednolicone numery wersji we wszystkich plikach (`package.json`, `style.css`, `CLAUDE.md`, `PROJEKT.md`) → 0.4.0.
+- CHANGELOG uporządkowany — usunięty błędny, zdublowany wpis 0.2.0 wrzucony nad nowsze wersje.
+- `assets/css/custom.css`: sekcja WŁASNE KLASY + `.max-w-site` = 1324px (TW4 nie ma już `max-w-screen-*`).
 
 ## 0.3.3 — 2026-07-30 (powrót do natywnego Pinegrow — koniec nadpisywania)
 

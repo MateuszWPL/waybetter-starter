@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.3.3)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.4.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Pełna dokumentacja workflow: `D:\Pulpit\Workflow\Docs\`.
 
