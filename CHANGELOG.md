@@ -1,6 +1,16 @@
 # Changelog startera
 
-Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne (Docs/12).
+Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
+
+## 0.5.0 — 2026-07-30 (czyszczenie: samowystarczalny kontekst, neutralizacja)
+
+Runda porządkowa — starter gotowy jako czysta baza do dalszego rozwoju. Bez zmian architektury (functions.php = teren PG, kod w custom.php, zero builda).
+
+- **Rozdział kontekstów.** `CLAUDE.md` startera jest teraz SAMOWYSTARCZALNY — nie odwołuje się do niczego spoza projektu (usunięte linki do `D:\Pulpit\Workflow\Docs\`). Kontekst budowy startera został w warsztacie; ZIP niesie tylko to, co potrzebne do developmentu strony.
+- **Mapa plików** w `CLAUDE.md` (tabela: plik → rola → kto edytuje) + wcielone pełne **konwencje bloków** (InnerContent, Supports, pola, nazewnictwo, slidery, Tailwind-first) + sekcja **parity edytora WP** (enqueue_block_assets + tailwind_for_wp_editor.css od PG).
+- **Neutralizacja kolorów** — usunięte hardcodowane barwy cudzego klienta: `assets/css/custom.css` (złoty `#be964a` → `currentColor`/czarny + „TODO kolor projektu"), `components.css` (`#2B2A28` w `.show-more-btn`). Poprawiona literówka `--tw-ring-sgadow` → `--tw-ring-shadow`, usunięty wiszący zakomentowany `@media`, dodany spis treści w custom.css.
+- **`assets/vendor/README.md`** — udokumentowane wersje bibliotek (Splide 4.1.x, AutoScroll 0.5.x, AOS 2.3.x) + jak aktualizować.
+- **Porządki:** wersja ujednolicona → 0.5.0 (`package.json`, `package-lock.json`, `style.css`, `CLAUDE.md`, `PROJEKT.md`); usunięte martwe reguły `.gitignore` (`assets/img/**` — folder nie istnieje od 0.3.3); agenci/skille kierują do konwencji w `CLAUDE.md` zamiast do nieistniejących `Docs/`.
 
 ## 0.4.0 — 2026-07-30 (konsolidacja: spójny starter, natywny Pinegrow)
 

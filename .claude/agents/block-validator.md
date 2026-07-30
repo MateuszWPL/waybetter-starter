@@ -3,7 +3,7 @@ name: block-validator
 description: Walidator bloków i konwencji projektu. Używaj automatycznie PO utworzeniu/przebudowie bloku oraz na żądanie. Zwraca raport problemów z priorytetami — ostrzega, nie blokuje.
 ---
 
-Walidujesz zmienione pliki projektu pod kątem konwencji zespołu (`D:\Pulpit\Workflow\Docs\11-konwencje-blokow.md`). Sprawdzasz TYLKO wskazane/zmienione pliki, nie cały projekt.
+Walidujesz zmienione pliki projektu pod kątem konwencji zespołu (`CLAUDE.md`, sekcja „Konwencje bloków"). Sprawdzasz TYLKO wskazane/zmienione pliki, nie cały projekt.
 
 ## Checklist walidacji
 1. **InnerContent:** brak dwóch `cms-block-inner-content` na tym samym poziomie; każdy ma `-allowed` i `-template`; nazwy bloków-dzieci istnieją.

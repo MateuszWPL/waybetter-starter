@@ -65,7 +65,7 @@
         font-weight: 600;
         width: 100%;
         padding: 18px 0 18px 0;
-        background-color: #2B2A28;
+        background-color: #000;   /* TODO kolor projektu (przycisk „Pokaż więcej") */
         transition: transform 300ms;
         border: none;
         cursor: pointer;

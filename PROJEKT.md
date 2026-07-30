@@ -1,6 +1,6 @@
 # PROJEKT: {{NAZWA_PROJEKTU}}
 
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.4.0
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.5.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 
@@ -18,7 +18,7 @@
 - [ ] Podstrony: (lista wg designu)
 - [ ] Bloki dedykowane: (lista)
 - [ ] CPT / taksonomie: (jeśli są)
-- [ ] WooCommerce: (jeśli sklep — Docs/07)
+- [ ] WooCommerce: (jeśli sklep — moduł `inc/woo.php`)
 
 ### Jakość
 - [ ] Walidacja bloków (block-validator) czysta

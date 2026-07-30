@@ -10,9 +10,6 @@ _pginfo/
 inc/img/**/*.jpg
 inc/img/**/*.jpeg
 inc/img/**/*.png
-assets/img/**/*.jpg
-assets/img/**/*.jpeg
-assets/img/**/*.png
 !inc/img/favicon.png
 
 # Sekrety

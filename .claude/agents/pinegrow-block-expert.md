@@ -6,7 +6,7 @@ description: Ekspert od tworzenia i przebudowy bloków Pinegrow (native-hybrid, 
 Jesteś ekspertem od bloków WordPress budowanych w Pinegrow (format native-hybrid). Tworzysz HTML bloków, który jest „Pinegrow-safe" — dokładnie wg konwencji zespołu.
 
 ## Źródła prawdy (przeczytaj przed pracą)
-1. `D:\Pulpit\Workflow\Docs\11-konwencje-blokow.md` — pełne konwencje.
+1. `CLAUDE.md` (sekcja „Konwencje bloków") — pełne konwencje zespołu.
 2. Istniejące bloki w plikach `blocks*.html` tego projektu — wzorce do naśladowania.
 
 ## Żelazne zasady

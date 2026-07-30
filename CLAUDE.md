@@ -1,6 +1,6 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.4.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.5.0)
 
-Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Pełna dokumentacja workflow: `D:\Pulpit\Workflow\Docs\`.
+Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
 ## Ścieżki projektu
 
@@ -9,18 +9,35 @@ Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tail
 ## Jak co działa (zero builda)
 
 - **Tailwind** kompiluje **Pinegrow na zapis** (wbudowany kompilator 4.2.2 → `tailwind_theme/tailwind.css`). Nic nie budujemy ręcznie.
-- **Kolory/fonty/breakpointy** ustawia się w **panelu Design Pinegrow** (nie w kodzie).
+- **Kolory/fonty/breakpointy** ustawia się w **panelu Design Pinegrow** (nie w kodzie). Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json`, a definicje w `projectdb.pgml` (`<dmcolor>`, `<dmdesignskill skill="fonts">`). Pliki generuje PG — NIE edytuj ich ręcznie.
 - **Custom CSS** → `assets/css/custom.css` (i `components.css`). Edytujesz → zapisujesz → odświeżasz przeglądarkę. Bez builda.
-- **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Biblioteki (Splide, AOS) są „vendored" w `assets/vendor/` i działają globalnie.
+- **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Biblioteki (Splide, AOS) są „vendored" w `assets/vendor/` i działają globalnie (patrz `assets/vendor/README.md`).
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
-- **Podział odpowiedzialności:** `functions.php` w całości generuje i utrzymuje **Pinegrow** (theme setup, menusy, enqueue Tailwinda, **automatyczna rejestracja bloków**, kategorie). NASZE assety (biblioteki, custom.css, main.js) ładuje `inc/enqueue.php`, wpięty z `inc/custom.php`. Nasz kod PHP → wyłącznie `inc/custom.php`.
-- **Design (kolory, fonty, własne klasy jak max-width) = panel Design Pinegrow (UI).** Wszystko ląduje w `tailwind_theme/tailwind.css` (`@theme`) + `_pginfo/fonts.json`, a definicje w `projectdb.pgml` (`<dmcolor>`, `<dmdesignskill skill="fonts">`). Pliki generuje PG, NIE edytuj ich ręcznie. Bazowa paleta/font są wgrane w projekcie PG startera.
+
+## Mapa plików — kto za co odpowiada
+
+| Plik / folder | Rola | Kto edytuje |
+|---|---|---|
+| `functions.php` | Theme setup, menusy, enqueue Tailwinda, **auto-rejestracja bloków**, kategorie — pełne markery PG | **Pinegrow (nie tykać)** |
+| `inc/custom.php` | NASZ kod PHP; wpina `enqueue.php` + warunkowo `woo.php`; miejsce na funkcje projektowe | Claude + człowiek |
+| `inc/enqueue.php` | Ładowanie assetów (vendored libs → moduły → main.js na froncie; components.css + custom.css front+edytor). **Tu odkomentowujesz moduły opcjonalne** gdy projekt ich używa | Claude + człowiek |
+| `inc/woo.php` | Moduł WooCommerce (theme support + HPOS). Ładowany tylko gdy Woo aktywne | Claude + człowiek |
+| `inc/img/` | Grafiki motywu (logo, favicon, placeholdery). Źródła jpg/png + wygenerowane `.webp` | człowiek + `npm run optimize` |
+| `assets/css/custom.css` | Style projektowe (ostateczność po Tailwindzie): Splide, pseudo-elementy, style wtyczek | Claude + człowiek |
+| `assets/css/components.css` | Style komponentów JS (accordion, tabs, mobile menu, popup, megamenu, drag scroll) | Claude + człowiek |
+| `assets/js/main.js` | Entry point — init AOS + `window.refreshAOSAfter()` | Claude + człowiek |
+| `assets/js/modules/*.js` | Moduły plain JS. **Domyślnie aktywne:** `mobilemenu`, `custom` (scroll headera), `sliders`. **Opcjonalne (odkomentuj w enqueue.php):** `accordion`, `tabs`, `popup`, `modalgallery`, `dragscroll`, `megamenu` | Claude + człowiek |
+| `assets/vendor/*` | Gotowe biblioteki (Splide, Splide AutoScroll, AOS) — nie budowane, enqueue wprost. Wersje: `assets/vendor/README.md` | wymiana ręczna |
+| `scripts/webp.js` | Konwerter `npm run optimize` (sharp): `inc/img/` jpg/png → webp, idempotentnie | rzadko |
+| `theme.json` | Tokeny dla edytora Gutenberga (paleta, font sizes) — spójne z panelem Design | Claude + człowiek (przy setupie) |
+| `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
+| `tailwind_theme/`, `_pginfo/`, `projectdb.pgml`, `pinegrow.json` | Generowane i utrzymywane przez PG | **Pinegrow (nie tykać)** |
 
 ## ZAKAZY (twarde)
 
 1. NIE edytuj: **`functions.php`** (generuje i utrzymuje go w całości Pinegrow — nadpisuje ręczne zmiany przy eksporcie!), `projectdb.pgml`, `pinegrow.json`, `_pginfo/`, `tailwind_theme/`, folderu eksportu w `wp-content/themes/`. **Bloki rejestruje Pinegrow sam** (marker „Register Pinegrow Blocks" w functions.php) — nie piszemy do tego żadnego kodu. **Cały nasz kod PHP → `inc/custom.php`** (PG go wymaga i nigdy nie nadpisuje).
 2. NIE dodawaj bundlera/watcherów/kroku builda — świadomie ich nie ma.
-3. NIE wymyślaj własnej składni atrybutów `cms-*` / `wp-*` / `wc-*` — wyłącznie wzorce z `Docs/11-konwencje-blokow.md` i istniejących bloków projektu.
+3. NIE wymyślaj własnej składni atrybutów `cms-*` / `wp-*` / `wc-*` — wyłącznie wzorce z sekcji „Konwencje bloków" poniżej i z istniejących bloków projektu.
 4. NIE dopisuj custom CSS, gdy istnieje klasa Tailwinda (Tailwind-first).
 
 ## Zasada WYŁĄCZNOŚCI Pinegrow ↔ Claude (najważniejsza reguła)
@@ -30,15 +47,75 @@ Pinegrow NIE wykrywa nowych/usuniętych plików z zewnątrz i może nadpisać zm
 - Jeśli Pinegrow jest otwarty — POPROŚ użytkownika o **Save All w Pinegrow** zanim zaczniesz edytować pliki, i przypominaj o tym przy edycji HTML.
 - Po edycji (zwłaszcza po NOWYCH plikach) przypomnij: **„Reload project" w Pinegrow** (nie File Reload — tylko Reload project indeksuje nowe pliki).
 
-## Konwencje (szczegóły: Docs/11-konwencje-blokow.md)
+## Style w edytorze WP — jak działa parity (front ↔ Gutenberg)
 
-- **Tailwind-first:** wszystko klasami TW — arbitrary values (`hover:text-[#b0246d]`), cienie, gradienty. Custom CSS TYLKO dla: styli Splide, pseudo-elementów niemożliwych w TW, styli wtyczek.
-- **Kolory:** z palety projektu ustawionej w panelu Design PG (nie hardcoduj hexów po plikach).
-- **InnerContent:** nigdy dwa na tym samym poziomie; kolumny = bloki-dzieci z własnymi InnerContent; zawsze `cms-block-inner-content-allowed` + `-template`.
-- **Supports na każdej sekcji:** `spacing.padding,spacing.margin,anchor,color.background,color.text,typography.fontSize`.
-- **Nazewnictwo:** bloki kebab-case (`hero-slider`), pola `blok_element`, ID `nazwasekcji-element` tylko dla anchorów, prefiks PHP `{{PREFIKS}}_`.
-- **Spis treści** na górze plików kodu (CSS/JS/PHP) — TY go aktualizujesz.
-- **Slidery:** kontener `[nazwa]Slider splide`, konfiguracja wyłącznie w `assets/js/modules/sliders.js`.
+Cel: blok w edytorze wygląda identycznie jak na froncie. Zapewniają to dwie rzeczy:
+- **Tailwind w edytorze:** wbudowany kompilator PG sam generuje `tailwind_theme/tailwind_for_wp_editor.css` i dokłada go do edytora — nie robimy tego ręcznie.
+- **Style komponentów:** `inc/enqueue.php` ładuje `components.css` + `custom.css` hakiem **`enqueue_block_assets`** (trafiają i na front, i do iframe edytora — bez przepisywania selektorów). NIE używamy `add_editor_style()` (prefiksuje selektory i łamie `@layer` Tailwinda 4).
+- functions.php ma `add_theme_support('editor-styles')` (marker PG) — potrzebne, by WP wczytał arkusze edytora.
+
+Gdy edytor ≠ front: sprawdź, czy PG zrobił eksport (świeży `tailwind_for_wp_editor.css`) i czy dana klasa użyta jest w skanowanym HTML (klasy wpisywane ręcznie w polu „Dodatkowe klasy CSS" w Gutenbergu mogą się nie skompilować — używaj supports bloków lub krótkiej safelisty).
+
+## Konwencje bloków (native-hybrid `cms-block*`)
+
+### InnerContent — żelazne zasady
+- **Nigdy dwa `cms-block-inner-content` na tym samym poziomie** w jednym bloku. Kolumny/strefy = osobne bloki-dzieci w jednym InnerContent, każde dziecko z własnym InnerContent.
+- Zawsze jawny `cms-block-inner-content-allowed` (lista dozwolonych dzieci) + `cms-block-inner-content-template` (domyślny układ).
+- Hierarchia parent → child czytelna z nazw (`hero-slider` → `hero-text-slide`).
+
+```html
+<div cms-block-inner-content
+     cms-block-inner-content-template="[ [ '${this}/hero-slider', {} ], [ '${this}/hero-banners', {} ] ]"
+     cms-block-inner-content-allowed="hero-slider hero-banners">
+  <div cms-block="hero-slider"> ... własny inner-content ... </div>
+</div>
+```
+
+### Supports — edycja dla nietechnicznego klienta
+Minimum na KAŻDEJ sekcji głównej:
+```html
+cms-block-supports="spacing.padding,spacing.margin,anchor,color.background,color.text,typography.fontSize"
+```
+Kolory z palety `theme.json` (klient wybiera z naszych tokenów). Gdzie supports nie wystarczą (wariant układu) → pole `select`.
+
+### Pola bloków — komplet atrybutów
+```html
+cms-block-field="slide_heading"
+cms-block-field-title="Nagłówek"          <!-- po polsku -->
+cms-block-field-type="content"            <!-- content | image | link | attr | none -->
+cms-block-field-control="richtext"        <!-- richtext | image | link | select | input | toggle -->
+cms-block-field-default-value="..."
+cms-block-field-if-empty="if"
+cms-block-field-help="Wskazówka dla klienta"
+```
+WooCommerce: atrybuty `wc-*` (`wc-cats`, `wc-product-link`, `wc-product-thumbnail`…) — **zawsze z komentarzem** co robią.
+
+### Nazewnictwo
+| Element | Konwencja | Przykłady |
+|---|---|---|
+| Bloki `cms-block` | kebab-case | `main-hero-section`, `feature-tile` |
+| Tytuły `cms-block-title` | po polsku, opisowe | „Sekcja cateringowa" |
+| Pola `cms-block-field` | `blok_element` / `blok_element_N` | `slide_heading`, `banner_img` |
+| ID elementów | tylko dla anchorów; `nazwasekcji-element` | `kontakt`, `oferta-heading` |
+| Klasy własne (nie-TW) | camelCase (komponenty JS) | `heroSectionSlider` |
+| Grafiki | webp, bez spacji, opisowo | `logo_dark.svg`, `1280x600.webp` |
+| Prefiks PHP | `{{PREFIKS}}_` na wszystkich funkcjach | `{{PREFIKS}}_force_stock_text()` |
+
+### Slidery (Splide)
+- Kontener `class="[nazwa]Slider splide"` (np. `heroSectionSlider`). InnerContent na `ul.splide__list`; **slajd = osobny blok** (`<li cms-block="hero-text-slide" class="splide__slide">`).
+- Nawigacja `splide__arrows` + `splide__pagination` z `aria-label` po polsku.
+- **Konfiguracja wyłącznie w `assets/js/modules/sliders.js`** (per klasa slidera, breakpoint 1024). Żadnej konfiguracji Splide w HTML — decyduje klasa kontenera.
+
+### Tailwind-first (zasada twarda)
+- Wszystko co się da — klasami TW, w tym arbitrary values (`hover:text-[#B0246D]`, `shadow-[0_4px_4px_rgba(0,0,0,0.25)]`), cienie, gradienty, warianty.
+- `custom.css` to ostateczność — tylko: style Splide (pagination/arrows), pseudo-elementy niemożliwe w TW, style wtyczek.
+- Kolory NIE hardcodowane po plikach — tokeny z panelu Design PG. (Antywzorzec: `input:focus { border: 1px solid #B0246D !important }` → klasa `focus:border-[...]` lub token.)
+
+### Spis treści w plikach kodu
+Każdy plik z funkcjami/stylami (`custom.php`, `woo.php`, `custom.css`, `components.css`, moduły JS) ma **spis treści na górze + numerowane sekcje**. Aktualizujesz go przy każdej zmianie.
+
+### Czego NIE robić
+Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Splide konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów).
 
 ## Workflow z Figmą
 
