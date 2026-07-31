@@ -1,3 +1,15 @@
+/**
+ * SPIS TREŚCI - popup.js (modal popup, wiele instancji)
+ * Markup:
+ *   <button class="popup-modal-trigger" data-popup-modal="idModala">Otwórz</button>
+ *   <div id="idModala" class="popup-modal hidden ...">   <!-- .popup-modal WYMAGANE -->
+ *     <button class="popup-modal-close">×</button>
+ *     ... treść ...
+ *   </div>
+ * Stan: przełącza .hidden/.flex. Zamyka: .popup-modal-close, klik w tło, Escape.
+ * Klasa .popup-modal jest konieczna, żeby editor.css pokazał modal w edytorze
+ * (JS nie działa w iframe edytora - tam modal jest widoczny statycznie, w ramce).
+ */
 document.addEventListener('DOMContentLoaded', () => {
   // Znajdujemy wszystkie przyciski otwierające popup modal
   const popupModalTriggers = document.querySelectorAll('.popup-modal-trigger');

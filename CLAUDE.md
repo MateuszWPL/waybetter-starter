@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.9.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.10.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -31,6 +31,7 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 | `assets/css/custom.css` | Style projektowe (ostateczność po Tailwindzie): Swiper, pseudo-elementy, style wtyczek | Claude + człowiek |
 | `assets/css/components.css` | Style komponentów JS (accordion, tabs, mobile menu, popup, gallery, megamenu, drag scroll) | Claude + człowiek |
 | `assets/css/animations.css` | Animacje on-scroll `data-anim` (CSS scroll-driven + fallback dla `reveal.js`) | Claude + człowiek |
+| `assets/css/editor.css` | Parity edytora Gutenberga (tylko admin): neutralizacja CSS treści WP + statyczny podgląd komponentów JS. Scope `.editor-styles-wrapper` | Claude + człowiek |
 | `assets/js/main.js` | Entry point — miejsce na globalne inicjalizacje (ładowany po modułach) | Claude + człowiek |
 | `assets/js/modules/*.js` | Moduły plain JS (włączane w config `enqueue.php`). **Domyślnie:** `mobilemenu`, `custom` (scroll headera), `reveal` (fallback animacji), `sliders`. **Opcjonalne:** `accordion`, `tabs`, `popup`, `modalgallery`, `dragscroll`, `megamenu` | Claude + człowiek |
 | `assets/vendor/*` | **Swiper** (slider) — vendored, zarządzany przez npm (`npm run vendors`). Nie edytuj ręcznie. Wersje: `assets/vendor/README.md` | npm |
@@ -93,14 +94,20 @@ Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Do p
 - Kolejność: struktura → akcje/slidery (dopinają hooki) → animacje (warstwa na gotowym) → walidacja.
 - **Definicja sukcesu = pixel-perfect z Figmą** oraz identyczny wygląd front ↔ edytor Gutenberga.
 
-## Style w edytorze WP — jak działa parity (front ↔ Gutenberg)
+## Style w edytorze WP - parity front ↔ Gutenberg (jak to naprawdę działa)
 
-Cel: blok w edytorze wygląda identycznie jak na froncie. Zapewniają to dwie rzeczy:
-- **Tailwind w edytorze:** wbudowany kompilator PG sam generuje `tailwind_theme/tailwind_for_wp_editor.css` i dokłada go do edytora — nie robimy tego ręcznie.
-- **Style komponentów:** `inc/enqueue.php` ładuje `components.css` + `custom.css` hakiem **`enqueue_block_assets`** (trafiają i na front, i do iframe edytora — bez przepisywania selektorów). NIE używamy `add_editor_style()` (prefiksuje selektory i łamie `@layer` Tailwinda 4).
-- functions.php ma `add_theme_support('editor-styles')` (marker PG) — potrzebne, by WP wczytał arkusze edytora.
+Canvas edytora bloków to **iframe**. WordPress wstrzykuje do niego style (hak `enqueue_block_assets`), ale **nigdy skryptów**. Stąd cała mechanika:
 
-Gdy edytor ≠ front: sprawdź, czy PG zrobił eksport (świeży `tailwind_for_wp_editor.css`) i czy dana klasa użyta jest w skanowanym HTML (klasy wpisywane ręcznie w polu „Dodatkowe klasy CSS" w Gutenbergu mogą się nie skompilować — używaj supports bloków lub krótkiej safelisty).
+**Kolory i layout (parity wyglądu):**
+- Do iframe idzie **surowy `tailwind_theme/tailwind.css`** (wpina go `inc/enqueue.php` przez `enqueue_block_assets` + `is_admin()`). Wprost, bez transformacji, więc `:root` (zmienne `--color-*`) i `@layer` działają. Kolory i utilities poprawne.
+- **Nie polegamy** na `tailwind_for_wp_editor.css` z `add_editor_style()` (marker PG). WordPress przy `add_editor_style` przepisuje selektory (`:root` → `.editor-styles-wrapper`) i psuje `@layer`. To była przyczyna „rozwalonych" bloków w starym starterze: złe kolory nagłówków, rozjechane gridy/flexy. Arkusz PG zostaje (teren PG), ale po transformacji jest nieszkodliwy.
+- **`assets/css/editor.css`** (ładowany tylko w adminie) neutralizuje niewarstwowy CSS treści edytora WP (marginesy i rozmiary nagłówków, listy, linki), który inaczej wygrywa z warstwowymi utilities Tailwinda 4. To mirror preflight, celowo bez `@layer`.
+- `components.css` + `custom.css` + `animations.css` też lecą przez `enqueue_block_assets` (front i edytor).
+
+**Komponenty JS w edytorze (celowo statyczne):**
+JS nie działa w iframe, więc `editor.css` pokazuje komponenty statycznie i czytelnie do edycji: slidy w siatce 3 kolumn, tabsy jeden pod drugim, akordeon otwarty, popup i megamenu w przerywanej ramce z etykietą, animacje wejścia wyłączone (element widoczny). To ZAMIERZONE, na froncie wszystko działa normalnie. Warunek: komponent ma poprawne hooki (popup z klasą `.popup-modal`, slider `.swiper-wrapper` > `.swiper-slide`, tabsy `[tab-panel]` w `[data-tab-panels]`).
+
+Gdy edytor ≠ front: zrób świeży eksport z PG; sprawdź, czy użyta klasa jest w skanowanym HTML (klasy wpisywane ręcznie w polu „Dodatkowe klasy CSS" mogą się nie skompilować, używaj supports bloków lub krótkiej safelisty).
 
 ## Konwencje bloków (native-hybrid `cms-block*`)
 
@@ -117,12 +124,16 @@ Gdy edytor ≠ front: sprawdź, czy PG zrobił eksport (świeży `tailwind_for_w
 </div>
 ```
 
-### Supports — edycja dla nietechnicznego klienta
-Minimum na KAŻDEJ sekcji głównej:
+### Supports — maksymalna edycja dla nietechnicznego klienta
+Im więcej klient ustawi sam, tym lepiej. Minimum na KAŻDEJ sekcji głównej:
 ```html
-cms-block-supports="spacing.padding,spacing.margin,anchor,color.background,color.text,typography.fontSize"
+cms-block-supports="spacing.padding,spacing.margin,spacing.blockGap,anchor,color.background,color.text,typography.fontSize,typography.lineHeight,align"
 ```
-Kolory z palety `theme.json` (klient wybiera z naszych tokenów). Gdzie supports nie wystarczą (wariant układu) → pole `select`.
+- Kolory z palety `theme.json` (klient wybiera z naszych tokenów, nie hardcode hexów).
+- **Warianty układu = pole `select`** (liczba kolumn 2/3/4, wyrównanie, wariant kolorystyczny) mapowane na klasy Tailwinda, nie sztywny markup.
+- **Odstępy między elementami** przez `spacing.blockGap` lub pole; paddingi/marginesy sekcji przez supports.
+- **Breakpointów klient nie dotyka** — układ jest mobile-first w klasach TW i sam się dostosowuje. Dajemy gotowy responsywny wygląd, nie pole „breakpoint".
+- Zasada przy przypisywaniu klas: myśl „co klient będzie chciał zmienić" i wystaw to jako supports albo pole, zamiast zaszywać na sztywno.
 
 ### Pola bloków — komplet atrybutów
 ```html

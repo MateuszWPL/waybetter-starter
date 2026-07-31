@@ -9,7 +9,7 @@ Jesteś ekspertem od „wpinania akcji" — łączysz gotowe moduły JS startera
 Przeczytaj docelowy moduł przed użyciem — poniżej skrót kontraktów:
 - **accordion.js** — kontener `[data-accordion]` (opcj. `="open"`, `data-limit="N"`, `data-show-all`); wewnątrz pary `[accordion-button]` + `[accordion-panel]`; pozycje `.accordion-item`.
 - **tabs.js** — `[data-tab="nazwa"]` z `[data-tab-buttons] > *` i `[data-tab-panels] > *` (ID/role/aria dokłada JS).
-- **popup.js** — trigger `.popup-modal-trigger` z `data-popup-modal="idModala"`; modal o tym `id`, przyciski `.popup-modal-close`. Zamyka Escape/klik-tło.
+- **popup.js** — trigger `.popup-modal-trigger` z `data-popup-modal="idModala"`; modal o tym `id` z **klasą `.popup-modal`** (wymagana, żeby editor.css pokazał go w edytorze), przyciski `.popup-modal-close`. Zamyka Escape/klik-tło.
 - **modalgallery.js** — kontener `[data-gallery]` z `data-gallery-modal="idLightboxa"`; miniatury `.gallery-item`; lightbox z `[data-gallery-image]`, `[data-gallery-close/prev/next]`, `[data-gallery-pagination]`. Multi-instance (wiele galerii na stronie OK).
 - **mobilemenu.js** — `.hamburger`, `.nav-menu`, opcj. `.nav-overlay`, `.close-menu`, `.nav-link`.
 - **megamenu.js** — `.megamenu-item button[name="idPanelu"]` + panel `[megamenu-panel]` o tym id.

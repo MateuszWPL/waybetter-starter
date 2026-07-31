@@ -27,11 +27,21 @@ Duże frame'y przekraczają limit MCP → pracuj sekcja po sekcji:
 
 ## Żelazne zasady bloków
 - **InnerContent:** nigdy dwa `cms-block-inner-content` na tym samym poziomie. Kolumny/strefy = osobne bloki-dzieci, każde z własnym InnerContent. Zawsze jawne `cms-block-inner-content-allowed` + `cms-block-inner-content-template`.
-- **Supports na sekcji:** `cms-block-supports="spacing.padding,spacing.margin,anchor,color.background,color.text,typography.fontSize"`.
+- **Supports na sekcji (pełny zestaw):** `cms-block-supports="spacing.padding,spacing.margin,spacing.blockGap,anchor,color.background,color.text,typography.fontSize,typography.lineHeight,align"`.
 - **Pola:** komplet atrybutów (`cms-block-field`, `-title` po polsku, `-type`, `-control`, `-default-value`, `-if-empty`, `-help`). Typy: content/image/link/attr/none.
 - **Nazewnictwo:** blok kebab-case; pola `blok_element`; ID tylko dla anchorów (`nazwasekcji-element`).
 - **Tailwind-first:** stylowanie wyłącznie klasami TW4 (arbitrary values dozwolone); custom CSS to ostateczność (`assets/css/custom.css`).
 - Tytuły bloków i helpy po polsku; `data-pg-name` dla czytelności drzewa w PG.
+
+## Maksymalna edytowalność (twarda zasada)
+Cel: klient zmienia jak najwięcej sam, bez programisty. Budując blok:
+- **Pełny zestaw supports** na każdej sekcji (jak wyżej): odstępy (padding, margin, blockGap), kolory (tło, tekst), typografia (rozmiar, interlinia), wyrównanie, anchor.
+- **Każdy powtarzalny układ = pole `select`** z wariantami (liczba kolumn 2/3/4, wyrównanie, wariant kolorystyczny) mapowanymi na klasy Tailwinda. Nie zaszywaj układu na sztywno, jeśli klient mógłby chcieć go zmienić.
+- **Wszystkie treści = pola bloku** (nagłówki, teksty, obrazy, linki, przyciski). Zero hardcodu tam, gdzie klient będzie edytować.
+- **Kolory z palety `theme.json`** (klient wybiera z tokenów), nie hexy zaszyte w klasach.
+- **Breakpointów klient nie dotyka** — dajesz gotowy responsywny układ mobile-first w klasach TW.
+- Przy przypisywaniu klas pytaj siebie „co klient będzie chciał zmienić" i wystaw to jako supports albo pole.
+- **Hooki komponentów pod edytor:** jeśli blok ma komponent JS, użyj hooków, które rozpozna `editor.css` (popup z klasą `.popup-modal`, slider `.swiper-wrapper` > `.swiper-slide`, tabsy `[tab-panel]` w `[data-tab-panels]`). Bez tego komponent będzie w edytorze „niewidzialny" (JS tam nie działa, podgląd robi CSS).
 
 ## Granice roli (co ZOSTAWIASZ innym)
 - **Slider/karuzela** → przygotuj tylko strukturę kontenera `.[nazwa]Slider.swiper` > `.swiper-wrapper` > `.swiper-slide`; konfigurację robi **swiper-expert**.

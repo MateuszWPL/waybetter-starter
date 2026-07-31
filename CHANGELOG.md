@@ -2,6 +2,15 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.10.0 — 2026-07-31 (parity edytora Gutenberga dla Tailwind 4 + edytowalność bloków)
+
+Naprawa problemu zgłoszonego przez zespół: przy TW4 bloki w edytorze się rozwalały (inne kolory nagłówków, rozjechane gridy/flexy, martwy JS). Trzy przyczyny (research: tailwindcss discussion #16934, Gutenberg issue #69833):
+
+- **Surowy Tailwind do iframe edytora.** `inc/enqueue.php` (hook `enqueue_block_assets` + `is_admin()`) wpina teraz `tailwind_theme/tailwind.css` wprost do iframe. Bez transformacji `add_editor_style` (która przepisuje `:root` na `.editor-styles-wrapper` i psuje `@layer`, przez co znikały kolory i layout). Arkusz `tailwind_for_wp_editor.css` od PG zostaje, po transformacji jest nieszkodliwy.
+- **Nowy `assets/css/editor.css`** (tylko admin, scope `.editor-styles-wrapper`): część 1 neutralizuje niewarstwowy CSS treści edytora WP (marginesy/rozmiary nagłówków, listy, linki), który wygrywał z warstwowymi utilities TW4 (mirror preflight, bez `@layer`); część 2 daje statyczny podgląd komponentów JS, których edytor nie uruchamia (iframe bez skryptów): slidy w siatce 3 kolumn, tabsy jeden pod drugim, akordeon otwarty, popup i megamenu w przerywanej ramce z etykietą, animacje wejścia wyłączone.
+- **Konwencja `.popup-modal`** na kontenerze modala (udokumentowana w `popup.js`) — bez niej editor.css nie pokaże popupu.
+- **Maksymalna edytowalność bloków.** Rozszerzony zestaw supports (dodane `spacing.blockGap`, `typography.lineHeight`, `align`) w `CLAUDE.md`, `pinegrow-block-expert` i `block-validator`. Nowa zasada dla budowniczego: warianty układu jako pole `select`, wszystkie treści jako pola, kolory z palety, breakpointy = klasy mobile-first (klient nie dotyka). Walidator sprawdza hooki pod edytor, hardcode treści i brak pól wariantów.
+
 ## 0.9.0 — 2026-07-31 (szablony stron, CF7, jeden plik instrukcji)
 
 - **Szablony stron** (root projektu, port ze starego szablonu na TW4): `404`, `page`, `single`, `archive`, `search` oraz `parts` (breadcrumbs z pełną logiką PHP + wariant CPT `cms-breadcrumbs` + paginacja). Tokeny kolorów zamiast hexów, `lang="pl"`, animacje `data-anim`, bez sidebarów i starych referencji (`main.min`, pgia). Otwierasz w PG przez Reload project.

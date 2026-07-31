@@ -86,6 +86,7 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 - **Style nie działają na froncie** → zrób eksport z PG (Ctrl+M) i sprawdź, czy motyw jest aktywny.
 - **Nowy plik/blok niewidoczny w PG** → **Reload project** (nie File Reload).
 - **Blok wygląda inaczej w edytorze niż na froncie** → zrób świeży eksport z PG; sprawdź, czy użyte klasy są w skanowanym HTML.
+- **Komponenty w edytorze wyglądają statycznie** (tabsy jeden pod drugim, slidy w siatce, popup w ramce) → to celowe. JS działa tylko na froncie, w edytorze pokazujemy zawartość tak, żeby dało się ją wygodnie edytować.
 - **Nie wiem, co dalej** → `PROJEKT.md` (stan projektu), potem `CLAUDE.md` (zasady).
 
 > Kontrola wersji (Git) - na razie nie używamy. Bazę Local trzymasz lokalnie.

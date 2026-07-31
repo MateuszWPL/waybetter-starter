@@ -1,0 +1,149 @@
+/* ============================================================
+   SPIS TREŚCI - editor.css (parity edytor Gutenberga, TYLKO admin)
+   1. NEUTRALIZACJA stylów treści edytora (mirror preflight TW4, bez @layer)
+   2. WIDOK KOMPONENTÓW JS (statyczny podgląd - JS nie działa w iframe edytora)
+   ------------------------------------------------------------
+   Ładowane w inc/enqueue.php hakiem enqueue_block_assets + is_admin() -> tylko iframe edytora.
+   Wszystko scope'owane pod .editor-styles-wrapper (kontener treści bloków w edytorze).
+
+   DLACZEGO to istnieje:
+   - Raw tailwind.css wpięty do iframe daje działające zmienne i utilities, ale jego
+     preflight/utilities siedzą w @layer i PRZEGRYWAJĄ z niewarstwowym CSS treści edytora
+     WordPressa (nagłówki dostają marginesy, inne rozmiary itd.). Część 1 zeruje te reguły
+     BEZ warstwy, więc wygrywa - blok wygląda jak na froncie.
+   - Canvas edytora to iframe, do którego WordPress z definicji NIE wstrzykuje skryptów.
+     Slidery/tabsy/popupy nie mają jak działać. Część 2 pokazuje je statycznie i czytelnie
+     do edycji (tabsy pod sobą, slidy w siatce, popup w ramce).
+   ============================================================ */
+
+/* === 1. NEUTRALIZACJA (mirror preflight - bez @layer, żeby pokonać CSS edytora WP) === */
+
+    /* Nagłówki: WP dokłada marginesy i własne rozmiary, co rozwala layout i typografię.
+       Zerujemy do stanu preflight (rozmiar/waga/interlinia z klas Tailwinda).
+       Wyłączamy pole tytułu wpisu - to element Gutenberga, nie treść bloku. */
+    .editor-styles-wrapper :is(h1, h2, h3, h4, h5, h6):not(.editor-post-title__input):not(.wp-block-post-title) {
+        margin: 0;
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
+    }
+
+    .editor-styles-wrapper :is(p, blockquote, figure, pre) {
+        margin: 0;
+    }
+
+    .editor-styles-wrapper :is(ul, ol) {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    /* WP koloruje linki na niebiesko - w blokach kolor bierzemy z klas. */
+    .editor-styles-wrapper a {
+        color: inherit;
+        text-decoration: inherit;
+    }
+
+    .editor-styles-wrapper :is(img, video) {
+        max-width: 100%;
+        height: auto;
+    }
+
+
+/* === 2. WIDOK KOMPONENTÓW JS (statyczny podgląd w edytorze) === */
+
+    /* --- Slidery (Swiper): pokaż slajdy w siatce 3 kolumn zamiast obciętego rzędu --- */
+    .editor-styles-wrapper .swiper {
+        overflow: visible;
+    }
+    .editor-styles-wrapper .swiper-wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        transform: none !important;
+    }
+    .editor-styles-wrapper .swiper-slide {
+        width: auto !important;
+        margin: 0 !important;
+        flex-shrink: 1;
+    }
+    /* Nawigacja slidera to szum w edytorze. */
+    .editor-styles-wrapper :is(.swiper-button-next, .swiper-button-prev, .swiper-pagination) {
+        display: none;
+    }
+
+    /* --- Tabsy: wszystkie panele jeden pod drugim (edycja treści każdej zakładki) --- */
+    .editor-styles-wrapper [tab-panel] {
+        display: block;
+        margin-bottom: 1rem;
+    }
+
+    /* --- Akordeon: wszystkie panele otwarte, „Pokaż więcej" bez sensu w edytorze --- */
+    .editor-styles-wrapper [accordion-panel] {
+        display: block;
+        height: auto;
+        overflow: visible;
+    }
+    .editor-styles-wrapper .hide-accordion {
+        display: block;
+        max-height: none;
+    }
+    .editor-styles-wrapper .show-more-btn {
+        display: none;
+    }
+
+    /* --- Popup: normalnie ukryty (klasa .hidden). W edytorze pokaż w ramce z etykietą,
+           żeby dało się edytować zawartość. Konwencja: kontener modala ma klasę .popup-modal. --- */
+    .editor-styles-wrapper .popup-modal {
+        display: block;
+        position: static;
+        inset: auto;
+        background: transparent;
+        outline: 2px dashed rgb(148 163 184);
+        outline-offset: 4px;
+        padding: 1rem;
+    }
+    .editor-styles-wrapper .popup-modal::before {
+        content: "Popup - na froncie widoczny po kliknięciu triggera";
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.75rem;
+        color: rgb(100 116 139);
+    }
+
+    /* --- Megamenu: panel rozwijany widoczny statycznie, z ramką jak popup --- */
+    .editor-styles-wrapper [megamenu-panel] {
+        display: block;
+        position: static;
+        outline: 2px dashed rgb(148 163 184);
+        outline-offset: 4px;
+    }
+
+    /* --- Menu mobilne: overlay to szum; menu bez transformów --- */
+    .editor-styles-wrapper .nav-overlay {
+        display: none;
+    }
+    .editor-styles-wrapper .nav-menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        height: auto;
+    }
+
+    /* --- Drag scroll: naturalne przewijanie w poziomie --- */
+    .editor-styles-wrapper .dragSlider {
+        overflow-x: auto;
+    }
+
+    /* --- Header: bez fixed/sticky, żeby nie zasłaniał treści w edytorze --- */
+    .editor-styles-wrapper .header {
+        position: static;
+    }
+
+    /* --- Animacje wejścia: zawsze widoczne (scroll-driven w iframe potrafi zostawić
+           element w połowie animacji - w edytorze nic nie animujemy) --- */
+    .editor-styles-wrapper [data-anim] {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }

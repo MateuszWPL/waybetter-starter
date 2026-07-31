@@ -3,9 +3,10 @@
  * SPIS TREŚCI - ŁADOWANIE ASSETÓW (zero builda, pliki wprost z assets/)
  * 1. KONFIGURACJA - które moduły JS ładować (per projekt: true/false)
  * 2. FRONT - biblioteki (warunkowo) + moduły + main.js (wszystko strategy=defer)
- * 3. FRONT + EDYTOR - style komponentów (components.css, custom.css, animations.css)
+ * 3. FRONT + EDYTOR - style komponentów (components.css, custom.css, animations.css);
+ *    w samym edytorze dokładamy surowy tailwind.css + editor.css (parity Gutenberga)
  *
- * Tailwind (tailwind_theme/tailwind.css) ładuje Pinegrow (sekcje w functions.php).
+ * Tailwind (tailwind_theme/tailwind.css) na FRONCIE ładuje Pinegrow (sekcje w functions.php).
  * Biblioteki są „vendored" w assets/vendor/ - zarządza je npm (`npm run vendors`).
  * Animacje on-scroll: CSS (animations.css) + reveal.js (fallback) - bez biblioteki.
  */
@@ -91,5 +92,15 @@ function wbstarter_enqueue_components() {
 	wp_enqueue_style( 'wbstarter-components', $uri . '/assets/css/components.css', array(), $ver );
 	wp_enqueue_style( 'wbstarter-custom', $uri . '/assets/css/custom.css', array(), $ver );
 	wp_enqueue_style( 'wbstarter-animations', $uri . '/assets/css/animations.css', array(), $ver );
+
+	// Tylko EDYTOR (iframe bloków). Dwa arkusze naprawiające parity z frontem:
+	// 1. surowy tailwind.css wprost do iframe - działające zmienne (:root) i @layer,
+	//    bez transformacji, którą robi add_editor_style PG (ona psuje kolory/layout);
+	// 2. editor.css - neutralizuje CSS treści edytora WP i daje statyczny podgląd
+	//    komponentów (JS nie działa w iframe). Patrz assets/css/editor.css.
+	if ( is_admin() ) {
+		wp_enqueue_style( 'wbstarter-tailwind-editor', $uri . '/tailwind_theme/tailwind.css', array(), $ver );
+		wp_enqueue_style( 'wbstarter-editor', $uri . '/assets/css/editor.css', array( 'wbstarter-components', 'wbstarter-tailwind-editor' ), $ver );
+	}
 }
 add_action( 'enqueue_block_assets', 'wbstarter_enqueue_components' );
