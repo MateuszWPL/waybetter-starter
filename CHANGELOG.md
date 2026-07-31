@@ -2,6 +2,11 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.8.2 — 2026-07-31 (grafika motywu)
+
+- **Dodany `screenshot.png`** w rootcie projektu (branding Way Better, 1200x900, format 4:3 wymagany przez WP). Służy jako grafika motywu na karcie w Wygląd > Motywy oraz jako miniatura projektu w Pinegrow. Pinegrow kopiuje go do folderu motywu przy eksporcie.
+- Grafika zostaje przy rebrandingu (`/nowy-projekt` jej nie podmienia): motyw jest autorstwa agencji, więc na projektach klienckich karta motywu nosi logo Way Better. Wiersz dodany do mapy plików w `CLAUDE.md`.
+
 ## 0.8.1 — 2026-07-31 (pierwsze wnioski z testów E2E + zero śladów AI)
 
 Poprawki z pierwszego testu end-to-end (projekt EnterThePoint) oraz reguły „pisz jak człowiek".

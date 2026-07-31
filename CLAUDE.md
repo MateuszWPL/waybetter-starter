@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.8.1)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.8.2)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -37,6 +37,7 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 | `scripts/webp.js` | Konwerter `npm run optimize` (sharp): `inc/img/` jpg/png → webp, idempotentnie | rzadko |
 | `scripts/vendors.js` | `npm run vendors` / `postinstall`: kopiuje biblioteki z `node_modules` → `assets/vendor/` | rzadko |
 | `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
+| `screenshot.png` | Grafika motywu (karta w Wygląd → Motywy) i miniatura projektu PG. Branding Way Better, 1200x900. Zostaje mimo rebrandingu (motyw jest autorstwa agencji) | rzadko |
 | `index.html` | Master page projektu PG (`wp-template-define-master-page`) — z niej PG generuje `index.php` | Pinegrow (przez PG) |
 | `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
 | `pinegrow.json` | Ustawienia projektu PG: WordPress Theme Settings (kategoria bloków, CSS edytora, WooCommerce off, folder/nazwa) + `design-settings.custom_config` (max-w-site) | **PG / `/nowy-projekt` (nie tykać ręcznie)** |
