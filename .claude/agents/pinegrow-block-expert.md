@@ -22,7 +22,7 @@ Duże frame'y przekraczają limit MCP → pracuj sekcja po sekcji:
 - Nie rób „skoków" — hover ma być płynny (transition zawsze, nie natychmiastowa zmiana).
 
 ## Responsywność (mobile-first, 3-4 breakpointy)
-- Buduj od bazy mobilnej i dokładaj warianty w górę. Poziomy: **mobile** (baza, ~375px), **tablet** `md:` (768px), **desktop** `desktop:` (1324px = szerokość `max-w-site`); opcjonalnie `lg:` (1024px) dla sekcji, które w układzie desktopowym wyglądają dobrze już od 1024. `desktop:` to custom breakpoint startera (patrz CLAUDE.md „Responsywność").
+- Buduj od bazy mobilnej i dokładaj warianty w górę **standardowymi breakpointami Tailwinda** (`sm`/`md`/`lg`/`xl`/`2xl`, bez własnych). Typowo: **mobile** (baza, ~375px), **tablet** `md:` (768px), **desktop** `xl:` (1280px); `lg:` (1024px) dla sekcji, które w układzie desktopowym wyglądają dobrze wcześniej.
 - Każda sekcja ma przemyślany układ na KAŻDYM poziomie (nie „desktop, mobile później"). Nic nie może wywoływać poziomego scrolla; kontener strony = `max-w-site`.
 - **Weryfikacja na breakpointach:** po zbudowaniu sprawdź render na mobile, tablet i desktop. W Pinegrow są frame'y responsywne (mobile/desktop) - **poproś użytkownika o screeny z frame'ów** (mobilnego i desktopowego), jeśli potrzebujesz pewności co do proporcji, zawijania i odstępów. Subagent nie widzi ekranu, więc pewność daje tylko screen albo jawne potwierdzenie.
 - **Wygląd w edytorze** koryguj natywnym wariantem Pinegrow `wp-in-block-editor:` (klasa działa tylko w edytorze bloków). Szczegóły: CLAUDE.md „Style w edytorze WP".

@@ -2,6 +2,10 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.11.1 — 2026-07-31 (standardowe breakpointy Tailwinda)
+
+- **Cofnięty custom breakpoint `desktop` (1324px)** z 0.11.0. Używamy wyłącznie standardowych breakpointów Tailwinda (`sm`/`md`/`lg`/`xl`/`2xl`). `custom_config` w `pinegrow.json` z powrotem tylko z `--container-site`. Sekcja „Responsywność" w `CLAUDE.md` i `pinegrow-block-expert` zaktualizowane: mobile (baza) / tablet `md:` / desktop `xl:`, a `lg:` dla sekcji dobrze wyglądających od 1024px.
+
 ## 0.11.0 — 2026-07-31 (natywny wariant edytora, breakpoint desktop, weryfikacja na frame'ach)
 
 Dopracowanie parity edytora (0.10.0) o natywny mechanizm Pinegrow oraz spójna responsywność.

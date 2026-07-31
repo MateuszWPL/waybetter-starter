@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.11.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.11.1)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -139,13 +139,12 @@ cms-block-supports="spacing.padding,spacing.margin,spacing.blockGap,anchor,color
 - Zasada przy przypisywaniu klas: myśl „co klient będzie chciał zmienić" i wystaw to jako supports albo pole, zamiast zaszywać na sztywno.
 
 ### Responsywność (breakpointy)
-Mobile-first, 3-4 poziomy. Każda sekcja ma sensowny układ na KAŻDYM z nich (nie „desktop, mobile później"):
+Używamy **standardowych breakpointów Tailwinda** (`sm` 640, `md` 768, `lg` 1024, `xl` 1280, `2xl` 1536), mobile-first. Bez własnych breakpointów. Typowo:
 - **mobile** = baza, bez prefiksu (projektuj od ~375px)
 - **tablet** = `md:` (768px)
-- **desktop** = `desktop:` (1324px, custom breakpoint = szerokość kontenera `max-w-site`)
-- opcjonalnie **`lg:` (1024px)** dla sekcji, które w układzie desktopowym dobrze wyglądają już od 1024px
+- **desktop** = `xl:` (1280px); dla sekcji, które w układzie desktopowym wyglądają dobrze wcześniej, `lg:` (1024px)
 
-Breakpoint `desktop` (1324) jest w custom config kompilatora (`pinegrow.json` → `design-settings.custom_config`, obok `--container-site`). Standardowe `sm/lg/xl` Tailwinda dalej działają. Sprawdź, że żaden układ nie wywołuje poziomego scrolla; kontener strony = `max-w-site`.
+Każda sekcja ma przemyślany układ na mobile, tablecie i desktopie (nie „desktop, mobile później"). Żaden układ nie może wywoływać poziomego scrolla; kontener strony = `max-w-site` (1324px).
 
 ### Pola bloków — komplet atrybutów
 ```html
