@@ -1,5 +1,5 @@
 /**
- * SPIS TREŚCI — megamenu.js (rozwijane panele menu, click-toggle, multi-instance)
+ * SPIS TREŚCI - megamenu.js (rozwijane panele menu, click-toggle, multi-instance)
  * Przycisk `.megamenu-item button` z atrybutem name="idPanelu";
  * panel `[megamenu-panel]` o tym samym id. Klik poza megamenu zamyka aktywny panel.
  */

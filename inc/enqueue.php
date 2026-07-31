@@ -1,13 +1,13 @@
 <?php
 /**
- * SPIS TREŚCI — ŁADOWANIE ASSETÓW (zero builda, pliki wprost z assets/)
- * 1. KONFIGURACJA — które moduły JS ładować (per projekt: true/false)
- * 2. FRONT — biblioteki (warunkowo) + moduły + main.js (wszystko strategy=defer)
- * 3. FRONT + EDYTOR — style komponentów (components.css, custom.css, animations.css)
+ * SPIS TREŚCI - ŁADOWANIE ASSETÓW (zero builda, pliki wprost z assets/)
+ * 1. KONFIGURACJA - które moduły JS ładować (per projekt: true/false)
+ * 2. FRONT - biblioteki (warunkowo) + moduły + main.js (wszystko strategy=defer)
+ * 3. FRONT + EDYTOR - style komponentów (components.css, custom.css, animations.css)
  *
  * Tailwind (tailwind_theme/tailwind.css) ładuje Pinegrow (sekcje w functions.php).
- * Biblioteki są „vendored" w assets/vendor/ — zarządza je npm (`npm run vendors`).
- * Animacje on-scroll: CSS (animations.css) + reveal.js (fallback) — bez biblioteki.
+ * Biblioteki są „vendored" w assets/vendor/ - zarządza je npm (`npm run vendors`).
+ * Animacje on-scroll: CSS (animations.css) + reveal.js (fallback) - bez biblioteki.
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
@@ -40,7 +40,7 @@ function wbstarter_enqueue_front() {
 	$mods  = wbstarter_modules();
 	$defer = array( 'strategy' => 'defer', 'in_footer' => true );
 
-	// Biblioteka Swiper — tylko gdy włączony moduł jej wymagający.
+	// Biblioteka Swiper - tylko gdy włączony moduł jej wymagający.
 	$needs_swiper = ! empty( $mods['sliders'] );
 	if ( $needs_swiper ) {
 		wp_enqueue_style( 'wbstarter-swiper', $uri . '/assets/vendor/swiper-bundle.min.css', array(), $ver );
@@ -67,7 +67,7 @@ function wbstarter_enqueue_front() {
 		wp_enqueue_script( 'wbstarter-' . $name, $uri . '/' . $path, $deps, $ver, $defer );
 	}
 
-	// Entry (globalne inicjalizacje) — po modułach.
+	// Entry (globalne inicjalizacje) - po modułach.
 	wp_enqueue_script( 'wbstarter-main', $uri . '/assets/js/main.js', array(), $ver, $defer );
 
 	/*
@@ -76,14 +76,14 @@ function wbstarter_enqueue_front() {
 	 *   if ( has_block( 'slugmotywu/hero-slider' ) ) { wp_enqueue_script( ... ); }
 	 * UWAGA: namespace bloku = SLUG MOTYWU (pinegrow.json → wp-theme-info.slug),
 	 * NIE "custom". Dokładną nazwę sprawdzisz po eksporcie w blocks/{blok}/block.json
-	 * (pole "name") — inaczej has_block() zawsze zwróci false i skrypt się nie załaduje.
+	 * (pole "name") - inaczej has_block() zawsze zwróci false i skrypt się nie załaduje.
 	 */
 }
 add_action( 'wp_enqueue_scripts', 'wbstarter_enqueue_front' );
 
 /* ============================================
    3. FRONT + EDYTOR: style komponentów (Swiper, accordion, animacje...)
-   enqueue_block_assets ładuje i na froncie, i w edytorze bloków — parity.
+   enqueue_block_assets ładuje i na froncie, i w edytorze bloków - parity.
    ============================================ */
 function wbstarter_enqueue_components() {
 	$uri = get_template_directory_uri();

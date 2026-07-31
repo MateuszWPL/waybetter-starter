@@ -1,13 +1,13 @@
 /**
- * SPIS TREŚCI — reveal.js (animacje wejścia — fallback)
- * Nowoczesne przeglądarki (animation-timeline: view()) — animuje samo CSS
+ * SPIS TREŚCI - reveal.js (animacje wejścia - fallback)
+ * Nowoczesne przeglądarki (animation-timeline: view()) - animuje samo CSS
  * (assets/css/animations.css). Ten moduł wtedy NIC nie robi.
- * Starsze przeglądarki — dokłada html.no-sda + klasę .anim-in na elementy
+ * Starsze przeglądarki - dokłada html.no-sda + klasę .anim-in na elementy
  * [data-anim] wchodzące w viewport (IntersectionObserver, reveal-once).
  * Dynamiczna treść (np. doładowane bloki): window.wbReveal.scan() obejmie nowe.
  */
 (function () {
-	// Nowoczesne CSS scroll-driven — nic nie robimy (CSS załatwia wszystko).
+	// Nowoczesne CSS scroll-driven - nic nie robimy (CSS załatwia wszystko).
 	if (window.CSS && CSS.supports && CSS.supports('animation-timeline: view()')) {
 		return;
 	}
@@ -20,7 +20,7 @@
 	function scan() {
 		var items = document.querySelectorAll('[data-anim]:not(.anim-in)');
 		if (!('IntersectionObserver' in window)) {
-			// Brak IO — pokaż wszystko od razu (bezpieczny default).
+			// Brak IO - pokaż wszystko od razu (bezpieczny default).
 			items.forEach(function (el) { el.classList.add('anim-in'); });
 			return;
 		}

@@ -1,5 +1,5 @@
 /**
- * SPIS TREŚCI — mobilemenu.js (menu mobilne: hamburger + overlay)
+ * SPIS TREŚCI - mobilemenu.js (menu mobilne: hamburger + overlay)
  * Elementy: .hamburger, .nav-menu, opcjonalnie .nav-overlay, .close-menu, .nav-link.
  */
 document.addEventListener('DOMContentLoaded', () => {

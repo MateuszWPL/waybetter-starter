@@ -1,5 +1,5 @@
 /**
- * Konwerter WEBP na żądanie — jedna komenda: `npm run optimize`
+ * Konwerter WEBP na żądanie - jedna komenda: `npm run optimize`
  * Przelatuje inc/img/, konwertuje jpg/jpeg/png → webp (quality 80).
  * Oryginał ZOSTAJE na miejscu (PG nie wykrywa usuniętych plików). Idempotentne:
  * pomija, gdy webp jest nowszy niż źródło. SVG i webp pomijane.
@@ -22,7 +22,7 @@ async function convert(file) {
 	const out = webpPath(file);
 	try {
 		if (fs.existsSync(out) && fs.statSync(out).mtimeMs >= fs.statSync(file).mtimeMs) {
-			return false; // aktualne — pomiń
+			return false; // aktualne - pomiń
 		}
 		await sharp(file).webp({ quality: QUALITY }).toFile(out);
 		console.log(`[webp] ${path.basename(file)} → ${path.basename(out)}`);
@@ -45,7 +45,7 @@ async function run() {
 			if (await convert(f)) done++;
 		}
 	}
-	console.log(`[webp] gotowe — przekonwertowano ${done} plik(ów).`);
+	console.log(`[webp] gotowe - przekonwertowano ${done} plik(ów).`);
 }
 
 run();

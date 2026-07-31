@@ -1,14 +1,14 @@
 <?php
 /**
- * functions.php — GENERUJE I W PEŁNI ZARZĄDZA PINEGROW. NIE EDYTUJ RĘCZNIE.
+ * functions.php - GENERUJE I W PEŁNI ZARZĄDZA PINEGROW. NIE EDYTUJ RĘCZNIE.
  *
  * Pinegrow sam wypełnia sekcje /* Pinegrow generated ... *​/ przy eksporcie:
  * rejestrację bloków, menusy, kategorie, enqueue Tailwinda, helpery bloków.
- * Nie musisz tu nic dopisywać — nawet bloków (robi to sekcja "Register Pinegrow Blocks").
+ * Nie musisz tu nic dopisywać - nawet bloków (robi to sekcja "Register Pinegrow Blocks").
  *
  * SWÓJ kod PHP pisz w  inc/custom.php  (Pinegrow wciąga go w "Include Resources").
  * Ładowanie własnych assetów (biblioteki, custom.css, main.js) robi  inc/enqueue.php
- * (wpięty z inc/custom.php). Tu NIE dokładamy własnych require — bo PG nadpisze plik.
+ * (wpięty z inc/custom.php). Tu NIE dokładamy własnych require - bo PG nadpisze plik.
  */
 
 if ( ! function_exists( 'wbstarter_theme_setup' ) ) :
@@ -84,10 +84,10 @@ add_action( 'wp_enqueue_scripts', 'wbstarter_enqueue_scripts' );
 endif;
 
 
-/* Rejestracja bloków edytora — Pinegrow sam dopisuje require dla każdego bloku. */
+/* Rejestracja bloków edytora - Pinegrow sam dopisuje require dla każdego bloku. */
 if ( ! function_exists( 'wbstarter_blocks_init' ) ) :
 function wbstarter_blocks_init() {
-	// Nie edytuj między poniższymi komentarzami — zarządza Pinegrow.
+	// Nie edytuj między poniższymi komentarzami - zarządza Pinegrow.
 	/* Pinegrow generated Register Pinegrow Blocks Begin */
 	/* Pinegrow generated Register Pinegrow Blocks End */
 }

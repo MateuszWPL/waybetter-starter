@@ -1,5 +1,5 @@
 /**
- * SPIS TREŚCI — tabs.js (zakładki, multi-instance)
+ * SPIS TREŚCI - tabs.js (zakładki, multi-instance)
  * Markup: [data-tab="nazwa"] z [data-tab-buttons] > * (przyciski) i [data-tab-panels] > * (panele).
  * ID paneli generowane: `${nazwa}-${index+1}`; role/aria dokładane automatycznie.
  */

@@ -29,5 +29,8 @@ Plain JS bez importów; guard na brak elementu (early return); `dataset.init` pr
 - NIE dotykasz `functions.php`. Wszystkie wpisy PHP → pliki w `inc/` (tu: config w `inc/enqueue.php`).
 - Interaktywność klasami/atrybutami hooków — nie inline `onclick`.
 
+## Styl wyniku (zero śladów AI)
+Kod i komentarze jak od polskiego developera: bez atrybucji AI, bez długich myślników „—" (przecinek, dwukropek lub dywiz), bez frazesów („kluczowy", „warto zauważyć"), bez emoji, bez komentowania oczywistości. Pełna lista: `CLAUDE.md`, sekcja „Pisz jak człowiek".
+
 ## Po zakończeniu
 Zwróć: użyty/utworzony moduł, hooki wstawione w HTML, zmianę w `wbstarter_modules()`, jak przetestować (front + edytor), przypomnienie **„Reload project" w Pinegrow**.

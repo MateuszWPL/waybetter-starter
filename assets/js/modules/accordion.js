@@ -1,5 +1,5 @@
 /**
- * SPIS TREŚCI — accordion.js (akordeon, multi-instance)
+ * SPIS TREŚCI - accordion.js (akordeon, multi-instance)
  * 1. Logika akordeonu (jeden otwarty naraz; data-accordion="open" otwiera pierwszy)
  * 2. „Pokaż więcej" (limit pozycji: data-limit=N; wyłączenie: data-show-all)
  * ------------------------------------------------------------

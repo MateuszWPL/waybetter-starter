@@ -24,5 +24,8 @@ Dla nietypowych opcji/efektów użyj WebFetch dokumentacji Swipera dla ZAINSTALO
 - Ruch liniowy marquee zapewnia `.autoSlider .swiper-wrapper { transition-timing-function: linear }` w `custom.css` — dla nowego marquee dodaj analogiczną regułę.
 - Upewnij się, że `'sliders' => true` w `wbstarter_modules()` (`inc/enqueue.php`) — Swiper ładuje się tylko wtedy. Style paginacji: `custom.css` (`.swiper-pagination-bullet`).
 
+## Styl wyniku (zero śladów AI)
+Kod i komentarze jak od polskiego developera: bez atrybucji AI, bez długich myślników „—" (przecinek, dwukropek lub dywiz), bez frazesów („kluczowy", „warto zauważyć"), bez emoji, bez komentowania oczywistości. Pełna lista: `CLAUDE.md`, sekcja „Pisz jak człowiek".
+
 ## Po zakończeniu
 Zwróć: pliki zmienione (sliders.js, ew. custom.css, ew. markup), użyte klasy kontenerów, jak przetestować (front + edytor Gutenberga), przypomnienie **„Reload project" w Pinegrow**.

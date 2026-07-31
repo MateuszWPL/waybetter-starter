@@ -1,11 +1,11 @@
 /* ============================================================
-   SPIS TREŚCI — animations.css (animacje wejścia on-scroll, bez biblioteki)
+   SPIS TREŚCI - animations.css (animacje wejścia on-scroll, bez biblioteki)
    1. KEYFRAMES (wspólne dla obu ścieżek)
-   2. ŚCIEŻKA NOWOCZESNA — CSS scroll-driven (@supports animation-timeline)
-   3. FALLBACK — klasa .anim-in dokładana przez reveal.js (IntersectionObserver)
+   2. ŚCIEŻKA NOWOCZESNA - CSS scroll-driven (@supports animation-timeline)
+   3. FALLBACK - klasa .anim-in dokładana przez reveal.js (IntersectionObserver)
    ------------------------------------------------------------
    Użycie: atrybut  data-anim="fade-up|fade|fade-left|fade-right|zoom"
-   na elemencie; opcjonalnie  data-anim-delay="200"  (ms — działa w fallbacku).
+   na elemencie; opcjonalnie  data-anim-delay="200"  (ms - działa w fallbacku).
    Zasady bezpieczeństwa:
    - Respektuje prefers-reduced-motion (brak ruchu → element od razu widoczny).
    - Brak JS / brak wsparcia = element w PEŁNI widoczny (nie chowamy na sztywno).

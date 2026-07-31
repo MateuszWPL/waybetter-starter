@@ -1,16 +1,16 @@
 /* ============================================================
-   SPIS TREŚCI — custom.css (style projektowe, ostateczność po Tailwindzie)
+   SPIS TREŚCI - custom.css (style projektowe, ostateczność po Tailwindzie)
    1. PAGINACJA
    2. SLIDERY SWIPER (pagination bullets + marquee)
    3. FORMULARZ KONTAKTOWY (telefon, checkbox/input focus)
    4. AKTYWNE MENU
    ------------------------------------------------------------
-   Kolory: to STARTER — nie hardcodujemy tu barw klienta. Miejsca oznaczone
+   Kolory: to STARTER - nie hardcodujemy tu barw klienta. Miejsca oznaczone
    „TODO kolor projektu" podmień na token z panelu Design PG (albo klasę TW
    na elemencie). Domyślnie zostawiamy neutralny czarny / currentColor.
-   Tailwind-first: jeśli styl da się zapisać klasą TW — rób to na elemencie,
+   Tailwind-first: jeśli styl da się zapisać klasą TW - rób to na elemencie,
    nie tutaj. custom.css jest dla Swiper, pseudo-elementów i styli wtyczek.
-   Kontener strony: klasa „max-w-site" (1324px) to NATYWNA klasa Tailwinda —
+   Kontener strony: klasa „max-w-site" (1324px) to NATYWNA klasa Tailwinda -
    zdefiniowana w custom config kompilatora PG (--container-site), nie tutaj.
    Więcej: CLAUDE.md.
    ============================================================ */
@@ -40,7 +40,7 @@
   opacity: 1;
 }
 
-/* Ciągły auto-scroll (.autoSlider) — liniowy ruch bez easingu */
+/* Ciągły auto-scroll (.autoSlider) - liniowy ruch bez easingu */
 .autoSlider .swiper-wrapper {
   transition-timing-function: linear;
 }
@@ -61,7 +61,7 @@
   font-size: 14px;
 }
 
-/* Checkbox, input, textarea — [checked] [focus].
+/* Checkbox, input, textarea - [checked] [focus].
    currentColor = element dziedziczy kolor akcentu (ustaw klasą TW text-[...] na formularzu
    albo podmień na token projektu). */
 textarea:focus,

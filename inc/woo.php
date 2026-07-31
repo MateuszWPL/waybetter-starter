@@ -1,9 +1,9 @@
 <?php
 /**
- * SPIS TREŚCI — MODUŁ WOOCOMMERCE (D8/D10)
+ * SPIS TREŚCI - MODUŁ WOOCOMMERCE (D8/D10)
  * Ładowany tylko gdy WooCommerce aktywny (patrz functions.php).
  * 1. WSPARCIE MOTYWU + DEKLARACJA HPOS
- * 2. (dalsze sekcje projektowe — checkout, ulubione itd.)
+ * 2. (dalsze sekcje projektowe - checkout, ulubione itd.)
  */
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }

@@ -1,6 +1,6 @@
 /**
- * SPIS TREŚCI — modalgallery.js (lightbox galerii, MULTI-INSTANCE)
- * Każdy kontener [data-gallery] to osobna, izolowana galeria — może być wiele na stronie.
+ * SPIS TREŚCI - modalgallery.js (lightbox galerii, MULTI-INSTANCE)
+ * Każdy kontener [data-gallery] to osobna, izolowana galeria - może być wiele na stronie.
  * Markup (HTML w dalszym etapie):
  *   <div data-gallery data-gallery-modal="galeria-1">
  *     <button class="gallery-item"><img src="mini.webp" alt=""></button> ...
@@ -13,7 +13,7 @@
  *     <button data-gallery-next>›</button>
  *     <div data-gallery-pagination></div>
  *   </div>
- * Kropki paginacji: klasy .gallery-dot / .gallery-dot-active (components.css) — nie hardcode w JS.
+ * Kropki paginacji: klasy .gallery-dot / .gallery-dot-active (components.css) - nie hardcode w JS.
  */
 (function () {
 	function initGallery(container) {
