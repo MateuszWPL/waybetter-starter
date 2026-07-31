@@ -34,6 +34,7 @@ Odpal na zmienionych plikach. Napraw wszystkie `[BŁĄD]` (delegując do właśc
 ## 7. Domknięcie
 - Dodaj demo bloku do `blocks.html`.
 - Podsumuj: pliki, pola bloku (co klient edytuje), supports, dodane hovery/animacje/interakcje.
-- Przypomnij: **„Reload project" w Pinegrow** → eksport → **porównaj render ze screenshotem Figmy** (front ORAZ edytor Gutenberga — mają wyglądać identycznie).
+- **Responsywność:** poproś użytkownika o screeny z frame'ów Pinegrow (mobilny + desktopowy) albo o potwierdzenie, że układ jest OK na mobile / tablet / desktop. Subagent nie widzi ekranu, pewność responsywności daje tylko screen.
+- Przypomnij: **„Reload project" w Pinegrow** → eksport → **porównaj render ze screenshotem Figmy** na mobile, tablecie i desktopie (front ORAZ edytor Gutenberga — mają wyglądać identycznie).
 
 Kroki 3–5 pomijaj, gdy sekcja ich nie potrzebuje. Kolejność jest ważna: najpierw struktura, potem akcje/slidery (dopinają hooki), na końcu animacje (warstwa na gotowym) i walidacja.

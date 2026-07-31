@@ -2,6 +2,14 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.11.0 — 2026-07-31 (natywny wariant edytora, breakpoint desktop, weryfikacja na frame'ach)
+
+Dopracowanie parity edytora (0.10.0) o natywny mechanizm Pinegrow oraz spójna responsywność.
+
+- **Wariant `wp-in-block-editor:`** (natywny stan Pinegrow, panel klas → stany → WordPress) udokumentowany jako precyzyjne narzędzie per blok: klasa działa tylko w edytorze (scope `.editor-styles-wrapper`), na froncie nic nie robi. `editor.css` zostaje automatycznym baseline'em dla wszystkich bloków; wariant to ręczna korekta pojedynczego (z `!` gdy nadpisuje regułę z editor.css). Wcześniejsza diagnoza „ta klasa nie istnieje" była błędna. Opis w `CLAUDE.md` i nagłówku `editor.css`.
+- **Custom breakpoint `desktop` = 1324px** (`pinegrow.json` → `design-settings.custom_config`, obok `--container-site`), czyli szerokość kontenera `max-w-site`. Nowa sekcja „Responsywność" w `CLAUDE.md`: mobile (baza) / tablet `md:` 768 / desktop `desktop:` 1324, opcjonalnie `lg:` 1024 dla sekcji, które w układzie desktopowym wyglądają dobrze wcześniej.
+- **Agenci budują na 3-4 breakpointach.** `pinegrow-block-expert`: sekcja „Responsywność" (mobile-first, układ przemyślany na każdym poziomie, korekta edytora przez `wp-in-block-editor:`). `pinegrow-block-expert` i skill `/nowa-sekcja`: weryfikacja responsywności na frame'ach Pinegrow (mobilny + desktopowy) i proszenie użytkownika o screeny dla pewności (subagent nie widzi ekranu).
+
 ## 0.10.0 — 2026-07-31 (parity edytora Gutenberga dla Tailwind 4 + edytowalność bloków)
 
 Naprawa problemu zgłoszonego przez zespół: przy TW4 bloki w edytorze się rozwalały (inne kolory nagłówków, rozjechane gridy/flexy, martwy JS). Trzy przyczyny (research: tailwindcss discussion #16934, Gutenberg issue #69833):

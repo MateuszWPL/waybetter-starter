@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.10.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.11.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -107,6 +107,9 @@ Canvas edytora bloków to **iframe**. WordPress wstrzykuje do niego style (hak `
 **Komponenty JS w edytorze (celowo statyczne):**
 JS nie działa w iframe, więc `editor.css` pokazuje komponenty statycznie i czytelnie do edycji: slidy w siatce 3 kolumn, tabsy jeden pod drugim, akordeon otwarty, popup i megamenu w przerywanej ramce z etykietą, animacje wejścia wyłączone (element widoczny). To ZAMIERZONE, na froncie wszystko działa normalnie. Warunek: komponent ma poprawne hooki (popup z klasą `.popup-modal`, slider `.swiper-wrapper` > `.swiper-slide`, tabsy `[tab-panel]` w `[data-tab-panels]`).
 
+**Sterowanie wyglądem per blok - natywny wariant `wp-in-block-editor:`:**
+Pinegrow ma wbudowany stan (wariant) **`wp-in-block-editor`** (panel klas → stany → WordPress; obok `wp-has-admin-bar`). Klasa z tym prefiksem działa TYLKO w edytorze bloków (kompiluje się do selektora scope'owanego pod `.editor-styles-wrapper`), na froncie nie robi nic. To PRECYZYJNE narzędzie per blok - używaj, gdy dany blok ma w edytorze wyglądać inaczej niż domyślnie: `hidden wp-in-block-editor:block` pokazuje w edytorze coś ukrytego na starcie, `wp-in-block-editor:grid-cols-2` daje własny układ podglądu. `editor.css` to automatyczny baseline dla wszystkich bloków; wariant to ręczna korekta pojedynczego. Żeby nadpisać regułę z `editor.css`, dodaj `!` (`wp-in-block-editor:grid-cols-2!`) - editor.css jest bez `@layer`, więc bez `!` utility przegra.
+
 Gdy edytor ≠ front: zrób świeży eksport z PG; sprawdź, czy użyta klasa jest w skanowanym HTML (klasy wpisywane ręcznie w polu „Dodatkowe klasy CSS" mogą się nie skompilować, używaj supports bloków lub krótkiej safelisty).
 
 ## Konwencje bloków (native-hybrid `cms-block*`)
@@ -134,6 +137,15 @@ cms-block-supports="spacing.padding,spacing.margin,spacing.blockGap,anchor,color
 - **Odstępy między elementami** przez `spacing.blockGap` lub pole; paddingi/marginesy sekcji przez supports.
 - **Breakpointów klient nie dotyka** — układ jest mobile-first w klasach TW i sam się dostosowuje. Dajemy gotowy responsywny wygląd, nie pole „breakpoint".
 - Zasada przy przypisywaniu klas: myśl „co klient będzie chciał zmienić" i wystaw to jako supports albo pole, zamiast zaszywać na sztywno.
+
+### Responsywność (breakpointy)
+Mobile-first, 3-4 poziomy. Każda sekcja ma sensowny układ na KAŻDYM z nich (nie „desktop, mobile później"):
+- **mobile** = baza, bez prefiksu (projektuj od ~375px)
+- **tablet** = `md:` (768px)
+- **desktop** = `desktop:` (1324px, custom breakpoint = szerokość kontenera `max-w-site`)
+- opcjonalnie **`lg:` (1024px)** dla sekcji, które w układzie desktopowym dobrze wyglądają już od 1024px
+
+Breakpoint `desktop` (1324) jest w custom config kompilatora (`pinegrow.json` → `design-settings.custom_config`, obok `--container-site`). Standardowe `sm/lg/xl` Tailwinda dalej działają. Sprawdź, że żaden układ nie wywołuje poziomego scrolla; kontener strony = `max-w-site`.
 
 ### Pola bloków — komplet atrybutów
 ```html

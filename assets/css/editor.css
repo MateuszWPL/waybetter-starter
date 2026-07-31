@@ -14,6 +14,12 @@
    - Canvas edytora to iframe, do którego WordPress z definicji NIE wstrzykuje skryptów.
      Slidery/tabsy/popupy nie mają jak działać. Część 2 pokazuje je statycznie i czytelnie
      do edycji (tabsy pod sobą, slidy w siatce, popup w ramce).
+
+   To jest AUTOMATYCZNY baseline dla wszystkich bloków. Precyzyjną korektę wyglądu
+   POJEDYNCZEGO bloku w edytorze robi się natywnym wariantem Pinegrow `wp-in-block-editor:`
+   (klasa działa tylko w edytorze). Żeby nadpisać regułę stąd, dodaj `!`
+   (np. `wp-in-block-editor:grid-cols-2!`) - ten plik jest bez @layer, więc bez `!`
+   utility przegra. Szczegóły: CLAUDE.md, „Style w edytorze WP".
    ============================================================ */
 
 /* === 1. NEUTRALIZACJA (mirror preflight - bez @layer, żeby pokonać CSS edytora WP) === */
