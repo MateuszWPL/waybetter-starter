@@ -1,6 +1,8 @@
 # PROJEKT: {{NAZWA_PROJEKTU}}
 
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.8.1
+> Ten plik to stan i checklist projektu (Claude uzupełnia). Jak pracujemy → `INSTRUKCJA.md`.
+
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.9.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 

@@ -24,3 +24,7 @@ if ( class_exists( 'WooCommerce' ) ) {
 /* ============================================
    FUNKCJE PROJEKTOWE - dodawaj poniżej
    ============================================ */
+
+// Contact Form 7: nie owijaj pól w <p>/<br> - układ formularza robimy klasami Tailwinda
+// (patrz skill /formularz-cf7). Filtr jest nieszkodliwy, gdy wtyczka jest nieaktywna.
+add_filter( 'wpcf7_autop_or_not', '__return_false' );

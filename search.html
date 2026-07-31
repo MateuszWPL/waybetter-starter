@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl" wp-template wp-template-export-as="search.php">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Wyniki wyszukiwania</title>
+        <link href="tailwind_theme/tailwind.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div wp-site-content>
+            <section class="mx-auto max-w-site px-5 py-10 lg:py-16">
+                <h1 class="mb-8 text-2xl font-bold text-gray-900 lg:text-4xl" cms-function="code" cms-function-code="echo 'Wyniki wyszukiwania: &laquo;' . esc_html( get_search_query() ) . '&raquo;';" cms-function-type="content" data-anim="fade-up">Wyniki wyszukiwania</h1>
+                <div cms-post="loop" cms-post-repeat="> div:nth-of-type(1) > article" cms-post-items-container="> div:nth-of-type(1)" cms-post-show-empty-element="> div:nth-of-type(2)">
+                    <div class="flex flex-col divide-y divide-gray-200">
+                        <article class="group relative flex flex-col gap-4 py-6 sm:flex-row" data-anim="fade-up">
+                            <a href="#" class="absolute inset-0 z-10" cms-post-link aria-label="Otwórz wynik"></a>
+                            <img src="https://pinegrow.com/placeholders/img5.jpg" class="h-40 w-full rounded-lg object-cover sm:h-28 sm:w-44" cms-post-image="medium" cms-post-image-sizes="(max-width: 640px) 92vw, 176px" wp-if-has-post-thumbnail alt="Miniatura wyniku" loading="lazy">
+                            <div>
+                                <h2 class="mb-1 text-lg font-bold text-gray-900 transition-colors group-hover:text-primary-500" cms-post-title>Tytuł wyniku</h2>
+                                <time class="text-sm text-gray-500" datetime="2026-01-01" cms-post-date>1 stycznia 2026</time>
+                                <div class="mt-2 line-clamp-2 text-sm text-gray-600" cms-post-excerpt>Fragment treści wyniku wyszukiwania.</div>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="py-16 text-center">
+                        <h2 class="mb-6 text-xl font-semibold text-gray-900">Brak wyników dla podanej frazy</h2>
+                        <a href="/" cms-site-link="home" class="inline-flex items-center rounded-full bg-primary-500 px-6 py-4 text-base font-semibold text-white duration-300 hover:bg-primary-600 cursor-pointer">Wróć do strony głównej</a>
+                    </div>
+                </div>
+                <div class="pt-10">
+                    <div cms-template-part="template-parts/pagination"></div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

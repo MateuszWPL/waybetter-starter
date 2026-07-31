@@ -23,5 +23,5 @@ Kroki:
    - NIE ruszaj: `block_category`, `block_category_name`, `blocks_editor_styles`, `wc_enabled`, `design-settings.custom_config` (to działające ustawienia).
 3. `npm install` — **koniecznie z katalogu projektu, bez flag** (NIE `--prefix`, NIE `npm install <nazwa>` — inaczej npm dopisze błędną samo-referencję `"nazwa": "file:"` do package.json/lock; jeśli się pojawi, usuń ten wpis). Ściąga tylko sharp do webp. Bez builda — nie ma `npm run dev`/`build`.
 4. Jeśli podano Figmę: pobierz kolory (`get_variable_defs`) i **poinstruuj użytkownika**, żeby podmienił przykładowe kolory (primary/secondary/accent) w panelu Design PG na kolory marki (tokeny nie idą do kodu przy wbudowanym kompilatorze).
-5. Uzupełnij `PROJEKT.md` (nazwa, data startu, wersja startera).
+5. Uzupełnij `PROJEKT.md` (nazwa, data startu, wersja startera). Usuń z projektu `CHANGELOG.md` (to historia startera - zostaje na GitHubie, nie wędruje na projekt). `INSTRUKCJA.md` zostaje - to punkt wejścia dla zespołu.
 6. Wypisz użytkownikowi checklist GUI: Pinegrow → **Open project** (projekt gotowy, nie „Create Classic theme") → sprawdź/ustaw folder eksportu = `{{SCIEZKA_LOCAL}}` w WordPress Theme Settings → **Ctrl+M** (eksport) → aktywuj motyw w WP. Panel Design już skonfigurowany — na projekcie podmieniasz tylko wartości kolorów marki.

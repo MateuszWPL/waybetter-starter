@@ -2,6 +2,13 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.9.0 — 2026-07-31 (szablony stron, CF7, jeden plik instrukcji)
+
+- **Szablony stron** (root projektu, port ze starego szablonu na TW4): `404`, `page`, `single`, `archive`, `search` oraz `parts` (breadcrumbs z pełną logiką PHP + wariant CPT `cms-breadcrumbs` + paginacja). Tokeny kolorów zamiast hexów, `lang="pl"`, animacje `data-anim`, bez sidebarów i starych referencji (`main.min`, pgia). Otwierasz w PG przez Reload project.
+- **Contact Form 7 wbudowane** (99% projektów używa CF7): filtr `wpcf7_autop_or_not` (`__return_false`) w `inc/custom.php` usuwa owijanie pól w `<p>`/`<br>`; sekcja CF7 w `components.css` (zerowanie marginesu akceptacji, wyrównanie checkboxa zgody, komunikaty walidacji). Filtr nieszkodliwy, gdy wtyczka nieaktywna.
+- **Skill `/formularz-cf7`**: konwertuje formularz HTML+Tailwind na gotowy shortcode CF7 (klasy na `class:`, placeholdery, pola wymagane, acceptance, suwaki jako obcy HTML). Zapisuje do `cf7/{nazwa}.txt` i wypisuje w czacie.
+- **Jeden plik instrukcji**: nowy `INSTRUKCJA.md` (punkt wejścia dla zespołu: kolejność zakładania projektu, praca codzienna, grafiki, co jest gotowe, gdzie czego szukać). `README-praca.md` usunięty (wchłonięty). `PROJEKT.md` zostaje jako stan projektu z notką odsyłającą do instrukcji. `/nowy-projekt` usuwa teraz `CHANGELOG.md` z projektu (historia startera zostaje na GitHubie).
+
 ## 0.8.2 — 2026-07-31 (grafika motywu)
 
 - **Dodany `screenshot.png`** w rootcie projektu (branding Way Better, 1200x900, format 4:3 wymagany przez WP). Służy jako grafika motywu na karcie w Wygląd > Motywy oraz jako miniatura projektu w Pinegrow. Pinegrow kopiuje go do folderu motywu przy eksporcie.

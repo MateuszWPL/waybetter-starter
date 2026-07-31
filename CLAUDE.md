@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.8.2)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.9.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -40,6 +40,8 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 | `screenshot.png` | Grafika motywu (karta w Wygląd → Motywy) i miniatura projektu PG. Branding Way Better, 1200x900. Zostaje mimo rebrandingu (motyw jest autorstwa agencji) | rzadko |
 | `index.html` | Master page projektu PG (`wp-template-define-master-page`) — z niej PG generuje `index.php` | Pinegrow (przez PG) |
 | `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
+| `404.html`, `page.html`, `single.html`, `archive.html`, `search.html`, `parts.html` | Szablony stron WP (404 / strona / wpis / archiwum / wyszukiwanie + breadcrumbs i paginacja w `parts`). TW4, tokeny kolorów, `data-anim`. Otwierasz w PG (Reload project), dopasowujesz pod projekt | Claude + Pinegrow |
+| `INSTRUKCJA.md` | Punkt wejścia dla zespołu: jak pracujemy, kolejność kroków, gdzie co jest | rzadko |
 | `pinegrow.json` | Ustawienia projektu PG: WordPress Theme Settings (kategoria bloków, CSS edytora, WooCommerce off, folder/nazwa) + `design-settings.custom_config` (max-w-site) | **PG / `/nowy-projekt` (nie tykać ręcznie)** |
 | `projectdb.pgml` | Panel Design: kolory (`<dmcolor>`) i fonty (`<dmdesignskill skill="fonts">`) | **Pinegrow (panel Design, nie tykać ręcznie)** |
 | `theme.json` | Tokeny dla edytora Gutenberga (paleta, font sizes) — **PG generuje z palety** | **Pinegrow (nie tykać)** |

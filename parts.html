@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pl" wp-template wp-template-no-export>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Template parts</title>
+        <link href="tailwind_theme/tailwind.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <section data-pg-name="Breadcrumbs">
+            <div cms-template-part="template-parts/breadcrumbs" cms-template-part-define>
+                <div class="flex flex-wrap items-center gap-1 text-sm text-gray-500 [&_a:hover]:text-primary-500 [&_a]:cursor-pointer [&_.text-primary-500]:text-primary-500" wp-call-function="echo '<a href=&quot;' . esc_url(home_url()) . '&quot;>Strona główna</a>';
+echo '<span>&nbsp;&gt;&nbsp;</span>';
+
+// ===== STRONA Z WPISAMI =====
+if (is_home() && !is_front_page()) {
+    echo '<a href=&quot;' . esc_url(get_permalink(get_option('page_for_posts'))) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html(get_the_title(get_option('page_for_posts'))) . '</a>';
+}
+
+// ===== KATEGORIE I POJEDYNCZE WPISY =====
+elseif (is_category() || is_single()) {
+    if (is_category()) {
+        $current_category = get_queried_object();
+    } elseif (is_single()) {
+        $categories = get_the_category();
+        $current_category = !empty($categories) ? $categories[0] : null;
+    }
+
+    if (!empty($current_category)) {
+        $ancestors = get_ancestors($current_category->term_id, 'category');
+        $ancestors = array_reverse($ancestors);
+
+        foreach ($ancestors as $ancestor_id) {
+            $ancestor = get_category($ancestor_id);
+            echo '<a href=&quot;' . esc_url(get_category_link($ancestor->term_id)) . '&quot;>' . esc_html($ancestor->name) . '</a>';
+            echo '<span>&nbsp;&gt;&nbsp;</span>';
+        }
+
+        if (is_category()) {
+            echo '<a href=&quot;' . esc_url(get_category_link($current_category->term_id)) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html($current_category->name) . '</a>';
+        }
+    }
+
+    if (is_single()) {
+        if (!empty($current_category)) {
+            echo '<a href=&quot;' . esc_url(get_category_link($current_category->term_id)) . '&quot;>' . esc_html($current_category->name) . '</a>';
+            echo '<span>&nbsp;&gt;&nbsp;</span>';
+        }
+        echo '<a href=&quot;' . esc_url(get_permalink()) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html(get_the_title()) . '</a>';
+    }
+}
+
+// ===== TAGI =====
+elseif (is_tag()) {
+    echo '<a href=&quot;' . esc_url(get_tag_link(get_queried_object()->term_id)) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html(single_tag_title('', false)) . '</a>';
+}
+
+// ===== INNE TYPY ARCHIWOW =====
+elseif (is_archive()) {
+    $obj = get_queried_object();
+
+    if (is_tax() || is_category() || is_tag()) {
+        $url = get_term_link($obj);
+        $title = get_the_archive_title();
+    } elseif (is_post_type_archive()) {
+        $url = get_post_type_archive_link($obj->name);
+        $title = post_type_archive_title('', false);
+    } else {
+        $url = get_permalink();
+        $title = get_the_archive_title();
+    }
+
+    echo '<a href=&quot;' . esc_url($url) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html($title) . '</a>';
+}
+
+// ===== STRONY Z HIERARCHIA =====
+elseif (is_page()) {
+    $current_page = get_queried_object();
+    $ancestors = get_post_ancestors($current_page);
+    $ancestors = array_reverse($ancestors);
+
+    foreach ($ancestors as $ancestor_id) {
+        echo '<a href=&quot;' . esc_url(get_permalink($ancestor_id)) . '&quot;>' . esc_html(get_the_title($ancestor_id)) . '</a>';
+        echo '<span>&nbsp;&gt;&nbsp;</span>';
+    }
+
+    echo '<a href=&quot;' . esc_url(get_permalink()) . '&quot; class=&quot;text-primary-500&quot;>' . esc_html(get_the_title()) . '</a>';
+}
+
+// ===== WYNIKI WYSZUKIWANIA =====
+elseif (is_search()) {
+    echo '<a href=&quot;' . esc_url(get_search_link()) . '&quot; class=&quot;text-primary-500&quot;>Wyniki wyszukiwania dla: ' . esc_html(get_search_query()) . '</a>';
+}
+
+// ===== STRONA 404 =====
+elseif (is_404()) {
+    echo '<a href=&quot;' . esc_url(home_url()) . '&quot; class=&quot;text-primary-500&quot;>Nie znaleziono strony</a>';
+}" wp-call-function-set="content">
+                    Breadcrumbs
+                </div>
+            </div>
+            <div cms-template-part="template-parts/breadcrumbs-cpt" cms-template-part-define>
+                <nav class="flex flex-wrap items-center gap-1 text-sm text-gray-500" cms-breadcrumbs cms-breadcrumbs-home-name="Strona główna" cms-breadcrumbs-item="> a:nth-of-type(1)" cms-breadcrumbs-separator="> span:nth-of-type(2)" cms-breadcrumbs-last-item=".text-primary-500" cms-breadcrumbs-last-item-name=".text-primary-500" cms-breadcrumbs-item-name="> a:nth-of-type(1)" cms-breadcrumbs-first-item="> span:nth-of-type(1)" cms-breadcrumbs-home>
+                    <span><a href="" cms-site-link="home" class="hover:text-primary-500 cursor-pointer">Strona główna</a><span>&nbsp;&gt;&nbsp;</span><span>Archiwum</span></span>
+                    <span>&nbsp;&gt;&nbsp;</span>
+                    <a href="" class="hover:text-primary-500 cursor-pointer">Element</a>
+                    <span>&nbsp;&gt;&nbsp;</span>
+                    <a href="" class="text-primary-500">Element bieżący</a>
+                </nav>
+            </div>
+        </section>
+        <section data-pg-name="Pagination">
+            <div cms-template-part="template-parts/pagination" cms-template-part-define>
+                <nav aria-label="Nawigacja paginacji" class="mt-10 flex flex-row justify-between lg:mt-14" cms-pagination cms-pagination-fields cms-pagination-prev="> div:nth-of-type(1) > a" cms-pagination-next="> div:nth-of-type(2) > a" cms-pagination-repeat-item=".flex-wrap > li:nth-of-type(2)" cms-pagination-repeat-item-active=".flex-wrap > li:nth-of-type(1)" cms-pagination-dots=".flex-wrap > li:nth-of-type(3)">
+                    <div>
+                        <a aria-label="Poprzednia strona" href="" class="paginationBttn group hidden h-full items-center gap-2 border border-gray-300 px-5 text-base font-bold text-gray-700 duration-300 hover:border-primary-500 hover:bg-primary-500 hover:text-white lg:flex cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="rotate-180" aria-hidden="true">
+                                <path d="M7.90039 5.83301L12.1004 9.99967L7.90039 14.1663" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span>Poprzednia</span>
+                        </a>
+                    </div>
+                    <ul class="flex flex-wrap gap-2">
+                        <li>
+                            <a aria-current="page" href="" class="flex size-8 items-center justify-center border-0 bg-primary-500 text-base font-bold text-white lg:size-10 xl:size-12 cursor-pointer">1</a>
+                        </li>
+                        <li>
+                            <a href="" class="flex size-8 items-center justify-center border border-gray-300 text-base font-bold text-gray-700 duration-300 hover:border-primary-500 hover:bg-primary-500 hover:text-white lg:size-10 xl:size-12 cursor-pointer">2</a>
+                        </li>
+                        <li>
+                            <span class="flex size-8 items-center justify-center text-base font-bold text-gray-500 lg:size-10 xl:size-12">...</span>
+                        </li>
+                    </ul>
+                    <div>
+                        <a aria-label="Następna strona" href="" class="paginationBttn group hidden h-full items-center gap-2 border border-gray-300 px-5 text-base font-bold text-gray-700 duration-300 hover:border-primary-500 hover:bg-primary-500 hover:text-white lg:flex cursor-pointer">
+                            <span>Następna</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                <path d="M7.90039 5.83301L12.1004 9.99967L7.90039 14.1663" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </section>
+    </body>
+</html>

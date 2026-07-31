@@ -211,3 +211,43 @@
     html {
         scroll-behavior: smooth;
     }
+
+
+/* ------------------- Contact Form 7 ------------------- */
+    /* Układ formularza robimy klasami Tailwinda w shortcode (class:...), a <p>/<br>
+       wyłącza filtr w inc/custom.php. Tu tylko to, czego nie da się ustawić z CF7. */
+
+    /* Zeruje domyślny margines CF7 na akceptacji - checkbox zgody nie odjeżdża od tekstu. */
+    .wpcf7-list-item {
+        margin: 0;
+    }
+
+    /* Wyrównanie checkboxa zgody z wieloliniowym tekstem zgody. */
+    .wpcf7-acceptance .wpcf7-list-item label {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    /* Komunikat walidacji pod polem. */
+    .wpcf7-not-valid-tip {
+        margin-top: 0.25rem;
+        font-size: 0.75rem;
+        color: #dc2626;
+    }
+
+    .wpcf7-not-valid {
+        border-color: #dc2626 !important;
+    }
+
+    /* Zbiorczy komunikat CF7 (sukces/błąd) pod formularzem. */
+    .wpcf7-response-output {
+        margin: 1rem 0 0;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .wpcf7-spinner {
+        margin-left: 0.5rem;
+    }
