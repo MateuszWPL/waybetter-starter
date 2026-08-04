@@ -2,6 +2,15 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.12.0 — 2026-08-04 (konwencje z analizy 5 oddanych projektów)
+
+Test workflow wykazał, że agenci wpinali akcje WP "logicznie, ale błędnie" (Block Attribute `href` zamiast typu Link) i dawali sztywne szerokości przycisków (`w-24`). Przeanalizowane projekty: Rogowski, KokuSushi, Askdom, Proste Cło, Dozycia (pełny raport: warsztatowe `Docs/14-analiza-projektow-konwencje.md`, nie w repo). Reguły potwierdzone w oficjalnych docs Pinegrow.
+
+- **`CLAUDE.md`, nowa sekcja "Akcje WP - jak wpinać edytowalność":** link na `<a>` zawsze przez `cms-block-field-type="link"` + `control="link"` (zakaz `type="attr"` z `attribute="href"`), etykieta przycisku osobnym polem content (span albo `cms-block-field-2`); linki specjalne (`cms-site-link`, `cms-post-link`, `cms-editable-type="link"`); obrazki z fallbackiem `wp-if-has-post-thumbnail="!"`; tło sekcji jako warstwowy `img absolute` z polem image (nie background-image); warianty przez `control="select"` + `field-values`; pętla postów zawsze ze stanem pustym. Plus nakaz: przy niepewności czytać docs Pinegrow (konkretne URL-e), nie zgadywać.
+- **`CLAUDE.md`, sekcje "Przyciski" i "Standardowy layout sekcji":** wymiar przycisku wyłącznie z paddingów (`px-4/5/6` + `py-3/3.5/4`) i `w-fit`/`max-w-max`/`w-full`, zakaz sztywnych szerokości (wyjątek: przyciski-ikony `size-*`); wzorzec sekcji `px-5` na `<section>` + `max-w-site mx-auto` + `py-*` na 2 breakpointach; wzorce headera (fixed, z-[999]) i stopki (grid 12 kolumn, `current_year` + `cms-site-name`).
+- **`pinegrow-block-expert`:** nowe sekcje "Akcje WP - poprawne wpinanie" i "Przyciski i layout" (twarde zasady + WebFetch docs Pinegrow zamiast domysłów).
+- **`block-validator`:** punkty 20-23: zła akcja na linku = [BŁĄD], sztywna szerokość przycisku = [BŁĄD], odstępstwo od wzorca sekcji = [OSTRZEŻENIE], tło/fallbacki/stan pusty pętli.
+
 ## 0.11.1 — 2026-07-31 (standardowe breakpointy Tailwinda)
 
 - **Cofnięty custom breakpoint `desktop` (1324px)** z 0.11.0. Używamy wyłącznie standardowych breakpointów Tailwinda (`sm`/`md`/`lg`/`xl`/`2xl`). `custom_config` w `pinegrow.json` z powrotem tylko z `--container-site`. Sekcja „Responsywność" w `CLAUDE.md` i `pinegrow-block-expert` zaktualizowane: mobile (baza) / tablet `md:` / desktop `xl:`, a `lg:` dla sekcji dobrze wyglądających od 1024px.

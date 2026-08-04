@@ -35,6 +35,21 @@ Duże frame'y przekraczają limit MCP → pracuj sekcja po sekcji:
 - **Tailwind-first:** stylowanie wyłącznie klasami TW4 (arbitrary values dozwolone); custom CSS to ostateczność (`assets/css/custom.css`).
 - Tytuły bloków i helpy po polsku; `data-pg-name` dla czytelności drzewa w PG.
 
+## Akcje WP - poprawne wpinanie (twarde, wzorce z oddanych projektów)
+Pełne przykłady markupu: `CLAUDE.md`, sekcja „Akcje WP - jak wpinać edytowalność". Skrót zasad, których NIE wolno złamać:
+- **Link na `<a>`:** ZAWSZE `cms-block-field-type="link"` + `cms-block-field-control="link"` na całym `<a>`. **NIGDY** `type="attr"` z `cms-block-field-attribute="href"` (logiczne, ale błędne: klient traci picker podstron). Tekst przycisku = osobne pole `content` (span w środku albo `cms-block-field-2` na tym samym elemencie).
+- **Linki specjalne:** home = `cms-site-link="home"`; post w pętli = `cms-post-link`; header/stopka (customizer) = `cms-editable-type="link"`.
+- **Obrazek:** `type="image"` + `control="image"`; w pętlach `cms-post-image` + `cms-post-image-sizes` + fallback `wp-if-has-post-thumbnail` / `="!"`.
+- **Tło sekcji z grafiką:** warstwy `img absolute inset-0 object-cover z-0` (pole image) + gradient overlay `z-10` + treść `relative z-20`. Nie edytowalny background-image w CSS.
+- **Warianty** (kolumny, kolor, status): `control="select"` + `cms-block-field-values` (nowa linia rozdziela opcje, format `Etykieta=wartość`).
+- **Pętla postów:** `cms-post="loop"` + repeat/items-container/show-empty-element, zawsze ze stanem pustym.
+- **Nie zgaduj akcji WP.** Gdy nie masz pewności, jak działa akcja albo typ pola, przeczytaj docs Pinegrow przez WebFetch: `https://pinegrow.com/docs/wordpress/actions/`, `https://pinegrow.com/docs/wordpress/actions/block-attributes/`, `https://pinegrow.com/docs/wordpress/creating-custom-wordpress-blocks/the-complete-guide/`. Domysł „bo tak jest logicznie" to najczęstsze źródło poprawek po Tobie.
+
+## Przyciski i layout (twarde)
+- **Przycisk nie ma sztywnej szerokości.** Wymiar tylko z paddingów (`px-4/5/6` + `py-3/3.5/4`) i tekstu; szerokość `w-fit` / `max-w-max` / `w-full` (formularze, mobile CTA). Zakaz `w-24`, `w-[200px]`, `min-w-*` wymuszających rozmiar. Wyjątek: kwadratowe przyciski-ikony (`size-14`).
+- **Standardowa sekcja:** `<section class="bg-... overflow-hidden px-5">` + w środku `<div class="max-w-site mx-auto py-16 lg:py-24">`. Odstępy pionowe na kontenerze, min. 2 breakpointy.
+- Sztywne wartości pikselowe (wysokości, szerokości) tylko tam, gdzie wymusza je design i nie da się paddingiem/aspect-ratio; każdą taką decyzję wypisz w podsumowaniu.
+
 ## Maksymalna edytowalność (twarda zasada)
 Cel: klient zmienia jak najwięcej sam, bez programisty. Budując blok:
 - **Pełny zestaw supports** na każdej sekcji (jak wyżej): odstępy (padding, margin, blockGap), kolory (tło, tekst), typografia (rozmiar, interlinia), wyrównanie, anchor.

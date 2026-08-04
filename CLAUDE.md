@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.11.1)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.12.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -158,6 +158,63 @@ cms-block-field-help="Wskazówka dla klienta"
 ```
 WooCommerce: atrybuty `wc-*` (`wc-cats`, `wc-product-link`, `wc-product-thumbnail`…) — **zawsze z komentarzem** co robią.
 
+### Akcje WP - jak wpinać edytowalność (wzorce obowiązkowe)
+Wzorce zebrane z 5 oddanych projektów (Rogowski, KokuSushi, Askdom, Proste Cło, Dozycia) i potwierdzone w docs Pinegrow. To jedyne poprawne sposoby, nie wymyślaj własnych.
+
+**Link na przycisku / elemencie `<a>` (twarda zasada):** akcja Block Attribute z typem `link` na całym `<a>`. **ZAKAZ** wpinania href przez `cms-block-field-type="attr"` + `cms-block-field-attribute="href"` (klient traci wyszukiwarkę podstron w panelu, to błąd architektury). Tekst przycisku to OSOBNE pole content:
+```html
+<a href="#" class="..."
+   cms-block-field="hero_cta" cms-block-field-type="link"
+   cms-block-field-control="link" cms-block-field-title="Link: przycisk główny">
+  <span cms-block-field="hero_cta_label" cms-block-field-type="content"
+        cms-block-field-control="richtext" cms-block-field-title="Etykieta: przycisk główny">Poznaj ofertę</span>
+</a>
+```
+Wariant bez spana: drugie pole na tym samym `<a>` przez `cms-block-field-2` + `cms-block-field-type-2="content"` + `cms-block-field-control-2="richtext"`.
+Linki specjalne: strona główna = `cms-site-link="home"` · link posta w pętli = `cms-post-link` · link w headerze/stopce (customizer) = `cms-editable` + `cms-editable-type="link"` + `cms-editable-section`.
+
+**Obrazek:** `cms-block-field-type="image"` + `cms-block-field-control="image"` (media library, WP sam generuje srcset). W pętlach postów: `cms-post-image="medium|large"` + `cms-post-image-sizes="..."` i ZAWSZE fallback:
+```html
+<img ... cms-post-image="medium" wp-if-has-post-thumbnail>
+<img src="fallback.webp" ... wp-if-has-post-thumbnail="!">
+```
+
+**Tło sekcji z grafiką:** nie robimy edytowalnego CSS background-image. Wzorzec warstwowy: `<img class="absolute inset-0 h-full object-cover w-full z-0">` z polem image + opcjonalny gradient overlay (`z-10`) + treść (`relative z-20`), sekcja `relative overflow-hidden`. Tła jednolite = klasy `bg-*` z palety.
+
+**Wariant układu / koloru / statusu:** pole select na atrybucie lub klasie:
+```html
+cms-block-field="karta_status" cms-block-field-type="attr"
+cms-block-field-attribute="fill" cms-block-field-control="select"
+cms-block-field-values="Zielony=#6EFF3A
+Pomarańczowy=#F99A42"
+```
+(wartości rozdzielone nową linią, format `Etykieta=wartość` albo same wartości).
+
+**Pętla postów:** `cms-post="loop"` + `cms-post-type` + `cms-post-type-order="date DESC"` + `cms-post-repeat="selektor"` + `cms-post-items-container` + `cms-post-show-empty-element` (zawsze element "brak wyników" z linkiem powrotu). Taksonomie na karcie: `cms-tags="taksonomia"` + `cms-tags-range`.
+
+**Niepewność = dokumentacja, nie zgadywanie.** Jeśli nie wiesz, jak wpiąć akcję, czytasz docs Pinegrow (WebFetch): `pinegrow.com/docs/wordpress/actions/` (lista akcji), `.../actions/block-attributes/` (typy pól), `.../creating-custom-wordpress-blocks/the-complete-guide/`. Logiczne domysły przy akcjach WP są zakazane, kosztują 2x więcej czasu przy poprawkach.
+
+### Przyciski (twarda zasada)
+Wymiar przycisku wynika WYŁĄCZNIE z paddingów i tekstu, nigdy ze sztywnej szerokości:
+- Szerokość: `w-fit` (domyślnie), `max-w-max`, `w-full` (formularze, mobile CTA). **ZAKAZ** `w-24`, `w-[200px]`, `min-w-*` wymuszających rozmiar. Wyjątek: kwadratowe przyciski-ikony (`size-14`, paginacja, hamburger).
+- Padding wg Figmy, typowo `px-4`/`px-5`/`px-6` + `py-3`/`py-3.5`/`py-4`.
+- Zawsze `cursor-pointer` + płynny hover (`duration-300` z `hover:scale-105`, `hover:bg-*`, zmiana bordera).
+- Ikona w przycisku: `flex items-center justify-center gap-2`.
+- Tekst: `text-center`; `whitespace-nowrap` tylko gdy łamanie faktycznie psuje układ.
+
+### Standardowy layout sekcji
+Wzorzec z 95% sekcji naszych oddanych projektów:
+```html
+<section class="bg-... overflow-hidden px-5 relative">
+  <div class="max-w-site mx-auto py-16 lg:py-24">...</div>
+</section>
+```
+- `px-5` na sekcji (odstęp treści od krawędzi ekranu na mobile), wewnątrz kontener `max-w-site mx-auto`.
+- Pionowe odstępy na kontenerze, minimum 2 breakpointy (`py-10 lg:py-16`, `py-16 lg:py-24`).
+- `overflow-hidden` gdy sekcja ma elementy wychodzące poza obrys (gradienty, dekoracje, slidery).
+- Header: `fixed inset-x-0 top-0 z-[999]` + `transition-all duration-300`, w środku ten sam kontener `max-w-site`.
+- Stopka: grid `grid-cols-2 lg:grid-cols-12` (logo+opis `lg:col-span-5`, kolumny linków po `lg:col-span-2/3`), pasek dolny z `cms-function="current_year"` + `cms-site-name`.
+
 ### Nazewnictwo
 | Element | Konwencja | Przykłady |
 |---|---|---|
@@ -188,7 +245,7 @@ WooCommerce: atrybuty `wc-*` (`wc-cats`, `wc-product-link`, `wc-product-thumbnai
 Każdy plik z funkcjami/stylami (`custom.php`, `woo.php`, `custom.css`, `components.css`, moduły JS) ma **spis treści na górze + numerowane sekcje**. Aktualizujesz go przy każdej zmianie.
 
 ### Czego NIE robić
-Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów).
+Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów) · edytowalny href przez `type="attr"` zamiast `type="link"` · sztywne szerokości przycisków (`w-24`) · sekcja bez wzorca `px-5` + `max-w-site mx-auto`.
 
 ## Workflow z Figmą
 
