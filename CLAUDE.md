@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.12.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.13.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -39,9 +39,11 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 | `scripts/vendors.js` | `npm run vendors` / `postinstall`: kopiuje biblioteki z `node_modules` → `assets/vendor/` | rzadko |
 | `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
 | `screenshot.png` | Grafika motywu (karta w Wygląd → Motywy) i miniatura projektu PG. Branding Way Better, 1200x900. Zostaje mimo rebrandingu (motyw jest autorstwa agencji) | rzadko |
-| `index.html` | Master page projektu PG (`wp-template-define-master-page`) — z niej PG generuje `index.php` | Pinegrow (przez PG) |
+| `index.html` | Master page projektu PG (`wp-template-define-master-page`) — zawiera **header i stopkę** (widoczne na każdej stronie) + slot treści `wp-site-content`. Z niej PG generuje `index.php`. Header/stopka to neutralny szkielet do przestylowania pod Figmę (tokeny, hooki JS startera, edycja przez sekcje customizera `header`/`additional_info`) | Claude + Pinegrow |
 | `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
+| `examples.html` | **Biblioteka wzorców** (nie eksportuje się): sprawdzone układy z oddanych projektów (przyciski, karta wpisu, snap-scroll→grid, paginacja, stan pusty, wzorzec sekcji). Agenci kopiują stąd markup. Czysty HTML+Tailwind, bez `cms-*` | Claude + człowiek |
 | `404.html`, `page.html`, `single.html`, `archive.html`, `search.html`, `parts.html` | Szablony stron WP (404 / strona / wpis / archiwum / wyszukiwanie + breadcrumbs i paginacja w `parts`). TW4, tokeny kolorów, `data-anim`. Otwierasz w PG (Reload project), dopasowujesz pod projekt | Claude + Pinegrow |
+| `archive-cpt.html`, `single-cpt.html` | Wzorce szablonów CPT (przykład `realizacje`). Skill `/nowy-cpt` kopiuje je pod właściwy slug. Same w sobie zostają jako referencja | Claude + Pinegrow |
 | `INSTRUKCJA.md` | Punkt wejścia dla zespołu: jak pracujemy, kolejność kroków, gdzie co jest | rzadko |
 | `pinegrow.json` | Ustawienia projektu PG: WordPress Theme Settings (kategoria bloków, CSS edytora, WooCommerce off, folder/nazwa) + `design-settings.custom_config` (max-w-site) | **PG / `/nowy-projekt` (nie tykać ręcznie)** |
 | `projectdb.pgml` | Panel Design: kolory (`<dmcolor>`) i fonty (`<dmdesignskill skill="fonts">`) | **Pinegrow (panel Design, nie tykać ręcznie)** |
@@ -82,6 +84,8 @@ Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Do p
 |---|---|---|
 | `/nowa-sekcja` (skill) | budowa sekcji z Figmy | orkiestruje: wymagania → budowa → akcje → slidery → animacje → walidacja |
 | `/nowy-blok` (skill) | pojedynczy blok | scaffold + walidacja |
+| `/nowy-cpt` (skill) | custom post type | rejestruje CPT + taksonomię w `inc/custom.php`, tworzy szablony `archive-{slug}`/`single-{slug}` z wzorców |
+| `/formularz-cf7` (skill) | formularz | konwertuje HTML+Tailwind na shortcode Contact Form 7 |
 | `pinegrow-block-expert` (budowniczy) | markup + wygląd | HTML+Tailwind pixel-perfect z Figmy, hovery + `cursor-pointer`, mobile-first |
 | `interactions-expert` | interakcje | dobiera/podpina moduły JS (accordion, tabs, popup, lightbox, menu) + config enqueue |
 | `swiper-expert` | slidery | konfiguracja Swipera w `sliders.js` (najpierw czyta docs, potem koduje) |

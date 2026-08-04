@@ -16,6 +16,7 @@ Kroki:
    - `wbstarter` → prefiks (np. `kn`) — prefiks funkcji, handle, text-domain
    - `WB Starter` → nazwa klienta (style.css Theme Name)
    - placeholdery `{{NAZWA_PROJEKTU}}`, `{{PREFIKS}}`, `{{SCIEZKA_LOCAL}}`
+   - `{{NAZWA_PROJEKTU}}` występuje też w `index.html` (tytuł + tekstowe logo w headerze i stopce) — podmień na nazwę klienta (to placeholder logo do przestylowania pod Figmę).
 2. **Przepisz `pinegrow.json`** (JSON — zachowaj poprawną składnię, jedna linia):
    - `wp-theme-info.name` → nazwa klienta, `wp-theme-info.slug` → slug (małe litery),
    - `wp-theme-info.dir` (placeholder `{{SCIEZKA_LOCAL}}`) → pełna ścieżka folderu motywu w Local,

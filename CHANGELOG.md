@@ -2,6 +2,17 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.13.0 — 2026-08-04 (header + stopka w masterze, szablony CPT, biblioteka wzorców)
+
+Domknięcie braków z analizy: rzeczy, które zespół dotąd budował ręcznie na każdym projekcie, trafiają do startera jako gotowy, neutralny szkielet.
+
+- **Header i stopka w masterze (`index.html`).** Pojawiają się na każdej stronie (przed/za `wp-site-content`). Neutralny szkielet do przestylowania pod Figmę, ale w pełni funkcjonalny: hooki JS startera (`.header`/`.header-scrolled`, `.hamburger`+`.bar`, `.nav-menu`, `.nav-overlay`, `.close-menu`, `.nav-link`), menu `cms-menu="primary"` i `cms-menu="footer"`, edycja tekstów przez sekcje customizera (`header`, `additional_info`), logo `cms-site-link="home"`, rok przez `date_i18n('Y')`, `cms-site-name`, kredyt Waybetter. Tokeny kolorów, zero hexów. Odstęp pod fixed headerem jako osobny div (do usunięcia przy headerze nad hero).
+- **Szablony CPT `archive-cpt.html` + `single-cpt.html`** (przykład `realizacje` + taksonomia `realizacje_kategorie`), wzorowane na `archive.html`/`single.html`: pętla `cms-post="loop"` z typem, fallback obrazka, stan pusty, paginacja/breadcrumbs CPT. Zostają jako referencja.
+- **Skill `/nowy-cpt`:** rejestruje CPT (+ opcjonalnie taksonomię) w `inc/custom.php` po konwencji (prefiks projektu, etykiety PL, `show_in_rest`, `has_archive`, `menu_icon`) i tworzy szablony `archive-{slug}`/`single-{slug}` z wzorców. Przypomina o odświeżeniu linków bezpośrednich (inaczej 404).
+- **Biblioteka wzorców `examples.html`** (nie eksportuje się): przyciski (primary/outline/ikona/w-full), karta wpisu (obraz `group-hover:scale`, badge `backdrop-blur`, `line-clamp-2`), karty jako poziomy snap-scroll→grid od `lg` (wzorzec z Rogowskiego), paginacja, stan pusty, wzorzec sekcji. Agenci kopiują stąd markup zamiast wymyślać (wpięte w źródła prawdy `pinegrow-block-expert`).
+- **`/nowy-projekt`** podmienia teraz `{{NAZWA_PROJEKTU}}` także w `index.html` (tekstowe logo w headerze/stopce). Mapa plików w `CLAUDE.md`, tabela skilli i `INSTRUKCJA.md` zaktualizowane.
+- **Fix TW4:** `single.html` używał `max-w-screen-lg`, klasy usuniętej w Tailwind 4 (kompilowała się do niczego, artykuł tracił ograniczenie szerokości). Zmienione na `max-w-5xl` (1024px). To ten typ cichego błędu kompilacji zgłaszany przy TW4.
+
 ## 0.12.0 — 2026-08-04 (konwencje z analizy 5 oddanych projektów)
 
 Test workflow wykazał, że agenci wpinali akcje WP "logicznie, ale błędnie" (Block Attribute `href` zamiast typu Link) i dawali sztywne szerokości przycisków (`w-24`). Przeanalizowane projekty: Rogowski, KokuSushi, Askdom, Proste Cło, Dozycia (pełny raport: warsztatowe `Docs/14-analiza-projektow-konwencje.md`, nie w repo). Reguły potwierdzone w oficjalnych docs Pinegrow.

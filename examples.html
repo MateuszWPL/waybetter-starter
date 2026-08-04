@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pl">
+    <!-- =========================================================================
+         BIBLIOTEKA WZORCÓW (reference only - NIE jest szablonem WP, nie eksportuje się).
+         Źródło sprawdzonych układów z oddanych projektów. Agenci kopiują stąd markup,
+         człowiek ogląda rendera w Pinegrow. Tokeny kolorów z palety (primary/secondary/gray).
+         Nie wpina tu akcji WP (cms-*) - to czysty HTML+Tailwind do przeklejenia i orkodowania.
+         ========================================================================= -->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Biblioteka wzorców</title>
+        <link href="tailwind_theme/tailwind.css" rel="stylesheet" type="text/css">
+    </head>
+    <body class="bg-gray-100 text-gray-900">
+        <div class="mx-auto max-w-site px-5 py-12">
+            <h1 class="mb-2 text-3xl font-bold">Biblioteka wzorców</h1>
+            <p class="mb-12 text-gray-600">Kopiuj markup do bloku, potem wpinaj akcje WP (linki jako <code class="rounded bg-gray-200 px-1">type="link"</code>, teksty jako <code class="rounded bg-gray-200 px-1">content</code>).</p>
+
+            <!-- ============ PRZYCISKI ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Przyciski (wymiar z paddingów, nigdy sztywna szerokość)</h2>
+                <div class="flex flex-wrap items-center gap-4">
+                    <!-- primary -->
+                    <a href="#" class="inline-flex items-center justify-center rounded-full bg-primary-500 px-6 py-3 text-base font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-600 cursor-pointer">Przycisk główny</a>
+                    <!-- primary z ikoną -->
+                    <a href="#" class="inline-flex items-center justify-center gap-2 rounded-full bg-primary-500 px-6 py-3 text-base font-bold text-white transition-all duration-300 hover:bg-primary-600 cursor-pointer">
+                        <span>Z ikoną</span>
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+                    </a>
+                    <!-- outline -->
+                    <a href="#" class="inline-flex items-center justify-center rounded-full border border-gray-300 px-6 py-3 text-base font-bold text-gray-700 transition-all duration-300 hover:border-primary-500 hover:text-primary-500 cursor-pointer">Outline</a>
+                    <!-- ghost -->
+                    <a href="#" class="inline-flex items-center justify-center gap-1 px-4 py-3 text-base font-bold text-primary-500 transition-colors duration-300 hover:text-primary-600 cursor-pointer">
+                        <span>Link-przycisk</span>
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                    <!-- icon-only (wyjątek: kwadrat) -->
+                    <button type="button" class="flex size-12 items-center justify-center rounded-full bg-gray-900 text-white transition-transform duration-300 hover:scale-105 cursor-pointer" aria-label="Akcja">
+                        <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                    </button>
+                </div>
+                <!-- w-full (formularze / mobile CTA) -->
+                <a href="#" class="mt-4 flex w-full items-center justify-center rounded-full bg-secondary-500 px-6 py-4 text-base font-bold text-white transition-all duration-300 hover:bg-secondary-600 cursor-pointer sm:max-w-xs">Pełna szerokość (w-full)</a>
+            </section>
+
+            <!-- ============ KARTA WPISU ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Karta wpisu (obraz group-hover:scale, badge, line-clamp)</h2>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    <article class="group relative overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <a href="#" class="absolute inset-0 z-10" aria-label="Otwórz wpis"></a>
+                        <div class="relative overflow-hidden">
+                            <img src="https://pinegrow.com/placeholders/img5.jpg" class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="" loading="lazy">
+                            <span class="absolute left-4 top-4 z-20 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">Kategoria</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-primary-500">Dłuższy tytuł wpisu, który po dwóch liniach zostaje przycięty wielokropkiem</h3>
+                            <p class="mb-3 line-clamp-2 text-sm text-gray-600">Krótki opis wpisu, również przycięty do dwóch linii, żeby karty w rzędzie miały równą wysokość.</p>
+                            <time class="text-sm text-gray-500" datetime="2026-01-01">1 stycznia 2026</time>
+                        </div>
+                    </article>
+                    <article class="group relative overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <a href="#" class="absolute inset-0 z-10" aria-label="Otwórz wpis"></a>
+                        <div class="relative overflow-hidden">
+                            <img src="https://pinegrow.com/placeholders/img8.jpg" class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="" loading="lazy">
+                            <span class="absolute left-4 top-4 z-20 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">Kategoria</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-primary-500">Krótki tytuł</h3>
+                            <p class="mb-3 line-clamp-2 text-sm text-gray-600">Opis wpisu.</p>
+                            <time class="text-sm text-gray-500" datetime="2026-01-01">1 stycznia 2026</time>
+                        </div>
+                    </article>
+                    <article class="group relative overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
+                        <a href="#" class="absolute inset-0 z-10" aria-label="Otwórz wpis"></a>
+                        <div class="relative overflow-hidden">
+                            <img src="https://pinegrow.com/placeholders/img15.jpg" class="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105" alt="" loading="lazy">
+                            <span class="absolute left-4 top-4 z-20 rounded-full bg-white/20 px-3 py-1 text-xs font-bold text-white backdrop-blur-md">Kategoria</span>
+                        </div>
+                        <div class="p-5">
+                            <h3 class="mb-2 line-clamp-2 text-lg font-bold text-gray-900 transition-colors group-hover:text-primary-500">Trzeci tytuł wpisu w rzędzie</h3>
+                            <p class="mb-3 line-clamp-2 text-sm text-gray-600">Opis wpisu.</p>
+                            <time class="text-sm text-gray-500" datetime="2026-01-01">1 stycznia 2026</time>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ============ POZIOMY SNAP-SCROLL -> GRID ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Karty: przewijanie w poziomie na mobile, grid od lg (wzorzec z Rogowskiego)</h2>
+                <!-- na mobile: poziomy snap-scroll (karty 80% szerokości), od lg: zwykły grid 3 kolumny -->
+                <div class="-mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 hide-scroll lg:mx-0 lg:grid lg:grid-cols-3 lg:overflow-visible lg:px-0">
+                    <article class="w-4/5 shrink-0 snap-start rounded-lg bg-white p-6 shadow-md sm:w-3/5 lg:w-auto">
+                        <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/10 text-primary-500">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="mb-2 text-lg font-bold">Filar korzyści 1</h3>
+                        <p class="text-sm text-gray-600">Opis korzyści. Na mobile karty przewijają się w poziomie i przyciągają do krawędzi (snap).</p>
+                    </article>
+                    <article class="w-4/5 shrink-0 snap-start rounded-lg bg-white p-6 shadow-md sm:w-3/5 lg:w-auto">
+                        <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/10 text-primary-500">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="mb-2 text-lg font-bold">Filar korzyści 2</h3>
+                        <p class="text-sm text-gray-600">Od lg te same karty układają się w grid 3 kolumny, bez przewijania.</p>
+                    </article>
+                    <article class="w-4/5 shrink-0 snap-start rounded-lg bg-white p-6 shadow-md sm:w-3/5 lg:w-auto">
+                        <div class="mb-4 flex size-12 items-center justify-center rounded-full bg-primary-500/10 text-primary-500">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <h3 class="mb-2 text-lg font-bold">Filar korzyści 3</h3>
+                        <p class="text-sm text-gray-600">Klasa hide-scroll (components.css) ukrywa pasek przewijania.</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- ============ PAGINACJA ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Paginacja (kwadraty size-*, aktywny / nieaktywny)</h2>
+                <nav aria-label="Paginacja" class="flex flex-wrap items-center gap-2">
+                    <a href="#" aria-current="page" class="flex size-10 items-center justify-center bg-primary-500 text-base font-bold text-white lg:size-12 cursor-pointer">1</a>
+                    <a href="#" class="flex size-10 items-center justify-center border border-gray-300 text-base font-bold text-gray-700 transition-colors duration-300 hover:border-primary-500 hover:bg-primary-500 hover:text-white lg:size-12 cursor-pointer">2</a>
+                    <a href="#" class="flex size-10 items-center justify-center border border-gray-300 text-base font-bold text-gray-700 transition-colors duration-300 hover:border-primary-500 hover:bg-primary-500 hover:text-white lg:size-12 cursor-pointer">3</a>
+                    <span class="flex size-10 items-center justify-center text-base font-bold text-gray-500 lg:size-12">...</span>
+                </nav>
+            </section>
+
+            <!-- ============ STAN PUSTY ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Stan pusty (dla pustej pętli postów / wyników)</h2>
+                <div class="rounded-lg bg-white py-16 text-center shadow-sm">
+                    <h3 class="mb-6 text-xl font-semibold text-gray-900">Brak elementów do wyświetlenia</h3>
+                    <a href="/" class="inline-flex items-center rounded-full bg-primary-500 px-6 py-4 text-base font-semibold text-white transition-colors duration-300 hover:bg-primary-600 cursor-pointer">Wróć do strony głównej</a>
+                </div>
+            </section>
+
+            <!-- ============ WZORZEC SEKCJI ============ -->
+            <section class="mb-14">
+                <h2 class="mb-5 border-b border-gray-300 pb-2 text-sm font-bold uppercase tracking-wider text-gray-500">Wzorzec sekcji (95% sekcji)</h2>
+                <pre class="overflow-x-auto rounded-lg bg-gray-900 p-5 text-sm text-white"><code>&lt;section class="bg-white overflow-hidden px-5"&gt;
+  &lt;div class="mx-auto max-w-site py-16 lg:py-24"&gt;
+    ...treść...
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+                <p class="mt-3 text-sm text-gray-600">px-5 na sekcji (odstęp od krawędzi), kontener max-w-site w środku, py na min. 2 breakpointach.</p>
+            </section>
+
+        </div>
+    </body>
+</html>

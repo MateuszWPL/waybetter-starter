@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pl" wp-template wp-template-export-as="single-realizacje.php" wp-template-post-template-types="realizacje" wp-template-post-template-name="Realizacja - standard" wp-template-no-export>
+    <!-- =========================================================================
+         SZABLON WZORCOWY: pojedynczy wpis CPT (tu przykład "realizacje").
+         Skill /nowy-cpt kopiuje ten plik i podmienia slug. Header/stopka z mastera.
+         ========================================================================= -->
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Realizacja</title>
+        <link href="tailwind_theme/tailwind.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div wp-site-content>
+            <div cms-post="loop">
+                <div class="mx-auto max-w-5xl px-5 py-8 lg:py-12">
+                    <main id="content">
+                        <header class="overflow-hidden pb-6" data-anim="fade">
+                            <div class="hidden pb-6 lg:block">
+                                <div cms-template-part="template-parts/breadcrumbs-cpt">Breadcrumbs</div>
+                            </div>
+                            <div class="mb-4 flex flex-row flex-wrap gap-2" cms-tags="realizacje_kategorie" cms-tags-display="this" cms-tags-delimiter=" ">
+                                <a class="block max-w-max rounded bg-primary-500 px-2 py-1 text-[10px] font-semibold text-white duration-300 hover:bg-primary-600 hover:scale-105 lg:text-sm cursor-pointer" href="#">Kategoria</a>
+                            </div>
+                            <h1 class="mb-6 text-2xl font-bold text-gray-900 sm:text-3xl lg:text-4xl" cms-post-title>Tytuł realizacji</h1>
+                            <div class="relative">
+                                <img src="https://pinegrow.com/placeholders/img11.jpg" class="relative z-0 max-h-[520px] min-h-56 w-full rounded-lg object-cover" cms-post-image="large" cms-post-image-sizes="(max-width: 1024px) 92vw, 1024px" wp-if-has-post-thumbnail alt="Zdjęcie główne realizacji" loading="lazy">
+                                <img src="https://pinegrow.com/placeholders/img11.jpg" class="relative z-0 max-h-[520px] min-h-56 w-full rounded-lg object-cover" wp-if-has-post-thumbnail="!" alt="" loading="lazy">
+                            </div>
+                        </header>
+                        <article cms-post-content class="prose max-w-none py-8" data-anim="fade-up">
+                            <p>Treść realizacji. Ten akapit zastępuje edytor WordPress przy renderowaniu wpisu.</p>
+                        </article>
+                        <div class="border-t border-gray-200 pt-8">
+                            <a href="/realizacje/" class="inline-flex items-center gap-2 text-base font-bold text-primary-500 transition-colors hover:text-primary-600 cursor-pointer">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" class="rotate-180" aria-hidden="true">
+                                    <path d="M7.9 5.83L12.1 10l-4.2 4.17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <span>Wszystkie realizacje</span>
+                            </a>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

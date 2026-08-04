@@ -16,7 +16,7 @@ Ten plik to wszystko, co trzeba wiedzieć. Kolejność ma znaczenie - rób po ko
 6. **Aktywuj motyw** w WP (Wygląd → Motywy).
 7. **Podmień kolory marki** w panelu Design PG (primary / secondary / accent) - reszta pójdzie automatycznie.
 
-Od tej chwili budujesz stronę: header i stopkę, potem sekcje z Figmy.
+Od tej chwili budujesz stronę. **Header i stopka są już w masterze** (`index.html`) jako neutralny szkielet - przestylujesz je pod Figmę (logo, kolory, pozycje menu). Potem sekcje z Figmy.
 
 ---
 
@@ -54,9 +54,14 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 - **`/nowy-projekt`** - zakłada projekt (krok 1 wyżej).
 - **`/nowa-sekcja`** - buduje pełną sekcję z Figmy (interakcje, slider, animacje, walidacja).
 - **`/nowy-blok`** - pojedynczy blok.
+- **`/nowy-cpt`** - rejestruje custom post type (np. realizacje, oferta, zespół) + szablony archiwum i wpisu.
 - **`/formularz-cf7`** - przerabia formularz HTML+Tailwind na gotowy shortcode Contact Form 7.
 
-**Szablony stron** (w rootcie, otwierasz w PG): `404`, `page`, `single`, `archive`, `search`, `parts` (breadcrumbs + paginacja). Gotowe do dopasowania pod projekt.
+**Header i stopka**: w masterze `index.html`, na każdej stronie. Neutralny szkielet - przestyluj pod Figmę.
+
+**Szablony stron** (w rootcie, otwierasz w PG): `404`, `page`, `single`, `archive`, `search`, `parts` (breadcrumbs + paginacja) oraz wzorce CPT `archive-cpt` / `single-cpt`. Gotowe do dopasowania pod projekt.
+
+**Biblioteka wzorców** `examples.html` - sprawdzone układy (przyciski, karty, paginacja, snap-scroll→grid). Otwórz w PG albo skopiuj markup do bloku.
 
 **Moduły JS** (włączasz w `inc/enqueue.php` - tablica na górze, `true`/`false`): slider (Swiper), menu mobilne, accordion, tabs, popup, galeria (lightbox), megamenu, drag scroll, animacje wejścia (`data-anim`).
 
@@ -73,6 +78,8 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 | Style komponentów (menu, popup, CF7) | `assets/css/components.css` |
 | Włączyć/wyłączyć moduł JS | `inc/enqueue.php` (tablica na górze) |
 | Napisać własny kod PHP | `inc/custom.php` (nigdy `functions.php`) |
+| Dodać custom post type | skill `/nowy-cpt` |
+| Skopiować gotowy układ (przycisk, karta) | `examples.html` |
 | WooCommerce | `inc/woo.php` (ładuje się, gdy wtyczka aktywna) |
 | Stan i checklist projektu | `PROJEKT.md` |
 | Pełne konwencje i zasady | `CLAUDE.md` |
