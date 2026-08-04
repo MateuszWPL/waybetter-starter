@@ -56,6 +56,7 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 - **`/nowy-blok`** - pojedynczy blok.
 - **`/nowy-cpt`** - rejestruje custom post type (np. realizacje, oferta, zespół) + szablony archiwum i wpisu.
 - **`/formularz-cf7`** - przerabia formularz HTML+Tailwind na gotowy shortcode Contact Form 7.
+- **`/audyt`** - przed oddaniem: skan dostępności (WCAG) i SEO, raport co poprawić.
 
 **Header i stopka**: w masterze `index.html`, na każdej stronie. Neutralny szkielet - przestyluj pod Figmę.
 
@@ -94,6 +95,11 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 - **Nowy plik/blok niewidoczny w PG** → **Reload project** (nie File Reload).
 - **Blok wygląda inaczej w edytorze niż na froncie** → zrób świeży eksport z PG; sprawdź, czy użyte klasy są w skanowanym HTML.
 - **Komponenty w edytorze wyglądają statycznie** (tabsy jeden pod drugim, slidy w siatce, popup w ramce) → to celowe. JS działa tylko na froncie, w edytorze pokazujemy zawartość tak, żeby dało się ją wygodnie edytować.
+- **JS komponentu nie działa na froncie** → sprawdź w `inc/enqueue.php` (tablica na górze), czy dany moduł ma `=> true`. Jeśli używasz warunkowego `has_block()`, namespace bloku to slug motywu (np. `wbstarter/hero`), do sprawdzenia w `blocks/{blok}/block.json` (pole `name`).
+- **Slider się nie uruchamia** → moduł `sliders => true`, kontener ma klasę wariantu (`basicSlider` albo `autoSlider`) i są w nim slajdy. Warning w konsoli o „loop mode" = za mało slajdów (dodaj slajdy albo wyłącz pętlę).
+- **Podstrona CPT / archiwum daje 404** → WP → Ustawienia → Bezpośrednie odnośniki → Zapisz zmiany (przebudowa reguł przekierowań).
+- **Menu puste na stronie** → WP → Wygląd → Menu → utwórz menu i przypisz je do lokalizacji (np. „Menu główne (nagłówek)").
+- **Font się nie wczytuje** → to 2 kroki: `@font-face` w `assets/css/custom.css` (sekcja 6) ORAZ dodanie rodziny jako token w panelu Design PG (bez tego klasa `font-nazwa` nie istnieje).
 - **Nie wiem, co dalej** → `PROJEKT.md` (stan projektu), potem `CLAUDE.md` (zasady).
 
 > Kontrola wersji (Git) - na razie nie używamy. Bazę Local trzymasz lokalnie.

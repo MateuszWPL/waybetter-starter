@@ -24,6 +24,16 @@ Dla nietypowych opcji/efektów użyj WebFetch dokumentacji Swipera dla ZAINSTALO
 - Ruch liniowy marquee zapewnia `.autoSlider .swiper-wrapper { transition-timing-function: linear }` w `custom.css` — dla nowego marquee dodaj analogiczną regułę.
 - Upewnij się, że `'sliders' => true` w `wbstarter_modules()` (`inc/enqueue.php`) — Swiper ładuje się tylko wtedy. Style paginacji: `custom.css` (`.swiper-pagination-bullet`).
 
+## Pułapki Swiper 11 (znaj, zanim zakodujesz)
+Zweryfikowane w dokumentacji (`https://swiperjs.com/swiper-api`). Baseline w `sliders.js` już to uwzględnia — pilnuj tego przy nowych wariantach.
+- **Breakpoints = min-width (mobile-first, jak Tailwind).** `breakpoints: { 1024: {...} }` znaczy „od 1024px w górę". Baza konfiguracji (poza `breakpoints`) to wartości mobilne; w progach nadpisujesz w górę. Nie ma tu logiki max-width.
+- **Loop wymaga zapasu slajdów.** Gdy slajdów jest mniej niż `slidesPerView + 1`, Swiper 11 wyłącza loop i wypisuje warning w konsoli („not enough slides for loop mode"). Procedura: jeśli klient poda mało slajdów, ustaw `loop: false` albo zaproponuj duplikację slajdów, i napisz to w podsumowaniu. Nie zostawiaj warninga.
+- **Slider w ukrywanym kontenerze (tabs, akordeon, popup)** startuje ze złymi wymiarami, bo w chwili init kontener ma szerokość 0. Dodaj `observer: true, observeParents: true` (Swiper przelicza się po pokazaniu). Baseline `sliders.js` ma to na obu wariantach.
+- **A11y po polsku.** Bundle ma moduł A11y aktywny, ale komunikaty są angielskie. Ustaw `a11y` z polskimi tekstami (wzór `a11yPL` w `sliders.js`) i tak czy inaczej daj `aria-label` po polsku na `.swiper-button-next/prev` w markupie.
+- **Marquee (`autoSlider`).** Kombinacja `freeMode + loop + autoplay.delay 0 + speed` daje ciągły przesuw, ale potrzebuje tylu slajdów, żeby wypełnić ~2x szerokość kontenera — inaczej widać przerwę/przeskok. Ruch liniowy zapewnia reguła `.autoSlider .swiper-wrapper { transition-timing-function: linear }` w `custom.css`.
+- **Obrazy w slajdach:** natywny `loading="lazy"` na `<img>`; przy cięższych galeriach rozważ `lazyPreloadPrevNext: 1`.
+- Do nietypowych opcji czytaj konkretne sekcje: `#parameters` (breakpoints), `#autoplay`, `#observer`, `#a11y`, `#lazy`.
+
 ## Styl wyniku (zero śladów AI)
 Kod i komentarze jak od polskiego developera: bez atrybucji AI, bez długich myślników „—" (przecinek, dwukropek lub dywiz), bez frazesów („kluczowy", „warto zauważyć"), bez emoji, bez komentowania oczywistości. Pełna lista: `CLAUDE.md`, sekcja „Pisz jak człowiek".
 

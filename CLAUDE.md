@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.13.0)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -48,6 +48,7 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 | `pinegrow.json` | Ustawienia projektu PG: WordPress Theme Settings (kategoria bloków, CSS edytora, WooCommerce off, folder/nazwa) + `design-settings.custom_config` (max-w-site) | **PG / `/nowy-projekt` (nie tykać ręcznie)** |
 | `projectdb.pgml` | Panel Design: kolory (`<dmcolor>`) i fonty (`<dmdesignskill skill="fonts">`) | **Pinegrow (panel Design, nie tykać ręcznie)** |
 | `theme.json` | Tokeny dla edytora Gutenberga (paleta, font sizes) — **PG generuje z palety** | **Pinegrow (nie tykać)** |
+| `blocks/{blok}/block.json` | Powstaje przy eksporcie bloku z PG. Pole `name` = namespace bloku (`{slug-motywu}/{nazwa}`, np. `wbstarter/hero-slider`) — tego używa `has_block()` w `inc/enqueue.php`. Weryfikuj tu dokładną nazwę, nie zgaduj | **Pinegrow (odczyt do weryfikacji namespace)** |
 | `tailwind_theme/`, `_pginfo/` | Output kompilatora TW (`tailwind.css`, `tailwind_for_wp_editor.css`) + stan PG | **Pinegrow (nie tykać)** |
 
 ## ZAKAZY (twarde)
@@ -86,6 +87,7 @@ Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Do p
 | `/nowy-blok` (skill) | pojedynczy blok | scaffold + walidacja |
 | `/nowy-cpt` (skill) | custom post type | rejestruje CPT + taksonomię w `inc/custom.php`, tworzy szablony `archive-{slug}`/`single-{slug}` z wzorców |
 | `/formularz-cf7` (skill) | formularz | konwertuje HTML+Tailwind na shortcode Contact Form 7 |
+| `/audyt` (skill) | przed oddaniem | skan WCAG + SEO szablonów i bloków, raport z priorytetami (nie zmienia plików) |
 | `pinegrow-block-expert` (budowniczy) | markup + wygląd | HTML+Tailwind pixel-perfect z Figmy, hovery + `cursor-pointer`, mobile-first |
 | `interactions-expert` | interakcje | dobiera/podpina moduły JS (accordion, tabs, popup, lightbox, menu) + config enqueue |
 | `swiper-expert` | slidery | konfiguracja Swipera w `sliders.js` (najpierw czyta docs, potem koduje) |
@@ -216,6 +218,7 @@ Wzorzec z 95% sekcji naszych oddanych projektów:
 - `px-5` na sekcji (odstęp treści od krawędzi ekranu na mobile), wewnątrz kontener `max-w-site mx-auto`.
 - Pionowe odstępy na kontenerze, minimum 2 breakpointy (`py-10 lg:py-16`, `py-16 lg:py-24`).
 - `overflow-hidden` gdy sekcja ma elementy wychodzące poza obrys (gradienty, dekoracje, slidery).
+- **Wyjątek fullbleed:** sekcje na pełną szerokość (slider/marquee, tło dekoracyjne, osadzona mapa, hero z grafiką na całość) łamią wzorzec świadomie - wtedy `px-5` i `max-w-site` idą na wewnętrzną warstwę treści (nakładka nad grafiką), a nie na `<section>`. Walidator traktuje to jako [SUGESTIA], nie ostrzeżenie.
 - Header: `fixed inset-x-0 top-0 z-[999]` + `transition-all duration-300`, w środku ten sam kontener `max-w-site`.
 - Stopka: grid `grid-cols-2 lg:grid-cols-12` (logo+opis `lg:col-span-5`, kolumny linków po `lg:col-span-2/3`), pasek dolny z `cms-function="current_year"` + `cms-site-name`.
 

@@ -10,13 +10,26 @@
 document.addEventListener('DOMContentLoaded', function () {
 	if (typeof Swiper === 'undefined') return;
 
+	// Komunikaty czytnika ekranu po polsku (moduł A11y Swipera ma domyślnie angielskie).
+	var a11yPL = {
+		prevSlideMessage: 'Poprzedni slajd',
+		nextSlideMessage: 'Następny slajd',
+		firstSlideMessage: 'To jest pierwszy slajd',
+		lastSlideMessage: 'To jest ostatni slajd',
+		paginationBulletMessage: 'Przejdź do slajdu {{index}}',
+	};
+
 	// 1. Slidery podstawowe
 	document.querySelectorAll('.basicSlider').forEach(function (el) {
 		if (el.querySelectorAll('.swiper-slide').length === 0) return;
 		new Swiper(el, {
 			slidesPerView: 1,
 			spaceBetween: 18,
-			loop: true,
+			loop: true, // wymaga zapasu slajdów; przy zbyt małej liczbie Swiper sam wyłącza loop (warning w konsoli)
+			// observer* przelicza wymiary, gdy slider startuje w ukrytym kontenerze (tabs, akordeon, popup)
+			observer: true,
+			observeParents: true,
+			a11y: a11yPL,
 			pagination: {
 				el: el.querySelector('.swiper-pagination'),
 				clickable: true,
@@ -38,9 +51,12 @@ document.addEventListener('DOMContentLoaded', function () {
 		new Swiper(el, {
 			slidesPerView: 'auto',
 			spaceBetween: 80,
-			loop: true,
+			loop: true, // marquee potrzebuje zapasu slajdów (~2x szerokość kontenera), inaczej widać przerwę
 			freeMode: true,
 			speed: 4000,
+			observer: true,
+			observeParents: true,
+			a11y: a11yPL,
 			autoplay: {
 				delay: 0,
 				disableOnInteraction: false,

@@ -73,11 +73,12 @@ function wbstarter_enqueue_front() {
 
 	/*
 	 * WARUNKOWE ŁADOWANIE PER STRONA (opcjonalnie, wdrażasz na projekcie):
-	 * ładuj ciężki asset tylko tam, gdzie faktycznie jest dany blok, np.:
-	 *   if ( has_block( 'slugmotywu/hero-slider' ) ) { wp_enqueue_script( ... ); }
-	 * UWAGA: namespace bloku = SLUG MOTYWU (pinegrow.json → wp-theme-info.slug),
-	 * NIE "custom". Dokładną nazwę sprawdzisz po eksporcie w blocks/{blok}/block.json
-	 * (pole "name") - inaczej has_block() zawsze zwróci false i skrypt się nie załaduje.
+	 * ładuj ciężki asset tylko tam, gdzie faktycznie jest dany blok. Namespace bloku
+	 * to SLUG MOTYWU (pinegrow.json → wp-theme-info.slug), NIE "custom". W tym starterze
+	 * slug = "wbstarter" (po /nowy-projekt = slug projektu), więc:
+	 *   if ( has_block( 'wbstarter/hero-slider' ) ) { wp_enqueue_script( ... ); }
+	 * Dokładną nazwę potwierdzisz po eksporcie w blocks/{blok}/block.json (pole "name")
+	 * - zły namespace = has_block() zawsze false i skrypt się nie załaduje.
 	 */
 }
 add_action( 'wp_enqueue_scripts', 'wbstarter_enqueue_front' );

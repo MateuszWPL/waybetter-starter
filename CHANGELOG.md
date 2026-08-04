@@ -2,6 +2,15 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.0 — 2026-08-04 (audyt workflow: Swiper, DX, skill /audyt)
+
+Audyt trzech obszarów (ładowanie skryptów, wiedza agenta od sliderów, ogólna optymalność). Ładowanie assetów wyszło czyste (defer + zależności, brak duplikatów Tailwinda front/edytor, early-returny w modułach, cache-busting wersją motywu) - bez zmian funkcjonalnych. Reszta to utwardzenia i DX.
+
+- **Swiper 11 - pułapki w wiedzy agenta i utwardzenie `sliders.js`.** `swiper-expert` dostał sekcję „Pułapki Swiper 11" (zweryfikowane w swiperjs.com): breakpoints = min-width; `loop` przy zbyt małej liczbie slajdów jest auto-wyłączany (warning w konsoli) - procedura; slider w ukrywanym kontenerze (tabs/akordeon/popup) wymaga `observer`/`observeParents`; komunikaty A11y domyślnie po angielsku; marquee potrzebuje zapasu slajdów. `sliders.js`: oba warianty dostały `observer: true, observeParents: true` i `a11y` z polskimi komunikatami; komentarze o wymaganiach loop.
+- **Skill `/audyt`** (przed oddaniem): skan WCAG (alt, hierarchia nagłówków, aria-label, kontrast heurystycznie, formularze, focus) + SEO (jeden h1, semantyka, webp/lazy, brak placeholderów) + higiena (nieużywane moduły, resztki grafik). Raportuje (nie zmienia plików), zapisuje `audyt-RRRR-MM-DD.md`, odhacza pozycję w `PROJEKT.md`.
+- **DX i doprecyzowania.** `custom.css`: wzorce (zakomentowane) `.header-scrolled` (moduł `custom.js` dodaje klasę, dotąd nic jej nie stylowało) i `@font-face` z notką o 2 krokach (deklaracja + token w panelu Design). `inc/enqueue.php`: komentarz `has_block()` z konkretnym slugiem (`wbstarter/...`) zamiast `slugmotywu`. `block-validator`: pkt 20 rozbity (hardcoded href bez akcji = ostrzeżenie), pkt 22 złagodzony dla świadomego fullbleed ([SUGESTIA] zamiast [OSTRZEŻENIE]). `CLAUDE.md`: wyjątek fullbleed w layoucie sekcji, wiersz `blocks/{blok}/block.json` w mapie plików, `/audyt` w tabeli skilli. `INSTRUKCJA.md`: troubleshooting o realne case'y (JS/namespace, slider, CPT 404, puste menu, font).
+- **`README.md`** w rootcie repo (wizytówka GitHub): szybki start, który plik dla kogo, stack, skille.
+
 ## 0.13.0 — 2026-08-04 (header + stopka w masterze, szablony CPT, biblioteka wzorców)
 
 Domknięcie braków z analizy: rzeczy, które zespół dotąd budował ręcznie na każdym projekcie, trafiają do startera jako gotowy, neutralny szkielet.

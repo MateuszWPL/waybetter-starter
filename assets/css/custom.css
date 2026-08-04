@@ -4,6 +4,8 @@
    2. SLIDERY SWIPER (pagination bullets + marquee)
    3. FORMULARZ KONTAKTOWY (telefon, checkbox/input focus)
    4. AKTYWNE MENU
+   5. SCROLL HEADER (wzorzec, zakomentowany)
+   6. CZCIONKI LOKALNE (wzorzec @font-face, zakomentowany)
    ------------------------------------------------------------
    Kolory: to STARTER - nie hardcodujemy tu barw klienta. Miejsca oznaczone
    „TODO kolor projektu" podmień na token z panelu Design PG (albo klasę TW
@@ -94,3 +96,28 @@ input[type="checkbox"]:checked {
 .active-mega-menu{
   color: currentColor;                             /* TODO kolor projektu (akcent aktywnej pozycji) */
 }
+
+
+/* === 5. SCROLL HEADER === */
+/* Moduł assets/js/modules/custom.js dodaje klasę .header-scrolled na .header po
+   przewinięciu > 50px. Efekt stylujesz per projekt (mniejszy padding, cień, tło).
+   Wzorzec (odkomentuj i dopasuj albo zrób klasami TW na elemencie):
+.header.header-scrolled {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+*/
+
+
+/* === 6. CZCIONKI LOKALNE === */
+/* Font z pliku (woff2) zamiast Google Fonts. Dwa kroki:
+   1) zadeklaruj @font-face tutaj (plik w assets/fonts/),
+   2) dodaj rodzinę jako token w panelu Design PG (font family) - inaczej klasa
+      `font-nazwa` w Tailwindzie nie istnieje i nie zadziała.
+   Wzorzec:
+@font-face {
+  font-family: 'Manrope';
+  src: url('../fonts/manrope-variable.woff2') format('woff2');
+  font-weight: 300 800;
+  font-display: swap;
+}
+*/

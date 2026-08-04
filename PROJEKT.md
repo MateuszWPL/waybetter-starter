@@ -2,7 +2,7 @@
 
 > Ten plik to stan i checklist projektu (Claude uzupełnia). Jak pracujemy → `INSTRUKCJA.md`.
 
-- **Start:** RRRR-MM-DD · **Wersja startera:** 0.13.0
+- **Start:** RRRR-MM-DD · **Wersja startera:** 0.14.0
 - **Strona Local:** {{SCIEZKA_LOCAL}}
 - **Figma:** (link)
 
