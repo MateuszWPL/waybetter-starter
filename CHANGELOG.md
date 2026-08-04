@@ -2,6 +2,13 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.1 — 2026-08-04 (hotfix: marker Customizera w functions.php)
+
+Regresja z 0.13.0: header i stopka w masterze używają pól edytowalnych przez Customizer (`cms-editable` + `cms-section`), ale szkielet `functions.php` nie miał funkcji `customize_register` z markerem, więc Pinegrow przy eksporcie zgłaszał „Section Customizer Controls not found" i eksport padał.
+
+- **`functions.php`** (szkielet startera): dodana funkcja `wbstarter_theme_customize_register` z markerem `Pinegrow generated Customizer Controls` (PG wypełnia go sekcjami i polami header/stopki przy eksporcie). Wzorzec potwierdzony na oddanych projektach (Askdom, Rogowski) - PG trzyma `add_section` i `add_control` w jednym markerze „Customizer Controls".
+- **`INSTRUKCJA.md`**: troubleshooting dla projektów założonych ze starszej wersji (przed 0.14.1) - jak dodać funkcję ręcznie.
+
 ## 0.14.0 — 2026-08-04 (audyt workflow: Swiper, DX, skill /audyt)
 
 Audyt trzech obszarów (ładowanie skryptów, wiedza agenta od sliderów, ogólna optymalność). Ładowanie assetów wyszło czyste (defer + zależności, brak duplikatów Tailwinda front/edytor, early-returny w modułach, cache-busting wersją motywu) - bez zmian funkcjonalnych. Reszta to utwardzenia i DX.

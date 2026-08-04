@@ -99,6 +99,17 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 - **Slider się nie uruchamia** → moduł `sliders => true`, kontener ma klasę wariantu (`basicSlider` albo `autoSlider`) i są w nim slajdy. Warning w konsoli o „loop mode" = za mało slajdów (dodaj slajdy albo wyłącz pętlę).
 - **Podstrona CPT / archiwum daje 404** → WP → Ustawienia → Bezpośrednie odnośniki → Zapisz zmiany (przebudowa reguł przekierowań).
 - **Menu puste na stronie** → WP → Wygląd → Menu → utwórz menu i przypisz je do lokalizacji (np. „Menu główne (nagłówek)").
+- **Eksport pada: „Section Customizer Controls not found in functions.php"** → projekt założony ze starszej wersji startera (przed 0.14.1) nie ma funkcji `customize_register`, której potrzebują edytowalne pola header/stopki. Dodaj do `functions.php` (raz), potem eksport ponownie:
+  ```php
+  if ( ! function_exists( 'wbstarter_theme_customize_register' ) ) :
+  function wbstarter_theme_customize_register( $wp_customize ) {
+  	/* Pinegrow generated Customizer Controls Begin */
+  	/* Pinegrow generated Customizer Controls End */
+  }
+  add_action( 'customize_register', 'wbstarter_theme_customize_register' );
+  endif;
+  ```
+  Od startera 0.14.1 jest to w szkielecie domyślnie.
 - **Font się nie wczytuje** → to 2 kroki: `@font-face` w `assets/css/custom.css` (sekcja 6) ORAZ dodanie rodziny jako token w panelu Design PG (bez tego klasa `font-nazwa` nie istnieje).
 - **Nie wiem, co dalej** → `PROJEKT.md` (stan projektu), potem `CLAUDE.md` (zasady).
 

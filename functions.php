@@ -54,6 +54,18 @@ endif;
 add_action( 'init', 'wbstarter_theme_init' );
 
 
+/* Customizer - sekcje i pola edytowalne (header/stopka w masterze). Markery wypełnia Pinegrow. */
+if ( ! function_exists( 'wbstarter_theme_customize_register' ) ) :
+function wbstarter_theme_customize_register( $wp_customize ) {
+
+	/* Pinegrow generated Customizer Controls Begin */
+	/* Pinegrow generated Customizer Controls End */
+
+}
+add_action( 'customize_register', 'wbstarter_theme_customize_register' );
+endif;
+
+
 /*
  * Pliki zasobów dołączane przez Pinegrow (nasz kod: inc/custom.php + helpery bloków).
  */
