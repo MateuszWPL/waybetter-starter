@@ -19,7 +19,7 @@ Pełna kolejność i codzienna praca: **[INSTRUKCJA.md](INSTRUKCJA.md)**.
 
 ## Skille (Claude Code)
 
-`/nowy-projekt` · `/nowa-sekcja` · `/nowy-blok` · `/nowy-cpt` · `/formularz-cf7` · `/audyt`
+`/nowy-projekt` · `/nowa-sekcja` · `/nowy-cpt` · `/formularz-cf7` · `/audyt`
 
 ## Stack
 

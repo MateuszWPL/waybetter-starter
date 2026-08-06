@@ -1,6 +1,6 @@
 ---
 name: nowa-sekcja
-description: Orkiestruje budowę pełnej sekcji/bloku z Figmy — prowadzi pipeline: wymagania → budowa (pixel-perfect) → akcje → slidery → animacje → walidacja. Używaj gdy użytkownik pisze /nowa-sekcja lub prosi o zbudowanie sekcji/ekranu z designu (Figma).
+description: Orkiestruje budowę bloku/sekcji z Figmy — prowadzi pipeline: materiały wejściowe (desktop + mobile) → budowa (pixel-perfect) → akcje → slidery → animacje → walidacja. Używaj gdy użytkownik pisze /nowa-sekcja albo prosi o zbudowanie bloku, sekcji lub ekranu z designu (Figma) — także pojedynczego bloku.
 ---
 
 Prowadzisz uporządkowany przebieg budowy sekcji z Figmy, delegując do wyspecjalizowanych agentów. **Kluczowa zasada: subagenci NIE rozmawiają z użytkownikiem — wszystkie wymagania zbierasz TY (główny agent) PRZED delegacją.** Jeśli agent zwróci listę pytań zamiast kodu, dopytaj użytkownika (AskUserQuestion) i ponów delegację z uzupełnionym briefem.

@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.3)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.4)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -54,7 +54,7 @@ Stronę WordPress obsługują **dwa ładowacze** i nie wolno ich mieszać:
 | `style.css` | Metadane motywu (nazwa, wersja, text-domain) | `/nowy-projekt` |
 | `screenshot.png` | Grafika motywu (karta w Wygląd → Motywy) i miniatura projektu PG. Branding Way Better, 1200x900. Zostaje mimo rebrandingu (motyw jest autorstwa agencji) | rzadko |
 | `index.html` | Master page projektu PG (`wp-template-define-master-page`) — zawiera **header i stopkę** (widoczne na każdej stronie) + slot treści `wp-site-content`. Z niej PG generuje `index.php`. Header/stopka to neutralny szkielet do przestylowania pod Figmę (tokeny, hooki JS startera, edycja przez sekcje customizera `header`/`additional_info`) | Claude + Pinegrow |
-| `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowy-blok` | Pinegrow (przez PG) |
+| `blocks.html` | Katalog-demo bloków (`wp-template-no-export`) — tu lądują bloki z `/nowa-sekcja` | Pinegrow (przez PG) |
 | `examples.html` | **Biblioteka wzorców** (nie eksportuje się): sprawdzone układy z oddanych projektów (przyciski, karta wpisu, snap-scroll→grid, paginacja, stan pusty, wzorzec sekcji). Agenci kopiują stąd markup. Czysty HTML+Tailwind, bez `cms-*` | Claude + człowiek |
 | `404.html`, `page.html`, `single.html`, `archive.html`, `search.html`, `parts.html` | Szablony stron WP (404 / strona / wpis / archiwum / wyszukiwanie + breadcrumbs i paginacja w `parts`). TW4, tokeny kolorów, `data-anim`. Otwierasz w PG (Reload project), dopasowujesz pod projekt | Claude + Pinegrow |
 | `archive-cpt.html`, `single-cpt.html` | Wzorce szablonów CPT (przykład `realizacje`). Skill `/nowy-cpt` kopiuje je pod właściwy slug. Same w sobie zostają jako referencja | Claude + Pinegrow |
@@ -93,12 +93,11 @@ Pinegrow NIE wykrywa nowych/usuniętych plików z zewnątrz i może nadpisać zm
 
 ## Zespół agentów AI (jak pracujemy nad sekcją)
 
-Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Do pełnej sekcji z Figmy użyj skilla **`/nowa-sekcja`** (prowadzi pipeline), do pojedynczego bloku **`/nowy-blok`**.
+Starter ma wyspecjalizowanych agentów — **jeden segment = jeden agent**. Każdy blok/sekcję z Figmy budujesz skillem **`/nowa-sekcja`** (prowadzi cały pipeline z delegacją do agentów).
 
 | Agent / skill | Kiedy | Co robi |
 |---|---|---|
 | `/nowa-sekcja` (skill) | budowa sekcji z Figmy | orkiestruje: wymagania → budowa → akcje → slidery → animacje → walidacja |
-| `/nowy-blok` (skill) | pojedynczy blok | scaffold + walidacja |
 | `/nowy-cpt` (skill) | custom post type | rejestruje CPT + taksonomię w `inc/custom.php`, tworzy szablony `archive-{slug}`/`single-{slug}` z wzorców |
 | `/formularz-cf7` (skill) | formularz | konwertuje HTML+Tailwind na shortcode Contact Form 7 |
 | `/audyt` (skill) | przed oddaniem | skan WCAG + SEO szablonów i bloków, raport z priorytetami (nie zmienia plików) |

@@ -2,6 +2,14 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.4 — 2026-08-06 (usunięcie /nowy-blok, jedna ścieżka budowy)
+
+`/nowy-blok` pokrywał się z `/nowa-sekcja` (która ma teraz twardy intake i pełną kontrolę jakości), więc został usunięty. Jedna droga budowy bloku/sekcji z Figmy = `/nowa-sekcja`, bez wyboru „lżejszej" ścieżki bez ceremonii.
+
+- Usunięty `.claude/skills/nowy-blok/`.
+- Odwołania wyczyszczone: `CLAUDE.md` (mapa plików, tabela agentów/skilli, akapit wstępny), `INSTRUKCJA.md`, `README.md`, `blocks.html` (komentarz), `nowy-cpt/SKILL.md`. Opis `/nowa-sekcja` obejmuje teraz też pojedynczy blok.
+- Historyczne wpisy w CHANGELOG (0.1.x, 0.11.x) zostają - to zapis przeszłych wersji.
+
 ## 0.14.3 — 2026-08-06 (/nowa-sekcja: obowiązkowy komplet wejściowy desktop + mobile)
 
 `/nowa-sekcja` wymaga teraz na starcie **czterech materiałów**: link do frame'a desktop, link do frame'a mobile, screen z desktopu, screen z mobile. Powód: subagent nie widzi ekranu, a układ mobilny bywa inny niż zwężony desktop - bez osobnego frame'a i screena mobile pixel-perfect na telefonie był zgadywaniem.

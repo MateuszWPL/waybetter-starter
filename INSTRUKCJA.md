@@ -52,8 +52,7 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 
 **Skille Claude Code** (wpisz `/nazwa`):
 - **`/nowy-projekt`** - zakłada projekt (krok 1 wyżej).
-- **`/nowa-sekcja`** - buduje pełną sekcję z Figmy (interakcje, slider, animacje, walidacja).
-- **`/nowy-blok`** - pojedynczy blok.
+- **`/nowa-sekcja`** - buduje blok/sekcję z Figmy (interakcje, slider, animacje, walidacja).
 - **`/nowy-cpt`** - rejestruje custom post type (np. realizacje, oferta, zespół) + szablony archiwum i wpisu.
 - **`/formularz-cf7`** - przerabia formularz HTML+Tailwind na gotowy shortcode Contact Form 7.
 - **`/audyt`** - przed oddaniem: skan dostępności (WCAG) i SEO, raport co poprawić.

@@ -62,7 +62,7 @@ Skopiuj i podmień slug (przykład `realizacje` → docelowy slug, `realizacje_k
 Nie ruszaj wzorców `archive-cpt.html` / `single-cpt.html` - zostają jako referencja dla następnego CPT.
 
 ## 4. (Opcjonalnie) blok listingu na stronę główną
-Jeśli CPT ma być pokazany na stronie (nie tylko w archiwum), zaproponuj blok z pętlą `cms-post="loop" cms-post-type="{slug}"` przez `/nowy-blok` albo `/nowa-sekcja`.
+Jeśli CPT ma być pokazany na stronie (nie tylko w archiwum), zaproponuj blok z pętlą `cms-post="loop" cms-post-type="{slug}"` przez `/nowa-sekcja`.
 
 ## 5. Walidacja i podsumowanie
 - Odpal agenta **block-validator** na nowych szablonach.
