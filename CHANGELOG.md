@@ -2,6 +2,12 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.3 — 2026-08-06 (/nowa-sekcja: obowiązkowy komplet wejściowy desktop + mobile)
+
+`/nowa-sekcja` wymaga teraz na starcie **czterech materiałów**: link do frame'a desktop, link do frame'a mobile, screen z desktopu, screen z mobile. Powód: subagent nie widzi ekranu, a układ mobilny bywa inny niż zwężony desktop - bez osobnego frame'a i screena mobile pixel-perfect na telefonie był zgadywaniem.
+
+- **`.claude/skills/nowa-sekcja/SKILL.md`**: krok 0 przepisany na obowiązkowy intake czterech rzeczy, z furtkami (brak frame'a mobile → dopytaj o zachowanie na mobile i zapisz brief; brak screenów → odnotuj ograniczoną weryfikację). Krok 2 (budowa) przekazuje `pinegrow-block-expert` oba frame'y i oba screeny i wymaga porównania renderu z desktopem I mobile osobno. Krok 7 domyka weryfikację o porównanie z obydwoma screenami.
+
 ## 0.14.2 — 2026-08-06 (jasny opis ładowania assetów: dwa ładowacze, jak importować)
 
 Doprecyzowanie po pytaniu z warsztatu: jak realnie działa enqueue i `assets/vendor`, i jak importować pliki, żeby nie dublować ładowania. Zero zmian w kodzie ładującym (był czysty) - tylko jasny opis zasady w trzech miejscach, żeby wiedział i człowiek, i agent.
