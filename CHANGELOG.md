@@ -2,6 +2,15 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.5 — 2026-08-06 (odstępy pionowe między sekcjami: padding, symetrycznie, pixel-perfect)
+
+Ustalona jedna zasada odstępów między sekcjami, żeby były powtarzalne co do piksela i odporne na przestawianie bloków w Gutenbergu. Odstęp = `py-*` na wewnętrznym kontenerze (nigdy margines), symetrycznie po połowie na sąsiada (80px = 40 dół górnej + 40 góra dolnej, nie „tylko dolna 80"). Skala domu gdy design nie precyzuje: standard `py-16 lg:py-24` (64/96px), ciaśniej `py-10 lg:py-16`.
+
+- **`CLAUDE.md`** („Standardowy layout sekcji"): pełna zasada pionu - padding nie margines, symetria (G/2 na stronę), pixel-perfect z Figmy (mierz górny i dolny padding sekcji, arbitrary `pt-[72px]` dla wartości spoza skali), różne tła = każdy swój padding, styk z headerem/stopką zeruje jedną stronę, regulacja przez `spacing.padding`. Pointer w „Czego NIE robić" (margines między sekcjami, asymetryczne „tylko dół 80").
+- **`pinegrow-block-expert`**: reguła odstępów w sekcji „Przyciski i layout" (budowniczy mierzy i wpina padding symetrycznie).
+- **`block-validator`** (pkt 22): margines pionowy między sekcjami = [OSTRZEŻENIE]; asymetryczny odstęp na styku bez powodu = [SUGESTIA] rozbicia po połowie.
+- **`/nowa-sekcja`**: w zbieraniu wymagań pytanie o odstęp do sąsiadów (albo skala domu), przekazywane budowniczemu.
+
 ## 0.14.4 — 2026-08-06 (usunięcie /nowy-blok, jedna ścieżka budowy)
 
 `/nowy-blok` pokrywał się z `/nowa-sekcja` (która ma teraz twardy intake i pełną kontrolę jakości), więc został usunięty. Jedna droga budowy bloku/sekcji z Figmy = `/nowa-sekcja`, bez wyboru „lżejszej" ścieżki bez ceremonii.

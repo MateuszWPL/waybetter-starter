@@ -25,6 +25,7 @@ Zapytaj o to, czego nie widać jednoznacznie z frame'a:
 - **Interakcje** w sekcji? (accordion / zakładki / popup / lightbox galerii / menu / brak)
 - **Slider/karuzela?** jeśli tak — jaki charakter (przewijany ręcznie z paginacją? auto-scroll/marquee? ile widocznych na desktop/mobile?)
 - **Animacje wejścia?** jeśli użytkownik nie ma zdania — zaznacz, że animation-expert zaproponuje minimalistyczny wariant do akceptacji.
+- **Odstęp do sąsiednich sekcji:** jeśli design go nie precyzuje, dopytaj albo przyjmij skalę domu (`py-16 lg:py-24`). Odstęp robimy paddingiem symetrycznie (połowa na sekcję), nie marginesem - pełna zasada w `CLAUDE.md` „Standardowy layout sekcji". Przekaż ustalenie budowniczemu.
 - Nazwa bloku (kebab-case) i przeznaczenie.
 
 ## 2. Budowa (pixel-perfect) → agent `pinegrow-block-expert`

@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.4)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.5)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -229,8 +229,17 @@ Wzorzec z 95% sekcji naszych oddanych projektów:
 </section>
 ```
 - `px-5` na sekcji (odstęp treści od krawędzi ekranu na mobile), wewnątrz kontener `max-w-site mx-auto`.
-- Pionowe odstępy na kontenerze, minimum 2 breakpointy (`py-10 lg:py-16`, `py-16 lg:py-24`).
 - `overflow-hidden` gdy sekcja ma elementy wychodzące poza obrys (gradienty, dekoracje, slidery).
+
+**Odstępy pionowe między sekcjami (twarda zasada, pixel-perfect):**
+Bloki są przestawiane/usuwane w Gutenbergu, więc odstęp musi należeć do sekcji, nie do sąsiada.
+- **Padding, nigdy margines.** Odstęp pionowy zawsze jako `py-*` na wewnętrznym kontenerze sekcji. Zero `mt-*`/`mb-*` między sekcjami (margines znika przy usunięciu sąsiada i nie mieści się w kolorowym tle).
+- **Symetrycznie, każda sekcja swoja połowa.** Przerwa między sekcjami = suma paddingów sąsiadów. Odstęp 80px między dwiema sekcjami = `py` dające 40 na dole górnej + 40 na górze dolnej. NIGDY „tylko dolna 80, górna 0" (łamie się przy reorderze i przy tłach).
+- **Skala domu (gdy design nie precyzuje):** standard `py-16 lg:py-24` (64/96px), ciaśniej `py-10 lg:py-16` (40/64px). Trzymaj ten rytm na całej stronie zamiast losowych wartości per sekcja.
+- **Pixel-perfect z Figmy:** zmierz górny i dolny padding każdej sekcji (od boxa treści do krawędzi sekcji) i wpisz wprost. Wartości spoza skali TW (72px, 88px…) jako arbitrary `pt-[72px] pb-[72px]`, dalej 2 breakpointy.
+- **Różne tła sąsiadów:** nie „dzielisz przerwy" - granica koloru to twarda linia, każda sekcja bierze swój padding z designu. **Takie same tła, a design podał tylko przerwę G:** rozbij `G/2` na każdą stronę.
+- **Wyjątek styku z headerem/stopką:** hero/sekcja dotykająca headera albo stopki świadomie zeruje odpowiednią stronę (`pt-0` / `pb-0`).
+- **Klient reguluje** paddingi przez `spacing.padding` w supports (już w zestawie) - nie zaszywaj odstępów tak, żeby nie dało się ich zmienić.
 - **Wyjątek fullbleed:** sekcje na pełną szerokość (slider/marquee, tło dekoracyjne, osadzona mapa, hero z grafiką na całość) łamią wzorzec świadomie - wtedy `px-5` i `max-w-site` idą na wewnętrzną warstwę treści (nakładka nad grafiką), a nie na `<section>`. Walidator traktuje to jako [SUGESTIA], nie ostrzeżenie.
 - Header: `fixed inset-x-0 top-0 z-[999]` + `transition-all duration-300`, w środku ten sam kontener `max-w-site`.
 - Stopka: grid `grid-cols-2 lg:grid-cols-12` (logo+opis `lg:col-span-5`, kolumny linków po `lg:col-span-2/3`), pasek dolny z `cms-function="current_year"` + `cms-site-name`.
@@ -265,7 +274,7 @@ Wzorzec z 95% sekcji naszych oddanych projektów:
 Każdy plik z funkcjami/stylami (`custom.php`, `woo.php`, `custom.css`, `components.css`, moduły JS) ma **spis treści na górze + numerowane sekcje**. Aktualizujesz go przy każdej zmianie.
 
 ### Czego NIE robić
-Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów) · edytowalny href przez `type="attr"` zamiast `type="link"` · sztywne szerokości przycisków (`w-24`) · sekcja bez wzorca `px-5` + `max-w-site mx-auto` · linkowanie custom CSS/JS w `<head>` eksportowanego szablonu (idzie przez `inc/enqueue.php`) · wypełnianie pól bloku `Style`/`Script`/`View script` w PG.
+Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów) · edytowalny href przez `type="attr"` zamiast `type="link"` · sztywne szerokości przycisków (`w-24`) · sekcja bez wzorca `px-5` + `max-w-site mx-auto` · odstęp między sekcjami marginesem (`mt/mb`) zamiast paddingu · asymetryczny odstęp „tylko dolna sekcja 80, górna 0" · linkowanie custom CSS/JS w `<head>` eksportowanego szablonu (idzie przez `inc/enqueue.php`) · wypełnianie pól bloku `Style`/`Script`/`View script` w PG.
 
 ## Workflow z Figmą
 
