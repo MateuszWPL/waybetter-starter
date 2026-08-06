@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.1)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.2)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -18,6 +18,20 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 - **Biblioteki (vendory):** tylko **Swiper** (slider) — plik w `assets/vendor/`, zarządzany przez npm: `npm run vendors` (kopiuje z `node_modules`, uruchamiane też po `npm install`). Runtime dalej zero-build. Patrz `assets/vendor/README.md`. Swiper ładuje się TYLKO gdy włączony moduł `sliders`.
 - **Animacje on-scroll:** atrybut `data-anim="fade-up|fade|fade-left|fade-right|zoom"` (opcjonalnie `data-anim-delay="200"`). Robi to CSS (`assets/css/animations.css`, scroll-driven) na nowoczesnych przeglądarkach; starsze łapie fallback `reveal.js` (IntersectionObserver). Bez biblioteki, koniec AOS. Respektuje `prefers-reduced-motion`; brak wsparcia = treść widoczna.
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
+
+## Jak ładują się pliki CSS/JS (i jak je importować) — twarda zasada
+
+Stronę WordPress obsługują **dwa ładowacze** i nie wolno ich mieszać:
+
+1. **Pinegrow** ładuje **tylko dwa pliki:** `tailwind_theme/tailwind.css` i główny `style.css`. Mechanizm: PG ma funkcję „`<link>`/`<script>` w eksportowanym HTML → zamiana na `wp_enqueue_*` w `functions.php` przy eksporcie". **Używamy tego CELOWO wyłącznie dla Tailwinda** (w `index.html` jest jeden `<link href="tailwind_theme/tailwind.css">`). `style.css` PG dodaje sam (to główny arkusz motywu).
+2. **`inc/enqueue.php`** (nasz kod) ładuje **całą resztę ręcznie:** Swiper (vendor), moduły JS, `main.js`, `components.css`, `custom.css`, `animations.css`. Tu mamy przełączniki `true/false` per moduł, kolejność przez zależności (`deps`), `strategy=defer` i warunkowe ładowanie. PG o tych plikach nie wie.
+
+**Jak dodać NOWY plik CSS/JS:** dopisujesz `wp_enqueue_style`/`wp_enqueue_script` w `inc/enqueue.php` (moduł JS → wpis w mapie modułów + ewentualny przełącznik). **NIGDY** nie linkujesz custom pliku w `<head>` szablonu ani nie doczepiasz go przez Stylesheets Managera do eksportowanego szablonu.
+
+**Reguły (łamanie = podwójne ładowanie tego samego pliku):**
+- W **eksportowanych szablonach** (`index.html` i szablony stron `page`/`single`/`archive`/`404`/`search`/`parts`) w `<head>` zostaje **wyłącznie `tailwind.css`**. Zero custom.css, swipera, main.js w HTML.
+- **Stylesheets Manager w PG = tylko podgląd (design-time).** Custom arkusze doczepiaj do `blocks.html` (ma `wp-template-no-export`, więc fizycznie nie może wygenerować enqueue). Nigdy nie ustawiaj custom arkuszowi opcji „enqueue" w PG.
+- **Pola bloku `Style` / `Editor style` / `Script` / `Editor script` / `View script`** (panel bloku w PG) zostają **puste.** Assety idą przez `inc/enqueue.php`. Wypełnione pole przy jednoczesnym wpisie w `enqueue.php` = ten sam plik ładowany 2x.
 
 ## Mapa plików — kto za co odpowiada
 
@@ -252,7 +266,7 @@ Wzorzec z 95% sekcji naszych oddanych projektów:
 Każdy plik z funkcjami/stylami (`custom.php`, `woo.php`, `custom.css`, `components.css`, moduły JS) ma **spis treści na górze + numerowane sekcje**. Aktualizujesz go przy każdej zmianie.
 
 ### Czego NIE robić
-Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów) · edytowalny href przez `type="attr"` zamiast `type="link"` · sztywne szerokości przycisków (`w-24`) · sekcja bez wzorca `px-5` + `max-w-site mx-auto`.
+Dwa InnerContent obok siebie · sekcja bez `cms-block-supports` · InnerContent bez `-allowed`/`-template` · spacje/numery aparatu w nazwach grafik · custom CSS gdy istnieje klasa TW · funkcje PHP bez prefiksu · Swiper konfigurowany w HTML · `wc-*` bez komentarza · ID „na zapas" (tylko dla anchorów) · edytowalny href przez `type="attr"` zamiast `type="link"` · sztywne szerokości przycisków (`w-24`) · sekcja bez wzorca `px-5` + `max-w-site mx-auto` · linkowanie custom CSS/JS w `<head>` eksportowanego szablonu (idzie przez `inc/enqueue.php`) · wypełnianie pól bloku `Style`/`Script`/`View script` w PG.
 
 ## Workflow z Figmą
 

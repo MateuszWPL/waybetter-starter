@@ -70,7 +70,29 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 
 ---
 
-## 5. Gdzie czego szukać
+## 5. Jak ładują się pliki CSS/JS (ważne, przeczytaj raz)
+
+Stroną sterują **dwa ładowacze** i nie wolno ich mieszać, bo dostaniesz ten sam plik wczytany dwa razy.
+
+**1. Pinegrow ładuje tylko Tailwind i główny `style.css`.** PG działa tak: jeśli w eksportowanym HTML jest `<link>` albo `<script>` wskazujący plik projektu, przy eksporcie zamienia go na wpis w `functions.php`. **Robimy to celowo tylko dla Tailwinda** - w `index.html` jest jeden `<link href="tailwind_theme/tailwind.css">`. To ten sam mechanizm, co w starym szablonie (`main.min.css`/`main.min.js`), tylko zawężony do jednego pliku.
+
+**2. `inc/enqueue.php` ładuje całą resztę.** Swiper, moduły JS, `main.js`, `components.css`, `custom.css`, `animations.css` wciąga nasz kod ręcznie - dzięki temu mamy przełączniki modułów (`true`/`false`), właściwą kolejność i ładowanie z opóźnieniem. Pinegrow o tych plikach nie wie.
+
+**Jak dodać własny plik CSS/JS:**
+- Wrzuć plik do `assets/css/` albo `assets/js/`.
+- Dopisz go w `inc/enqueue.php` (przy CSS - jedna linia `wp_enqueue_style`; przy module JS - wpis w mapie modułów na dole + przełącznik na górze).
+- **Nie linkuj go w `<head>`** szablonu i nie doczepiaj przez Stylesheets Managera do eksportowanego szablonu.
+
+**Zasady (żeby nie było dubli):**
+- W **eksportowanych szablonach** (`index.html`, `page`, `single`, `archive`, `404`, `search`, `parts`) w `<head>` zostaje **tylko `tailwind.css`**.
+- **Stylesheets Manager w Pinegrow to podgląd** (żeby PG malował style w edytorze). Custom arkusze doczepiaj do `blocks.html` - ten plik się nie eksportuje, więc nic nie zepsuje. Custom arkuszowi nie ustawiaj w PG opcji „enqueue".
+- Pola bloku **Style / Editor style / Script / View script** (panel bloku w PG) **zostaw puste** - assety idą przez `inc/enqueue.php`.
+
+W skrócie: **Tailwind ładuje Pinegrow (przez `<link>` w HTML), wszystko inne ładuje `inc/enqueue.php`.** Chcesz coś dodać do strony - dopisujesz w `enqueue.php`, nie w HTML.
+
+---
+
+## 6. Gdzie czego szukać
 
 | Chcę... | Plik / miejsce |
 |---|---|
@@ -89,7 +111,7 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 
 ---
 
-## 6. Coś nie działa
+## 7. Coś nie działa
 
 - **Style nie działają na froncie** → zrób eksport z PG (Ctrl+M) i sprawdź, czy motyw jest aktywny.
 - **Nowy plik/blok niewidoczny w PG** → **Reload project** (nie File Reload).
@@ -110,6 +132,7 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
   endif;
   ```
   Od startera 0.14.1 jest to w szkielecie domyślnie.
+- **Plik CSS/JS ładuje się dwa razy** (widać w źródle strony dwa `<link>`/`<script>` do tego samego) → custom plik jest jednocześnie w `inc/enqueue.php` i wpięty w HTML (link w `<head>` albo doczepiony w Stylesheets Managerze do eksportowanego szablonu). Usuń go z HTML - zostaje tylko w `enqueue.php`. W eksportowanym `<head>` ma być wyłącznie `tailwind.css` (patrz sekcja 5).
 - **Font się nie wczytuje** → to 2 kroki: `@font-face` w `assets/css/custom.css` (sekcja 6) ORAZ dodanie rodziny jako token w panelu Design PG (bez tego klasa `font-nazwa` nie istnieje).
 - **Nie wiem, co dalej** → `PROJEKT.md` (stan projektu), potem `CLAUDE.md` (zasady).
 

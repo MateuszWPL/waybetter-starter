@@ -2,6 +2,14 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.14.2 — 2026-08-06 (jasny opis ładowania assetów: dwa ładowacze, jak importować)
+
+Doprecyzowanie po pytaniu z warsztatu: jak realnie działa enqueue i `assets/vendor`, i jak importować pliki, żeby nie dublować ładowania. Zero zmian w kodzie ładującym (był czysty) - tylko jasny opis zasady w trzech miejscach, żeby wiedział i człowiek, i agent.
+
+- **`CLAUDE.md`**, nowa sekcja „Jak ładują się pliki CSS/JS (i jak je importować)": dwa ładowacze rozdzielone wprost. Pinegrow ładuje tylko `tailwind.css` (przez `<link>` w eksportowanym HTML → auto-enqueue) + `style.css`; całą resztę (Swiper, moduły, `main.js`, `components.css`, `custom.css`, `animations.css`) ładuje ręcznie `inc/enqueue.php`. Reguły przeciw dublom: w eksportowanych szablonach w `<head>` tylko `tailwind.css`; Stylesheets Manager = podgląd (doczepiaj do `blocks.html`, nie ustawiaj „enqueue"); pola bloku Style/Script/View script zostają puste. Pointer też w „Czego NIE robić".
+- **`INSTRUKCJA.md`**, nowa sekcja 5 „Jak ładują się pliki CSS/JS": to samo prostym językiem dla zespołu, z instrukcją „jak dodać własny plik CSS/JS" (wrzuć do `assets/`, dopisz w `inc/enqueue.php`, nie linkuj w HTML). Troubleshooting: objaw „plik ładuje się dwa razy" i jak go usunąć.
+- **`block-validator`**, pkt 24: custom CSS/JS linkowany w `<head>` eksportowanego szablonu albo ręcznie w `functions.php` = [BŁĄD] (dubel / teren PG). Arkusze doczepione do `blocks.html` (nie eksportuje się) = podgląd, nie zgłaszać.
+
 ## 0.14.1 — 2026-08-04 (hotfix: marker Customizera w functions.php)
 
 Regresja z 0.13.0: header i stopka w masterze używają pól edytowalnych przez Customizer (`cms-editable` + `cms-section`), ale szkielet `functions.php` nie miał funkcji `customize_register` z markerem, więc Pinegrow przy eksporcie zgłaszał „Section Customizer Controls not found" i eksport padał.
