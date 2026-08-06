@@ -2,55 +2,117 @@
    SPIS TREŚCI - animations.css (animacje wejścia on-scroll, bez biblioteki)
    1. KEYFRAMES (wspólne dla obu ścieżek)
    2. ŚCIEŻKA NOWOCZESNA - CSS scroll-driven (@supports animation-timeline)
+      2a. REVEALE (odpalają się raz, kończą na stanie z designu)
+      2b. SCRUB (sterowane całym przejściem elementu przez viewport)
    3. FALLBACK - klasa .anim-in dokładana przez reveal.js (IntersectionObserver)
    ------------------------------------------------------------
-   Użycie: atrybut  data-anim="fade-up|fade|fade-left|fade-right|zoom"
-   na elemencie; opcjonalnie  data-anim-delay="200"  (ms - działa w fallbacku).
+   Użycie: atrybut  data-anim="..."  na elemencie. Katalog:
+     REVEALE:  fade | fade-up | fade-down | fade-left | fade-right |
+               zoom | blur-up | rise | flip-up | rotate-in | mask-reveal
+     SCRUB:    parallax | parallax-fast | scale-scrub
+   Modyfikator:  data-anim-delay="200"  (ms, stagger - działa w fallbacku;
+   w nowoczesnych przeglądarkach elementy staggerują się naturalnie tempem
+   wchodzenia w viewport).
+
+   Kiedy co:
+   - REVEALE = treść, która ma dojść do pozycji z Figmy piksel w piksel
+     (nagłówki, karty, obrazy). Stan końcowy = design.
+   - SCRUB = elementy DEKORACYJNE (tło, kształty, obraz w tle sekcji), które
+     mogą się przesuwać wraz ze scrollem i nie mają „docelowej" pozycji.
+     NIE używaj scrub na treści, która musi stać dokładnie jak w designie.
+
    Zasady bezpieczeństwa:
    - Respektuje prefers-reduced-motion (brak ruchu → element od razu widoczny).
    - Brak JS / brak wsparcia = element w PEŁNI widoczny (nie chowamy na sztywno).
    - Nowoczesne przeglądarki: animuje samo CSS (bez JS). Starsze: reveal.js.
+   - Scrub działa tylko na nowoczesnej ścieżce; w fallbacku spada do zwykłego
+     fade (brak sterowania scrollem bez CSS scroll-driven).
+   - Animujemy transform + opacity, a dla blur-up/mask-reveal dodatkowo
+     filter:blur / clip-path (zero layout-shift - nie ruszamy width/height/margin).
    ============================================================ */
 
 /* === 1. KEYFRAMES === */
-@keyframes wb-fade       { from { opacity: 0; }                                  to { opacity: 1; } }
-@keyframes wb-fade-up    { from { opacity: 0; transform: translateY(2rem); }     to { opacity: 1; transform: none; } }
-@keyframes wb-fade-left  { from { opacity: 0; transform: translateX(2rem); }     to { opacity: 1; transform: none; } }
-@keyframes wb-fade-right { from { opacity: 0; transform: translateX(-2rem); }    to { opacity: 1; transform: none; } }
-@keyframes wb-zoom       { from { opacity: 0; transform: scale(0.92); }          to { opacity: 1; transform: none; } }
+@keyframes wb-fade         { from { opacity: 0; }                                         to { opacity: 1; } }
+@keyframes wb-fade-up      { from { opacity: 0; transform: translateY(2rem); }            to { opacity: 1; transform: none; } }
+@keyframes wb-fade-down    { from { opacity: 0; transform: translateY(-2rem); }           to { opacity: 1; transform: none; } }
+@keyframes wb-fade-left    { from { opacity: 0; transform: translateX(2rem); }            to { opacity: 1; transform: none; } }
+@keyframes wb-fade-right   { from { opacity: 0; transform: translateX(-2rem); }           to { opacity: 1; transform: none; } }
+@keyframes wb-zoom         { from { opacity: 0; transform: scale(0.92); }                 to { opacity: 1; transform: none; } }
+@keyframes wb-rise         { from { opacity: 0; transform: translateY(3.5rem); }          to { opacity: 1; transform: none; } }
+@keyframes wb-blur-up      { from { opacity: 0; transform: translateY(2rem); filter: blur(12px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes wb-flip-up      { from { opacity: 0; transform: perspective(800px) rotateX(12deg); }     to { opacity: 1; transform: perspective(800px) rotateX(0); } }
+@keyframes wb-rotate-in    { from { opacity: 0; transform: rotate(-4deg) scale(0.96); }   to { opacity: 1; transform: none; } }
+@keyframes wb-mask-reveal  { from { opacity: 0.001; clip-path: inset(0 0 100% 0); }       to { opacity: 1; clip-path: inset(0 0 0 0); } }
+
+/* Scrub: element przechodzi PRZEZ pozycję docelową (środek), drift dekoracyjny. */
+@keyframes wb-parallax      { from { transform: translateY(-2rem); } to { transform: translateY(2rem); } }
+@keyframes wb-parallax-fast { from { transform: translateY(-4rem); } to { transform: translateY(4rem); } }
+@keyframes wb-scale-scrub   { from { transform: scale(0.94); }       to { transform: scale(1.04); } }
 
 /* === 2. ŚCIEŻKA NOWOCZESNA: scroll-driven (bez JS) === */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+
+    /* --- 2a. REVEALE: odpalają się raz, gdy element wchodzi w viewport --- */
     [data-anim] {
       animation: wb-fade-up both;
       animation-timeline: view();
       animation-range: entry 15% entry 85%;
     }
-    [data-anim="fade"]       { animation-name: wb-fade; }
-    [data-anim="fade-up"]    { animation-name: wb-fade-up; }
-    [data-anim="fade-left"]  { animation-name: wb-fade-left; }
-    [data-anim="fade-right"] { animation-name: wb-fade-right; }
-    [data-anim="zoom"]       { animation-name: wb-zoom; }
+    [data-anim="fade"]        { animation-name: wb-fade; }
+    [data-anim="fade-up"]     { animation-name: wb-fade-up; }
+    [data-anim="fade-down"]   { animation-name: wb-fade-down; }
+    [data-anim="fade-left"]   { animation-name: wb-fade-left; }
+    [data-anim="fade-right"]  { animation-name: wb-fade-right; }
+    [data-anim="zoom"]        { animation-name: wb-zoom; }
+    [data-anim="rise"]        { animation-name: wb-rise; }
+    [data-anim="blur-up"]     { animation-name: wb-blur-up; }
+    [data-anim="flip-up"]     { animation-name: wb-flip-up; }
+    [data-anim="rotate-in"]   { animation-name: wb-rotate-in; }
+    [data-anim="mask-reveal"] { animation-name: wb-mask-reveal; animation-range: entry 10% entry 60%; }
+
+    /* --- 2b. SCRUB: sterowane całym przejściem elementu przez viewport --- */
+    [data-anim="parallax"],
+    [data-anim="parallax-fast"],
+    [data-anim="scale-scrub"] {
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+      animation-timing-function: linear;
+    }
+    [data-anim="parallax"]      { animation-name: wb-parallax; }
+    [data-anim="parallax-fast"] { animation-name: wb-parallax-fast; }
+    [data-anim="scale-scrub"]   { animation-name: wb-scale-scrub; }
   }
 }
 
 /* === 3. FALLBACK: starsze przeglądarki (html.no-sda ustawia reveal.js) === */
 html.no-sda [data-anim] {
   opacity: 0;
-  transition: opacity .6s ease, transform .6s ease;
+  transition: opacity .6s ease, transform .6s ease, filter .6s ease, clip-path .6s ease;
   will-change: opacity, transform;
 }
-html.no-sda [data-anim="fade-up"]    { transform: translateY(2rem); }
-html.no-sda [data-anim="fade-left"]  { transform: translateX(2rem); }
-html.no-sda [data-anim="fade-right"] { transform: translateX(-2rem); }
-html.no-sda [data-anim="zoom"]       { transform: scale(0.92); }
+html.no-sda [data-anim="fade-up"]     { transform: translateY(2rem); }
+html.no-sda [data-anim="fade-down"]   { transform: translateY(-2rem); }
+html.no-sda [data-anim="fade-left"]   { transform: translateX(2rem); }
+html.no-sda [data-anim="fade-right"]  { transform: translateX(-2rem); }
+html.no-sda [data-anim="zoom"]        { transform: scale(0.92); }
+html.no-sda [data-anim="rise"]        { transform: translateY(3.5rem); }
+html.no-sda [data-anim="blur-up"]     { transform: translateY(2rem); filter: blur(12px); }
+html.no-sda [data-anim="flip-up"]     { transform: perspective(800px) rotateX(12deg); }
+html.no-sda [data-anim="rotate-in"]   { transform: rotate(-4deg) scale(0.96); }
+html.no-sda [data-anim="mask-reveal"] { clip-path: inset(0 0 100% 0); }
+/* Scrub bez scrolla nie ma sensu - w fallbacku po prostu fade (transform none). */
+html.no-sda [data-anim="parallax"],
+html.no-sda [data-anim="parallax-fast"],
+html.no-sda [data-anim="scale-scrub"] { transform: none; }
 
 html.no-sda [data-anim].anim-in {
   opacity: 1;
   transform: none;
+  filter: none;
+  clip-path: inset(0 0 0 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.no-sda [data-anim] { opacity: 1; transform: none; transition: none; }
+  html.no-sda [data-anim] { opacity: 1; transform: none; filter: none; clip-path: none; transition: none; }
 }

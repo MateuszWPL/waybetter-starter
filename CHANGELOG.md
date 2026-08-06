@@ -2,6 +2,14 @@
 
 Projekty zapisują w PROJEKT.md wersję startera, z której powstały. Poprawki NIE propagują automatycznie do oddanych stron — backportujemy tylko krytyczne.
 
+## 0.15.0 — 2026-08-06 (rozbudowany katalog animacji on-scroll, wciąż bez biblioteki)
+
+Odświeżenie animacji wejścia bez wdrażania żadnej biblioteki (rozważane Motion One / GSAP+Lenis - odrzucone, zero-build i lekkość jako standard). Silnik zostaje natywny (CSS scroll-driven + fallback `reveal.js`), rozszerzony jest katalog gotowych efektów wołanych jedną linijką `data-anim="..."`, bez zmian w strukturze DOM.
+
+- **`assets/css/animations.css`** rozbudowany z 5 do 14 efektów. Nowe revele (kończą pixel-perfect na pozycji z designu): `fade-down`, `rise` (większy ruch), `blur-up` (filter blur + fade), `flip-up` (rotateX), `rotate-in`, `mask-reveal` (clip-path). Nowa kategoria **scrub** (sterowana całym przejściem elementu przez viewport, `animation-range: cover`): `parallax`, `parallax-fast`, `scale-scrub` - **tylko elementy dekoracyjne** (tło/kształty), nie treść pixel-perfect; w fallbacku spadają do zwykłego fade. Obie ścieżki (scroll-driven i `html.no-sda`) obsłużone, `prefers-reduced-motion` i „widoczne przy braku JS" zachowane. `reveal.js` bez zmian (jest agnostyczny na wartość `data-anim`).
+- **`animation-expert`**: pełny katalog w „System", twarda zasada scrub = tylko dekoracja (nie treść), dozwolone `filter:blur`/`clip-path` dla `blur-up`/`mask-reveal` (nadal zero layout-shift), nota o naturalnym staggerze na nowoczesnej ścieżce vs `data-anim-delay` w fallbacku.
+- **`CLAUDE.md`** (skrót assetów + „Animacje wejścia") i **`INSTRUKCJA.md`**: katalog efektów z podziałem revele vs scrub, stagger przez `data-anim-delay`.
+
 ## 0.14.5 — 2026-08-06 (odstępy pionowe między sekcjami: padding, symetrycznie, pixel-perfect)
 
 Ustalona jedna zasada odstępów między sekcjami, żeby były powtarzalne co do piksela i odporne na przestawianie bloków w Gutenbergu. Odstęp = `py-*` na wewnętrznym kontenerze (nigdy margines), symetrycznie po połowie na sąsiada (80px = 40 dół górnej + 40 góra dolnej, nie „tylko dolna 80"). Skala domu gdy design nie precyzuje: standard `py-16 lg:py-24` (64/96px), ciaśniej `py-10 lg:py-16`.

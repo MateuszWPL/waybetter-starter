@@ -1,4 +1,4 @@
-# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.14.5)
+# Projekt: {{NAZWA_PROJEKTU}} — motyw WordPress (starter WB v0.15.0)
 
 Motyw WP budowany w **Pinegrow 9.3** (bloki native-hybrid `cms-block*`) + **Tailwind 4** (wbudowany kompilator PG). **Zero builda** — custom CSS/JS to gotowe pliki serwowane wprost z `assets/`. Ten plik to KOMPLETNY kontekst pracy nad stroną — nie odwołuje się do niczego spoza projektu.
 
@@ -16,7 +16,7 @@ Starter jest **gotowym projektem Pinegrow** (niesie `pinegrow.json`, `projectdb.
 - **Custom CSS** → `assets/css/custom.css` (i `components.css`). Edytujesz → zapisujesz → odświeżasz przeglądarkę. Bez builda.
 - **Custom JS** → `assets/js/main.js` i `assets/js/modules/*.js` (plain JS, bez `import`). Które moduły się ładują — ustawiasz w tablicy config na górze `inc/enqueue.php` (`true`/`false`), nie odkomentowywaniem. Wszystkie skrypty z `strategy=defer`.
 - **Biblioteki (vendory):** tylko **Swiper** (slider) — plik w `assets/vendor/`, zarządzany przez npm: `npm run vendors` (kopiuje z `node_modules`, uruchamiane też po `npm install`). Runtime dalej zero-build. Patrz `assets/vendor/README.md`. Swiper ładuje się TYLKO gdy włączony moduł `sliders`.
-- **Animacje on-scroll:** atrybut `data-anim="fade-up|fade|fade-left|fade-right|zoom"` (opcjonalnie `data-anim-delay="200"`). Robi to CSS (`assets/css/animations.css`, scroll-driven) na nowoczesnych przeglądarkach; starsze łapie fallback `reveal.js` (IntersectionObserver). Bez biblioteki, koniec AOS. Respektuje `prefers-reduced-motion`; brak wsparcia = treść widoczna.
+- **Animacje on-scroll:** atrybut `data-anim="..."` (opcjonalnie `data-anim-delay="200"`). Katalog: revele `fade`, `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom`, `rise`, `blur-up`, `flip-up`, `rotate-in`, `mask-reveal`; scrub (dekoracyjne) `parallax`, `parallax-fast`, `scale-scrub`. Robi to CSS (`assets/css/animations.css`, scroll-driven) na nowoczesnych przeglądarkach; starsze łapie fallback `reveal.js` (IntersectionObserver). Bez biblioteki, koniec AOS. Respektuje `prefers-reduced-motion`; brak wsparcia = treść widoczna.
 - **Grafiki:** wrzuć jpg/png do `inc/img/` (jedyny folder na grafiki), potem jedna komenda **`npm run optimize`** robi webp (oryginał zostaje). W HTML referencja do `.webp`.
 
 ## Jak ładują się pliki CSS/JS (i jak je importować) — twarda zasada
@@ -262,8 +262,11 @@ Bloki są przestawiane/usuwane w Gutenbergu, więc odstęp musi należeć do sek
 - **Konfiguracja wyłącznie w `assets/js/modules/sliders.js`** (per klasa slidera, breakpoint 1024). Żadnej konfiguracji Swiper w HTML — decyduje klasa kontenera.
 
 ### Animacje wejścia (on-scroll)
-- Atrybut `data-anim="fade-up|fade|fade-left|fade-right|zoom"` na elemencie; opcjonalnie `data-anim-delay="200"` (ms, działa w fallbacku). Bez `data-aos` (koniec AOS).
-- Mechanizm: CSS scroll-driven (`animations.css`) + fallback `reveal.js` — nic nie inicjalizujesz w JS. Dynamiczna treść: `window.wbReveal.scan()`.
+- Atrybut `data-anim="..."` na elemencie; opcjonalnie `data-anim-delay="200"` (ms, działa w fallbacku). Bez `data-aos` (koniec AOS).
+- **Katalog (jedna linijka, bez zmian struktury):**
+  - Revele (kończą na pozycji z designu): `fade`, `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom`, `rise`, `blur-up`, `flip-up`, `rotate-in`, `mask-reveal`.
+  - Scrub (drift wraz ze scrollem, **tylko elementy dekoracyjne** - tło/kształty, nie treść pixel-perfect): `parallax`, `parallax-fast`, `scale-scrub`.
+- Mechanizm: CSS scroll-driven (`animations.css`) + fallback `reveal.js` — nic nie inicjalizujesz w JS. Nowy efekt = keyframes + selektor w `animations.css` (obie ścieżki). Dynamiczna treść: `window.wbReveal.scan()`.
 
 ### Tailwind-first (zasada twarda)
 - Wszystko co się da — klasami TW, w tym arbitrary values (`hover:text-[#B0246D]`, `shadow-[0_4px_4px_rgba(0,0,0,0.25)]`), cienie, gradienty, warianty.

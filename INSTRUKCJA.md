@@ -65,7 +65,11 @@ Robią się `.webp` (oryginał zostaje). W HTML zawsze używaj `.webp`.
 
 **Moduły JS** (włączasz w `inc/enqueue.php` - tablica na górze, `true`/`false`): slider (Swiper), menu mobilne, accordion, tabs, popup, galeria (lightbox), megamenu, drag scroll, animacje wejścia (`data-anim`).
 
-**Animacje:** dodaj atrybut `data-anim="fade-up"` (albo `fade`, `fade-left`, `fade-right`, `zoom`) na elemencie. Nic nie inicjalizujesz.
+**Animacje wejścia (on-scroll):** dodaj atrybut `data-anim="..."` na elemencie i tyle, nic nie inicjalizujesz. Do wyboru:
+- **Pojawianie treści** (kończy dokładnie na pozycji z designu): `fade`, `fade-up`, `fade-down`, `fade-left`, `fade-right`, `zoom`, `rise` (większy ruch), `blur-up` (z rozmyciem), `flip-up` (obrót), `rotate-in`, `mask-reveal` (wycieranie).
+- **Dekoracyjne (drift wraz ze scrollem)** - tylko na tło/kształty, nie na treść: `parallax`, `parallax-fast`, `scale-scrub`.
+- Stagger (kolejne kafelki po sobie): dorzuć `data-anim-delay="0"`, `"100"`, `"200"`...
+- Zero biblioteki: nowoczesne przeglądarki animują samym CSS, starsze łapie fallback. Respektuje „ogranicz ruch" w systemie użytkownika.
 
 ---
 
